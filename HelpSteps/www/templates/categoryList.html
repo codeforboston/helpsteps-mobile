@@ -1,18 +1,21 @@
+<!-- <ion-header-bar class="bar-positive">
+  <h1 class="title">HelpSteps</h1>
+</ion-header-bar> -->
+<ion-view>
+<ion-content>
 
-<ion-view view-title="Category List">
-<ion-nav-bar class="bar-stable">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-    </ion-nav-bar>
-	<ion-content> 
-	<h1>I am job list!</h1>
-	<h1>I am job list!</h1>
-	<h1>I am job list!</h1>
-	<h1>I am job list!</h1>
-	<h1>I am job list!</h1>
-	<h1>I am job list!</h1>
-	<h1>I am job list!</h1>
-	<h1>I am job list!</h1>
-		
-	</ion-content>
+    <!-- Search Bar -->
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search">
+      </label>
+    </div>
+
+    <!-- Categories/Cards -->
+    <div class="row categoryIcons">
+      <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories"></service-category-icon>             
+    </div>
+                             
+</ion-content>
 </ion-view>

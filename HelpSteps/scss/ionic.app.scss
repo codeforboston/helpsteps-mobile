@@ -21,3 +21,35 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+
+service-category-icon {
+	@extend .col-33
+}
+
+.categoryIcon {
+	font-size: 70px;
+}
+
+.centerBlock {
+                display: table;
+                margin: 0 auto;
+ }
+
+ .highlighted {
+ 	background-color: yellow;
+ }
+
+ button.customIconButton:before {
+    font-size: 52px !important;
+}
+
+.button {
+	background-color: #FFEB5E;
+	opacity: 0.5;
+}
+
+.categoryIcons {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
