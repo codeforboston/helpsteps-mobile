@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 	HelpStepsApi.GetDomainsAndChildren()
   .then(function(results){
     $scope.categories = results; 
-    debugger;
+
   });
   
 
@@ -18,11 +18,6 @@ angular.module('starter.controllers', [])
   	
     $scope.popover.show($event);
   };
-
-  
-
-  
-
   
 });
 

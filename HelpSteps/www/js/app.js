@@ -20,11 +20,7 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
 
 .config(function($stateProvider, $urlRouterProvider){
   $stateProvider
-  .state('launch', {
-    url: '/launch',            
-    templateUrl: 'templates/launch.html'
-        
-  })
+  
 
   .state('categoryList', {
     url: '/categoryList',
@@ -33,5 +29,5 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
     
   })
 
-  $urlRouterProvider.otherwise('/launch');
+  $urlRouterProvider.otherwise('/categoryList');
 });

@@ -16,7 +16,7 @@ angular.module('starter.directives', [])
 		},
 		templateUrl: 'templates/service-category-icon.html',		
 		
-       link: function ($scope, element) {
+       link: function ($scope, $element) {
        		$scope.icon = function(){
        			switch ($scope.categoryId) {
        				//help escape violence
@@ -68,6 +68,11 @@ angular.module('starter.directives', [])
        			}
        			
        		}();
+
+       		$element.bind('click', function(){
+       			
+       			$element.toggleClass('highlighted');
+       		});
       		
        }
 	};
