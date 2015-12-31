@@ -47,13 +47,29 @@ angular.module('starter.controllers', [])
       }
     });
     debugger;
-    $rootScope.selectedServices = selectedServices.join;
+    $rootScope.selectedServices = selectedServices.join(',');
     $state.go('agencyList');
   }
 })
 
-.controller('AgencyListCtrl', function($scope){
+.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state){
+  HelpStepsApi.GetAgencies().then(function(results){
+    $scope.agencies = results;
+    debugger;
+  });
+
+  $scope.getAgency = function(id){
+    $state.go('/agencyDetail/' + id);
+  }
   
+})
+
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state){
+  debugger;
+  HelpStepsApi.GetAgency($stateParams.id).then(function(result){
+    $scope.agency = result.data;
+    debugger;
+  });
   
 });
 

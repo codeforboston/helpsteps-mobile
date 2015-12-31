@@ -1,0 +1,18 @@
+
+<ion-view>
+<ion-content>
+    
+    <h1>{{agency.name}}</h1>
+    <p>{{agency.description}}</p>
+    <h6>Eligibility: {{agency.services[0].eligibility}}</h6>
+    <h2>{{agency.phones[0].number}}</h2>
+
+    <h3>Services</h3>
+    <ul>
+    	<li ng-repeat="service in agency.services">{{service.name}}</li>
+    </ul>
+                             
+</ion-content>
+
+
+</ion-view>

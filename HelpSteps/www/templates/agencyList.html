@@ -2,6 +2,13 @@
 <ion-view>
 <ion-content>
    <h2>agency list</h2>
+   <ion-list>
+   		<a ng-href="#/agencyDetail/{{agency.id}}" ng-repeat="agency in agencies" >
+   			<ion-item>{{agency.name}} {{agency.distance}}
+	   	</ion-item>
+   		</a>
+	   	
+   </ion-list>
                              
 </ion-content>
 

@@ -1,7 +1,8 @@
 angular.module('starter.services', [])
 
-.factory('HelpStepsApi', function($http){
+.factory('HelpStepsApi', function($http, $rootScope){
 	var allServiceCategories = [];
+	var selectedAgencies = [];
 	return {
 		GetDomainsAndChildren: function(){
 			return $http.get('http://localhost:3000/api/categories/domain/include_all_children')
@@ -11,11 +12,28 @@ angular.module('starter.services', [])
 			});
 		},
 		GetAgencies: function(){
-			return $http.get('http://localhost:3000/api/categories/domain/include_all_children')
+			///locations_with_distance/:location/:search_services/:tags_included'
+			return $http.get('http://localhost:3000/api/locations_with_distance/42.3245296,-71.1021299/' + $rootScope.selectedServices + '/false')
 			.then(function(results){
-				allServiceCategories = results.data;
-				return allServiceCategories;
+				selectedAgencies = results.data;
+				return selectedAgencies;
+			});
+		},
+
+		GetAgency: function(id){
+			///locations_with_distance/:location/:search_services/:tags_included'
+			return $http.get('http://localhost:3000/api/show_location_for_detail_view/' + id)
+			.then(function(result){
+				selectedAgency = result;
+				return selectedAgency;
 			});
 		}
+
+
+
+
+
+		
+
 	};
 });
