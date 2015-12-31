@@ -7,10 +7,15 @@
     <!-- Categories/Cards -->
     <ion-list>
       <ion-item ng-repeat="category in filteredCategories">{{category.name}}
-        <ion-checkbox ng-repeat="service in category.services">{{service.name}}</ion-checkbox>
+        <ion-checkbox ng-repeat="service in category.services" ng-true-value="true" ng-model="selected[service.id]">{{service.name}}</ion-checkbox>
       </ion-item>
     </ion-list>
                              
 </ion-content>
+<ion-footer-bar align-title="center" class="bar-royal" ng-click="getAgencies()">
+  
+  <h1 class="title">SEARCH</h1>
+  
+</ion-footer-bar>
 
 </ion-view>

@@ -36,5 +36,12 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
     
   })
 
+  .state('agencyList', {
+    url: '/agencyList',
+    templateUrl: 'templates/agencyList.html',
+    controller: 'AgencyListCtrl'
+    
+  })
+
   $urlRouterProvider.otherwise('/categoryList');
 });

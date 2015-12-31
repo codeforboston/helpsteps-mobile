@@ -22,7 +22,9 @@ angular.module('starter.controllers', [])
   
 })
 
-.controller('ServiceListCtrl', function($scope, $rootScope){
+.controller('ServiceListCtrl', function($scope, $rootScope, $state){
+  $scope.selected = {};
+
   $scope.categories = $rootScope.categories;
   
   $scope.filteredCategories = [];
@@ -33,6 +35,25 @@ angular.module('starter.controllers', [])
       $scope.filteredCategories.push(value);
     }
   });
-  debugger;
+  
+
+  $scope.getAgencies = function(){
+    //generate list of selected services
+    var selectedServices = [];
+    angular.forEach($scope.selected, function(value, key){
+      if(value == true){
+        selectedServices.push(key);
+        alert(key);
+      }
+    });
+    debugger;
+    $rootScope.selectedServices = selectedServices.join;
+    $state.go('agencyList');
+  }
+})
+
+.controller('AgencyListCtrl', function($scope){
+  
+  
 });
 
