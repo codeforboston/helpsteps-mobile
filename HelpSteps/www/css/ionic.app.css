@@ -9109,3 +9109,6 @@ button.customIconButton:before {
 .categoryIcons {
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap; }
+
+.angular-google-map-container {
+  height: 200px; }

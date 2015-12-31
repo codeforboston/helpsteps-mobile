@@ -62,13 +62,28 @@ angular.module('starter.controllers', [])
     $state.go('/agencyDetail/' + id);
   }
   
-})
+})   
 
-.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state){
-  debugger;
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi){
+  
   HelpStepsApi.GetAgency($stateParams.id).then(function(result){
     $scope.agency = result.data;
-    debugger;
+    
+    
+    var latitude = $scope.agency.latitude;
+  var longitude = $scope.agency.longitude;
+  $scope.map = {center: {latitude: latitude, longitude: longitude }, zoom: 16 };
+    $scope.marker = {
+      id: 0,
+      coords: {
+        latitude: latitude,
+        longitude: longitude
+      }
+    };
+  
+
+
+
   });
   
 });

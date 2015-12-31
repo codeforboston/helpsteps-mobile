@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives', 'starter.services'])
+angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives', 'starter.services', 'uiGmapgoogle-maps'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -16,6 +16,14 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
       StatusBar.styleDefault();
     }
   });
+})
+
+.config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyDu3ACzX5UEHrISWJyIDEYjN40IppUvbbM',
+        v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'weather,geometry,visualization'
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider){
