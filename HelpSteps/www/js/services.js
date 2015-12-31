@@ -6,8 +6,8 @@ angular.module('starter.services', [])
 		GetDomainsAndChildren: function(){
 			return $http.get('http://localhost:3000/api/categories/domain/include_all_children')
 			.then(function(results){
-				allServiceCategories = results;
-				return results.data;
+				allServiceCategories = results.data;
+				return allServiceCategories;
 			});
 		}
 	};

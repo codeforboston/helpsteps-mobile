@@ -29,5 +29,12 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
     
   })
 
+  .state('serviceList', {
+    url: '/serviceList',
+    templateUrl: 'templates/serviceList.html',
+    controller: 'ServiceListCtrl'
+    
+  })
+
   $urlRouterProvider.otherwise('/categoryList');
 });
