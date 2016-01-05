@@ -5,8 +5,13 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives', 'starter.services', 'uiGmapgoogle-maps'])
 
-.run(function($ionicPlatform) {
+.run(['$ionicPlatform',function($ionicPlatform) {
   $ionicPlatform.ready(function() {
+
+    
+
+
+    debugger;
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -16,7 +21,17 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
       StatusBar.styleDefault();
     }
   });
-})
+}])
+
+// .config(function (AnalyticsProvider) {
+//   // Add configuration code as desired - see below
+//   AnalyticsProvider
+//     .logAllCalls(true)
+//     .startOffline(true)
+//     .useEcommerce(true, true);
+// })
+
+
 
 .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({

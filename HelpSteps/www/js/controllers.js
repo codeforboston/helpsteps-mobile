@@ -1,7 +1,15 @@
 angular.module('starter.controllers', [])
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state){
-	HelpStepsApi.GetDomainsAndChildren()
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform){
+	
+
+
+  $ionicPlatform.ready(function() {
+     debugger;
+  
+
+  });
+  HelpStepsApi.GetDomainsAndChildren()
   .then(function(results){
     $scope.categories = results; 
     $rootScope.categories = results;
@@ -43,10 +51,9 @@ angular.module('starter.controllers', [])
     angular.forEach($scope.selected, function(value, key){
       if(value == true){
         selectedServices.push(key);
-        alert(key);
+        
       }
-    });
-    debugger;
+    });    
     $rootScope.selectedServices = selectedServices.join(',');
     $state.go('agencyList');
   }
@@ -55,7 +62,7 @@ angular.module('starter.controllers', [])
 .controller('AgencyListCtrl', function($scope, HelpStepsApi, $state){
   HelpStepsApi.GetAgencies().then(function(results){
     $scope.agencies = results;
-    debugger;
+    
   });
 
   $scope.getAgency = function(id){
@@ -81,9 +88,6 @@ angular.module('starter.controllers', [])
       }
     };
   
-
-
-
   });
   
 });

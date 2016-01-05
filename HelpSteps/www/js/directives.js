@@ -72,6 +72,13 @@ angular.module('starter.directives', [])
        		$element.bind('click', function(){
        			
        			$element.toggleClass('highlighted');
+                            debugger;
+                            if($element.hasClass('highlighted')){
+                              ga('send', 'event', 'Category Selection', 'select', 'Home Screen');       
+                            } else {
+                              ga('send', 'event', 'Category Selection', 'unselect', 'Home Screen');       
+                            }
+                            
        		});
       		
        }
