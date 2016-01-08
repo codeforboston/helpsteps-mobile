@@ -5,16 +5,20 @@ angular.module('starter.controllers', [])
   $scope.search = {};
 
   $scope.textSearch = function(){
-    //user input from search box
-    alert("hey");
-    var searchTerm = $scope.search.text.toLowerCase()
+    
+    //user input from search box    
+    $rootScope.searchTerm = $scope.search.text.toLowerCase();
     ga('send', {
      hitType: 'event',
      eventCategory: 'Text Search',
      eventAction: 'Text Search',
-     eventLabel: searchTerm
+     eventLabel: $rootScope.searchTerm
           
    });       
+
+    //go to agency list. Specify text search so that proper api endpoint is hit
+    $state.go('agencyList', { 'referer':'textSearch'});
+
   }
 
   HelpStepsApi.GetDomainsAndChildren()
@@ -33,12 +37,12 @@ angular.module('starter.controllers', [])
       categoriesArray.push(angular.element(userSelectedCategories[key]).attr('category-id'));
     });
     $rootScope.userCategoriesArray = categoriesArray;
-    $state.go('serviceList');
+    $state.go('serviceList', {'referer': 'selectionSearch'});
   }
   
 })
 
-.controller('ServiceListCtrl', function($scope, $rootScope, $state){
+.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams){
   $scope.selected = {};
   $scope.selectedNames = [];
 
@@ -73,7 +77,7 @@ angular.module('starter.controllers', [])
 
    });     
     
-    $state.go('agencyList');
+    $state.go('agencyList', { 'referer' : 'selectionSearch'});
   }
 
   $scope.reportToggle = function(category, service, selected){
@@ -108,11 +112,24 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state){
-  HelpStepsApi.GetAgencies().then(function(results){
+.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams){  
+
+debugger;
+  //get by search term if user entered text, get by selection if user tapped/browsed through
+  if($stateParams.referer == "textSearch"){    
+    debugger;
+    HelpStepsApi.GetAgenciesUsingKeyword().then(function(results){
+    $scope.agencies = results;    
+    debugger;
+  }); 
+
+  } else if ($stateParams.referer == "selectionSearch") {    
+     HelpStepsApi.GetAgencies().then(function(results){
     $scope.agencies = results;
     
-  });
+  }); 
+  }
+  
 
   $scope.getAgency = function(id){
     $state.go('/agencyDetail/' + id);

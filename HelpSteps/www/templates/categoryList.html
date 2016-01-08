@@ -4,15 +4,12 @@
 <ion-view hide-nav-bar="true" view-title="HelpSteps">
 
 
-
-
-
 <ion-header-bar align-title="left" class="bar-royal">
   <label class="item-input-wrapper" id="homeSearchBoxWrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
-    <input placeholder="Search" id="homeSearchBox">
+    <input placeholder="Search" id="homeSearchBox" ng-model="search.text">
   </label>
-  <button class="button button-clear">
+  <button class="button button-clear" ng-click="textSearch()">
     Search
   </button> 
   

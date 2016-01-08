@@ -20,6 +20,15 @@ angular.module('starter.services', [])
 			});
 		},
 
+		GetAgenciesUsingKeyword: function(){
+			return $http.get('https://gentle-shelf-3932.herokuapp.com/api/search?keyword=' + $rootScope.searchTerm)
+			.then(function(results){
+				debugger;
+				selectedAgencies = results.data;
+				return selectedAgencies;
+			});
+		},
+
 		GetAgency: function(id){
 			///locations_with_distance/:location/:search_services/:tags_included'
 			return $http.get('https://gentle-shelf-3932.herokuapp.com/api/show_location_for_detail_view/' + id)
@@ -27,13 +36,7 @@ angular.module('starter.services', [])
 				selectedAgency = result;
 				return selectedAgency;
 			});
-		}
-
-
-
-
-
-		
+		}		
 
 	};
 });
