@@ -10,9 +10,7 @@ angular.module('starter.directives', [])
 		//without this specification of a local scope (called isolate in Angular), it would inherit the parent's scope
 		scope: { 
 			category: '@',
-			categoryId: '@'
-			
-			
+			categoryId: '@'						
 		},
 		templateUrl: 'templates/service-category-icon.html',		
 		
@@ -71,16 +69,26 @@ angular.module('starter.directives', [])
 
        		$element.bind('click', function(){
        			
-       			$element.toggleClass('highlighted');
-                            debugger;
-                            if($element.hasClass('highlighted')){
-                              ga('send', 'event', 'Category Selection', 'select', 'Home Screen');       
-                            } else {
-                              ga('send', 'event', 'Category Selection', 'unselect', 'Home Screen');       
-                            }
+       			$element.toggleClass('highlighted');                            
                             
-       		});
-      		
+                            if($element.hasClass('highlighted')){
+                                   ga('send', {
+                                     hitType: 'event',
+                                     eventCategory: 'Category Selection',
+                                     eventAction: 'Select Category',
+                                     eventLabel: 'Select ' + $scope.category                                     
+                                     
+                                   });                              
+                            } else {                              
+                              ga('send', {
+                                     hitType: 'event',
+                                     eventCategory: 'Category Selection',
+                                     eventAction: 'Unselect Category',
+                                     eventLabel: 'Unselect ' + $scope.category                                     
+                                     
+                                   });
+                            }                            
+       		});      		
        }
 	};
 })

@@ -5,7 +5,7 @@ angular.module('starter.services', [])
 	var selectedAgencies = [];
 	return {
 		GetDomainsAndChildren: function(){
-			return $http.get('https://api2.helpsteps.com/api/categories/domain/include_all_children')
+			return $http.get('https://gentle-shelf-3932.herokuapp.com/api/categories/domain/include_all_children')
 			.then(function(results){
 				allServiceCategories = results.data;
 				return allServiceCategories;
@@ -13,7 +13,7 @@ angular.module('starter.services', [])
 		},
 		GetAgencies: function(){
 			///locations_with_distance/:location/:search_services/:tags_included'
-			return $http.get('https://api2.helpsteps.com/api/locations_with_distance/42.3245296,-71.1021299/' + $rootScope.selectedServices + '/false')
+			return $http.get('https://gentle-shelf-3932.herokuapp.com/api/locations_with_distance/42.3245296,-71.1021299/' + $rootScope.selectedServices + '/false')
 			.then(function(results){
 				selectedAgencies = results.data;
 				return selectedAgencies;
@@ -22,7 +22,7 @@ angular.module('starter.services', [])
 
 		GetAgency: function(id){
 			///locations_with_distance/:location/:search_services/:tags_included'
-			return $http.get('https://api2.helpsteps.com/api/show_location_for_detail_view/' + id)
+			return $http.get('https://gentle-shelf-3932.herokuapp.com/api/show_location_for_detail_view/' + id)
 			.then(function(result){
 				selectedAgency = result;
 				return selectedAgency;

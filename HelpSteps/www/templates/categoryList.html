@@ -1,17 +1,56 @@
 <!-- <ion-header-bar class="bar-positive">
   <h1 class="title">HelpSteps</h1>
 </ion-header-bar> -->
-<ion-view>
-<ion-content>
+<ion-view hide-nav-bar="true" view-title="HelpSteps">
+
+
+
+
+
+<ion-header-bar align-title="left" class="bar-royal">
+  <label class="item-input-wrapper" id="homeSearchBoxWrapper">
+    <i class="icon ion-ios-search placeholder-icon"></i>
+    <input placeholder="Search" id="homeSearchBox">
+  </label>
+  <button class="button button-clear">
+    Search
+  </button> 
+  
+
+</ion-header-bar>
+
+<!-- <div class="bar bar-header item-input-inset bar-royal">
+  <label class="item-input-wrapper">
+    <i class="icon ion-ios-search placeholder-icon"></i>
+    <input type="search" placeholder="Search">
+  </label>
+  <button class="button button-clear">
+    Cancel
+  </button>
+</div>
+ -->
+
+
+<ion-content has-header="true">
+
+
+
+
+
 
     <!-- Search Bar -->
-    <div class="list list-inset">
-      <label class="item item-input">
+    <!-- <div>      
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Search">
-      </label>
-    </div>
+        <input type="text" placeholder="Search" ng-model="search.text">
+        
+        <button class="button button-icon ion-android-search" ng-click="textSearch()"></button>
+    
+      
 
+    </div>
+ -->
+
+ 
     <!-- Categories/Cards -->
     <div class="row categoryIcons">
       <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories"></service-category-icon>             

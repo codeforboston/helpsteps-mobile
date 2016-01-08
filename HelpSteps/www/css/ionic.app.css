@@ -9112,3 +9112,10 @@ button.customIconButton:before {
 
 .angular-google-map-container {
   height: 200px; }
+
+#homeSearchBox {
+  border: none;
+  width: 100%; }
+
+#homeSearchBoxWrapper {
+  background-color: white; }
