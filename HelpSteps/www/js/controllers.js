@@ -50,17 +50,24 @@ angular.module('starter.controllers', [])
 
   });
 
-  $scope.selectServices = function() {
+  $scope.selectServices = function(execute) {
+    if (execute == false){
+      return false;
+    }
     //figure out which categories the user is interested in
     var userSelectedCategories = document.getElementsByClassName('highlighted')
     var categoriesArray = [];
+    
+    
+    angular.forEach(userSelectedCategories, function(value, key){
+      categoriesArray.push(angular.element(userSelectedCategories[key]).attr('category-id'));
+    });
+
     if(categoriesArray.length < 1){
       alert("Please select at least one service category.");
       return false;
     }
-    angular.forEach(userSelectedCategories, function(value, key){
-      categoriesArray.push(angular.element(userSelectedCategories[key]).attr('category-id'));
-    });
+
     $rootScope.userCategoriesArray = categoriesArray;
     $state.go('serviceList', {'referer': 'selectionSearch'});
   }
