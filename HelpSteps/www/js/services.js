@@ -3,6 +3,7 @@ angular.module('starter.services', [])
 .factory('HelpStepsApi', function($http, $rootScope){
 	var allServiceCategories = [];
 	var selectedAgencies = [];
+
 	return {
 		GetDomainsAndChildren: function(){
 			return $http.get('https://gentle-shelf-3932.herokuapp.com/api/categories/domain/include_all_children')
@@ -38,5 +39,19 @@ angular.module('starter.services', [])
 			});
 		}		
 
+	};
+})
+
+.factory('LoadingSpinner', function($ionicLoading){
+	return {
+		show: function(){
+			$ionicLoading.show({
+      		content: 'Loading...'      		
+    	});
+			debugger;
+		},
+		hide: function(){
+			$ionicLoading.hide();
+		}
 	};
 });

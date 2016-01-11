@@ -2,6 +2,15 @@ angular.module('starter.controllers', [])
 
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform){
 	
+  $scope.tracker = {};
+  $scope.execute = true;
+
+  $scope.setSearchBarFocusToFalse = function() {   
+    $scope.tracker.searchBarFocus = false;
+    $scope.execute = false;
+    console.log("false");
+  }  
+
   $scope.search = {};
   $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
 
@@ -50,8 +59,10 @@ angular.module('starter.controllers', [])
 
   });
 
-  $scope.selectServices = function(execute) {
-    if (execute == false){
+  $scope.selectServices = function() {
+
+    if($scope.execute == false ) {
+      $scope.execute = true;
       return false;
     }
     //figure out which categories the user is interested in
@@ -63,7 +74,7 @@ angular.module('starter.controllers', [])
       categoriesArray.push(angular.element(userSelectedCategories[key]).attr('category-id'));
     });
 
-    if(categoriesArray.length < 1){
+    if (categoriesArray.length < 1) {
       alert("Please select at least one service category.");
       return false;
     }
@@ -144,15 +155,16 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams){  
+.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner){  
+LoadingSpinner.show();
 
-debugger;
   //get by search term if user entered text, get by selection if user tapped/browsed through
   if($stateParams.referer == "textSearch"){    
     debugger;
     HelpStepsApi.GetAgenciesUsingKeyword().then(function(results){
     $scope.agencies = results;    
     debugger;
+    LoadingSpinner.hide();
   }); 
 
   } else if ($stateParams.referer == "selectionSearch") {    

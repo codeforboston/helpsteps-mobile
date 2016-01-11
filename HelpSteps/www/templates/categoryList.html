@@ -7,7 +7,7 @@
 <ion-header-bar align-title="left" class="bar-royal">
   <label class="item-input-wrapper" id="homeSearchBoxWrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
-    <input placeholder="Search" id="homeSearchBox" ng-model="search.text" ng-focus="searchBarFocus = true" ng-blur="searchBarFocus = false">
+    <input placeholder="Search" id="homeSearchBox" ng-model="search.text" ng-focus="tracker.searchBarFocus = true" ng-blur="setSearchBarFocusToFalse()" ng-init="tracker.searchBarFocus = false">
   </label>
   <button class="button button-clear" ng-click="textSearch()">
     Search
@@ -27,15 +27,18 @@
 
 </ion-header-bar>
 
+
+
 <ion-content has-header="true" has-subheader="true">
+  
  
     <!-- Service Categories -->
-    <div class="row categoryIcons" ng-if="!searchBarFocus">
+    <div class="row categoryIcons" ng-show="!tracker.searchBarFocus">
       <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories"></service-category-icon>             
     </div>
     <!-- Text Search Suggestions -->
       
-      <ion-list ng-if="searchBarFocus">
+      <ion-list ng-show="tracker.searchBarFocus">
 
         <ion-item ng-repeat="suggestion in suggestions" ng-click="textSearchFromSuggestion(suggestion)">
           {{suggestion}}
@@ -44,12 +47,12 @@
     
                              
 </ion-content>
-<ion-footer-bar align-title="center" class="bar-royal" ng-click="selectServices(searchBarFocus)" ng-if="!searchBarFocus">
+<ion-footer-bar align-title="center" class="bar-royal" ng-click="selectServices()" ng-show="!tracker.searchBarFocus">
   
   <h1 class="title">SEARCH</h1>
   
 </ion-footer-bar>
-<ion-footer-bar align-title="center" class="bar-royal" ng-click="searchBarFocus = false" ng-if="searchBarFocus">
+<ion-footer-bar align-title="center" class="bar-royal" ng-show="tracker.searchBarFocus" ng-click="myFunc()">
   
   <h1 class="title">Back to Browse</h1>
   
