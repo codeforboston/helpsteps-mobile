@@ -5,8 +5,12 @@ angular.module('starter.controllers', [])
   $scope.search = {};
   $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
 
-  $scope.textSearch = function(){
-    
+  $scope.textSearch = function(){    
+
+    if($scope.search.text == undefined || $scope.search.text.length < 1){
+      alert("Please enter a search term or select a suggested search term from the list.");
+      return false;
+    }
     //user input from search box    
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
     ga('send', {
@@ -50,7 +54,10 @@ angular.module('starter.controllers', [])
     //figure out which categories the user is interested in
     var userSelectedCategories = document.getElementsByClassName('highlighted')
     var categoriesArray = [];
-    
+    if(categoriesArray.length < 1){
+      alert("Please select at least one service category.");
+      return false;
+    }
     angular.forEach(userSelectedCategories, function(value, key){
       categoriesArray.push(angular.element(userSelectedCategories[key]).attr('category-id'));
     });
