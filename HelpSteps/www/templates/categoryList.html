@@ -7,7 +7,7 @@
 <ion-header-bar align-title="left" class="bar-royal">
   <label class="item-input-wrapper" id="homeSearchBoxWrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
-    <input placeholder="Search" id="homeSearchBox" ng-model="search.text">
+    <input placeholder="Search" id="homeSearchBox" ng-model="search.text" ng-focus="searchBarFocus = true" ng-blur="searchBarFocus = false">
   </label>
   <button class="button button-clear" ng-click="textSearch()">
     Search
@@ -49,7 +49,7 @@
 
  
     <!-- Categories/Cards -->
-    <div class="row categoryIcons">
+    <div class="row categoryIcons" ng-if="!searchBarFocus">
       <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories"></service-category-icon>             
     </div>
                              
