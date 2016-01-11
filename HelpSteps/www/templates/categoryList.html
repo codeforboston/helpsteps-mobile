@@ -48,10 +48,18 @@
  -->
 
  
-    <!-- Categories/Cards -->
+    <!-- Service Categories -->
     <div class="row categoryIcons" ng-if="!searchBarFocus">
       <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories"></service-category-icon>             
     </div>
+    <!-- Text Search Suggestions -->
+    
+      <ion-list ng-if="searchBarFocus">
+        <ion-item ng-repeat="suggestion in suggestions" ng-click="textSearchFromSuggestion(suggestion)">
+          {{suggestion}}
+        </ion-item>
+      </ion-list>        
+    
                              
 </ion-content>
 <ion-footer-bar align-title="center" class="bar-royal" ng-click="selectServices()">

@@ -3,11 +3,29 @@ angular.module('starter.controllers', [])
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform){
 	
   $scope.search = {};
+  $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
 
   $scope.textSearch = function(){
     
     //user input from search box    
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
+    ga('send', {
+     hitType: 'event',
+     eventCategory: 'Text Search',
+     eventAction: 'Text Search',
+     eventLabel: $rootScope.searchTerm
+          
+   });       
+
+    //go to agency list. Specify text search so that proper api endpoint is hit
+    $state.go('agencyList', { 'referer':'textSearch'});
+
+  }
+
+  $scope.textSearchFromSuggestion = function(suggestion){
+    
+    //user input from search box    
+    $rootScope.searchTerm = suggestion.toLowerCase();
     ga('send', {
      hitType: 'event',
      eventCategory: 'Text Search',
