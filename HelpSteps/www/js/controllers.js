@@ -5,6 +5,17 @@ angular.module('starter.controllers', [])
   $scope.tracker = {};
   $scope.execute = true;
 
+  $scope.handleIconTap = function(){
+    debugger;
+    alert("tap");
+  }
+
+  $scope.handleSearchBarFocus = function(){
+    $scope.tracker.searchBarFocus = true; 
+
+  }
+  
+
   $scope.setSearchBarFocusToFalse = function() {   
     $scope.tracker.searchBarFocus = false;
     $scope.execute = false;
@@ -160,17 +171,17 @@ LoadingSpinner.show();
 
   //get by search term if user entered text, get by selection if user tapped/browsed through
   if($stateParams.referer == "textSearch"){    
-    debugger;
+    
     HelpStepsApi.GetAgenciesUsingKeyword().then(function(results){
     $scope.agencies = results;    
-    debugger;
+    
     LoadingSpinner.hide();
   }); 
 
   } else if ($stateParams.referer == "selectionSearch") {    
      HelpStepsApi.GetAgencies().then(function(results){
     $scope.agencies = results;
-    
+    LoadingSpinner.hide();
   }); 
   }
   
