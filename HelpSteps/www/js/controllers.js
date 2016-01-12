@@ -1,9 +1,31 @@
 angular.module('starter.controllers', [])
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform){
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi){
 	
   $scope.tracker = {};
   $scope.execute = true;
+
+  
+  uiGmapGoogleMapApi.then(function(maps) {
+    debugger;
+       $scope.geocodeAddress = function(){
+    debugger;
+    var geocoder = new google.maps.Geocoder();
+    
+    geocoder.geocode( {"address": $scope.search.locationSearchTerm}, function(results, status){
+        
+      //latitude
+      $rootScope.latitude = results[0].geometry.location.G;
+
+      //longitude
+      $rootScope.longitude = results[0].geometry.location.K;      
+  
+    });
+  };
+  
+  });
+
+  
 
   
   
@@ -219,7 +241,7 @@ LoadingSpinner.show();
 
 .controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal){
 
-
+  debugger;
   $scope.$root.secondaryButtonFunction= function(){
     
     $scope.openModal();
@@ -248,6 +270,8 @@ LoadingSpinner.show();
         longitude: longitude
       }
     };
+
+
 
 
     $ionicModal.fromTemplateUrl('templates/shareScreen.html', {
