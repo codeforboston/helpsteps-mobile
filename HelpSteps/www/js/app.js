@@ -27,7 +27,12 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
     });
 })
 
-.config(function($stateProvider, $urlRouterProvider){
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider){
+
+  var jsScrolling = (ionic.Platform.isAndroid() ) ? false : true;
+  $ionicConfigProvider.scrolling.jsScrolling(jsScrolling);
+
+
   $stateProvider
   
 

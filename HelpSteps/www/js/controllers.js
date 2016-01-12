@@ -5,13 +5,25 @@ angular.module('starter.controllers', [])
   $scope.tracker = {};
   $scope.execute = true;
 
+  
+  
+
+  $scope.changeLocationPermission = function() {
+
+    if(!$scope.locationChecked) {
+
+    }
+    
+  }
+
   $scope.handleIconTap = function(){
     debugger;
     alert("tap");
   }
 
   $scope.handleSearchBarFocus = function(){
-    $scope.tracker.searchBarFocus = true; 
+    $scope.tracker.searchBarFocus = true;
+
 
   }
   
@@ -24,7 +36,8 @@ angular.module('starter.controllers', [])
 
   $scope.search = {};
   $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
-
+  $scope.locationFocusPlaceholder = 'Use My Current Location';
+  $scope.locationSuggestions = ['Use My Current Location', '300 Longwood Ave', 'Dorchester, MA', 'Jamaica Plain', 'Roxbury, MA', 'Jamaica Plain, MA', '75 Centre St, Jamaica Plain, MA', 'Boston, MA', 'Everett, MA'];
   $scope.textSearch = function(){    
 
     if($scope.search.text == undefined || $scope.search.text.length < 1){
@@ -65,6 +78,7 @@ angular.module('starter.controllers', [])
 
   HelpStepsApi.GetDomainsAndChildren()
   .then(function(results){
+    debugger;
     $scope.categories = results; 
     $rootScope.categories = results;
 

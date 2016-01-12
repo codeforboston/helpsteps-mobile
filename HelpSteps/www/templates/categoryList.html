@@ -9,7 +9,7 @@
     <i class="icon ion-ios-search placeholder-icon" ng-click="handleIconTap()"></i>
     <input placeholder="Search" class="homeSearchBox" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false">
   </div>
-  <button class="button button-clear" ng-click="tracker.searchBarFocus = false; $event.preventDefault();">
+  <button class="button button-clear" ng-click="tracker.searchBarFocus = false; tracker.locationBarFocus = false; $event.preventDefault();">
     Cancel
   </button> 
   
@@ -18,23 +18,27 @@
 
 <ion-header-bar class="bar bar-subheader bar-royal">
   
-  <label class="item-input-wrapper homeSearchBoxWrapper">    
-    <i class="icon ion-navigate placeholder-icon"></i>
-    <input class="homeSearchBox" placeholder="Enter Location" ng-focus="tracker.searchBarFocus = true" >
-  </label>
-  
-  
+  <div class="item-input-wrapper homeSearchBoxWrapper">
+    <i class="icon ion-ios-checkmark-outline placeholder-icon"></i>
+    <input class="homeSearchBox" placeholder="{{locationFocusPlaceholder}}" ng-focus="tracker.locationBarFocus = true; tracker.searchBarFocus = false; locationFocusPlaceholder = 'neighborhood, city, state or zip code'" ng-model="search.locationSearchTerm">
+    </div>
+    
 
 </ion-header-bar>
+
+
 
 </form>
 
 <ion-content has-header="true" has-subheader="true"  class="has-footer" >
   
+
+  
     
     <!-- Service Categories -->
-    <div class="row categoryIcons" ng-show="!tracker.searchBarFocus" id="categoryContent">
-      <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories"></service-category-icon>             
+    <div class="row categoryIcons" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;" id="categoryContent">
+      <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories"></service-category-icon>   
+
     </div>
     <!-- Text Search Suggestions -->
       
@@ -44,15 +48,24 @@
           {{suggestion}}
         </ion-item>
       </ion-list>        
+
+    <!-- Location Search Suggestions -->
+      
+      <ion-list ng-show="tracker.locationBarFocus">
+
+        <ion-item ng-repeat="suggestion in locationSuggestions" ng-click="search.locationSearchTerm = suggestion; tracker.searchBarFocus = false; tracker.locationBarFocus = false;">
+          {{suggestion}}
+        </ion-item>
+      </ion-list>        
     
                              
 </ion-content>
-<ion-footer-bar align-title="center" class="bar-royal bar-footer" ng-click="selectServices()" ng-show="!tracker.searchBarFocus">
+<ion-footer-bar align-title="center" class="bar-royal bar-footer" ng-click="selectServices()" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;">
   
   <h1 class="title">SEARCH</h1>
   
 </ion-footer-bar>
-<ion-footer-bar align-title="center" class="bar-royal" ng-show="tracker.searchBarFocus" ng-click="tracker.searchBarFocus = false">
+<ion-footer-bar align-title="center" class="bar-royal" ng-show="tracker.searchBarFocus; tracker.locationBarFocus;" ng-click="tracker.searchBarFocus = false; tracker.locationBarFocus = false;">
   
   <h1 class="title">Back to Browse</h1>
   
