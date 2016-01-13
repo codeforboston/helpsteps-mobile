@@ -7,10 +7,11 @@ angular.module('starter.controllers', [])
 
   
   uiGmapGoogleMapApi.then(function(maps) {
-    debugger;
-       $scope.geocodeAddress = function(){
-    debugger;
+    
     var geocoder = new google.maps.Geocoder();
+       $scope.geocodeAddress = function(nextMethod, nextMethodArg){
+      
+      debugger;
     
     geocoder.geocode( {"address": $scope.search.locationSearchTerm}, function(results, status){
         
@@ -18,7 +19,12 @@ angular.module('starter.controllers', [])
       $rootScope.latitude = results[0].geometry.location.G;
 
       //longitude
-      $rootScope.longitude = results[0].geometry.location.K;      
+      $rootScope.longitude = results[0].geometry.location.K;  
+
+        if(nextMethod){
+          debugger;
+          nextMethod(nextMethodArg);
+        }    
   
     });
   };
@@ -60,12 +66,19 @@ angular.module('starter.controllers', [])
   $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
   $scope.locationFocusPlaceholder = 'Use My Current Location';
   $scope.locationSuggestions = ['Use My Current Location', '300 Longwood Ave', 'Dorchester, MA', 'Jamaica Plain', 'Roxbury, MA', 'Jamaica Plain, MA', '75 Centre St, Jamaica Plain, MA', 'Boston, MA', 'Everett, MA'];
-  $scope.textSearch = function(){    
+  $scope.textSearch = function(){  
+
+
+
 
     if($scope.search.text == undefined || $scope.search.text.length < 1){
       alert("Please enter a search term or select a suggested search term from the list.");
       return false;
     }
+
+    $scope.geocodeAddress();
+    
+
     //user input from search box    
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
     ga('send', {
@@ -88,7 +101,7 @@ angular.module('starter.controllers', [])
     ga('send', {
      hitType: 'event',
      eventCategory: 'Text Search',
-     eventAction: 'Text Search',
+     eventAction: 'Text Search From Suggestion',
      eventLabel: $rootScope.searchTerm
           
    });       

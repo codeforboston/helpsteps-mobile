@@ -3,7 +3,7 @@
 </ion-header-bar> -->
 <ion-view hide-nav-bar="true" view-title="HelpSteps">
 
-<form ng-submit="textSearch()">
+<form ng-submit="geocodeAddress(chainTextSearch);">
 <ion-header-bar align-title="left" class="bar-royal">
   <div class="item-input-wrapper homeSearchBoxWrapper">
     <i class="icon ion-ios-search placeholder-icon" ng-click="handleIconTap()"></i>
@@ -44,14 +44,14 @@
       
       <ion-list ng-show="tracker.searchBarFocus">
 
-        <ion-item ng-repeat="suggestion in suggestions" ng-click="textSearchFromSuggestion(suggestion)">
+        <ion-item ng-repeat="suggestion in suggestions" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion); tracker.locationBarFocus = false;">
           {{suggestion}}
         </ion-item>
       </ion-list>        
 
     <!-- Location Search Suggestions -->
       
-      <ion-list ng-show="tracker.locationBarFocus">
+      <ion-list ng-show="tracker.locationBarFocus && !tracker.searchBarFocus">
 
         <ion-item ng-repeat="suggestion in locationSuggestions" ng-click="search.locationSearchTerm = suggestion; tracker.searchBarFocus = false; tracker.locationBarFocus = false;">
           {{suggestion}}

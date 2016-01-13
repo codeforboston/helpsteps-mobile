@@ -23,7 +23,7 @@ angular.module('starter.services', [])
 		},
 
 		GetAgenciesUsingKeyword: function(){
-			return $http.get('https://gentle-shelf-3932.herokuapp.com/api/search?keyword=' + $rootScope.searchTerm)
+			return $http.get('https://gentle-shelf-3932.herokuapp.com/api/search?keyword=' + $rootScope.searchTerm) 
 			.then(function(results){
 				debugger;
 				selectedAgencies = results.data;
