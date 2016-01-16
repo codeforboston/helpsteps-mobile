@@ -2,24 +2,24 @@ angular.module('starter.directives', [])
 
 
 .directive('serviceCategoryIcon', function(){
-	
+
 	return {
 		//element
 		restrict: 'E',
 		//this is a scope local to this element
 		//without this specification of a local scope (called isolate in Angular), it would inherit the parent's scope
-		scope: { 
+		scope: {
 			category: '@',
-			categoryId: '@'						
+			categoryId: '@'
 		},
-		templateUrl: 'templates/service-category-icon.html',		
-		
+		templateUrl: 'templates/service-category-icon.html',
+
        link: function ($scope, $element) {
        		$scope.icon = function(){
        			switch ($scope.categoryId) {
        				//help escape violence
        				case '15':
-       					return 'ion-heart-broken';	
+       					return 'ion-heart-broken';
        				//food
        				case '27':
        					return 'ion-pizza';
@@ -31,25 +31,25 @@ angular.module('starter.directives', [])
        					return 'ion-help-buoy';
        				//transit
        				case '97':
-       					return 'ion-android-bus';	
+       					return 'ion-android-bus';
        				//health
        				case '107':
-       					return 'ion-medkit';	
+       					return 'ion-medkit';
        				//addiction and recovery
        				case '108':
-       					return 'ion-wineglass';		
+       					return 'ion-wineglass';
        				//sexual health
        				case '187':
-       					return 'ion-heart';		
+       					return 'ion-heart';
        				//mental health
        				case '192':
-       					return 'ion-android-person';	
+       					return 'ion-android-person';
        				//nutrition and fitness
        				case '195':
-       					return 'ion-android-bicycle';	
+       					return 'ion-android-bicycle';
        				//afterschool
        				case '253':
-       					return 'ion-ios-body';	
+       					return 'ion-ios-body';
        				//parenting
        				case '298':
        					return 'ion-person-stalker';
@@ -58,40 +58,62 @@ angular.module('starter.directives', [])
        					return 'ion-paper-airplane';
        				//work
        				case '350':
-       					return 'ion-briefcase';		
+       					return 'ion-briefcase';
        				//legal
        				case '374':
-       					return 'ion-earth';				
-       				
+       					return 'ion-earth';
+
        			}
-       			
+
        		}();
 
        		$element.bind('click', function(){
-       			
-       			$element.toggleClass('highlighted');                            
-                            
+
+       			$element.toggleClass('highlighted');
+
                             if($element.hasClass('highlighted')){
                                    ga('send', {
                                      hitType: 'event',
                                      eventCategory: 'Category Selection',
                                      eventAction: 'Select Category',
-                                     eventLabel: 'Select ' + $scope.category                                     
-                                     
-                                   });                              
-                            } else {                              
+                                     eventLabel: 'Select ' + $scope.category
+
+                                   });
+                            } else {
                               ga('send', {
                                      hitType: 'event',
                                      eventCategory: 'Category Selection',
                                      eventAction: 'Unselect Category',
-                                     eventLabel: 'Unselect ' + $scope.category                                     
-                                     
+                                     eventLabel: 'Unselect ' + $scope.category
+
                                    });
-                            }                            
-       		});      		
+                            }
+       		});
        }
 	};
 })
+
+    .filter("prettyDistance", function() {
+        return function(miles) {
+            if (miles < 0.1) {
+                return "nearby";
+            } else if (miles >= 1 || miles < 0.2) {
+                var m = miles.toFixed(1).replace(/\.0$/, "");
+                return m + " mile" + (miles == 1 ? "" : "s");
+            } else {
+                var denom, num;
+                if (miles > 0.5) {
+                    denom = Math.round(1/(1-miles));
+                    num = Math.round(miles*denom);
+                } else {
+                    denom = Math.round(1/miles);
+                    num = 1;
+                }
+
+                return "about " + num + "/" + denom + " mile";
+            }
+        };
+    })
 
 
 ;

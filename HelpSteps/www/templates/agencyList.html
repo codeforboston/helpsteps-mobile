@@ -1,14 +1,13 @@
-
 <ion-view view-title="Agency List">
-<ion-content>   
+<ion-content>
    <ion-list>
    		<a ng-href="#/agencyDetail/{{agency.id}}" ng-repeat="agency in agencies" ng-click="reportAgencyClicked(agency.name, agency.id)">
-   			<ion-item>{{agency.name}} {{agency.distance}}
+   			<ion-item>{{agency.name}} {{agency.distance | prettyDistance}}
 	   	</ion-item>
    		</a>
-	   	
+
    </ion-list>
-                             
+
 </ion-content>
 
 </ion-view>
