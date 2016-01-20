@@ -1,47 +1,47 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ["starter.directives"])
 
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi){
-	
+
   $scope.tracker = {};
   $scope.execute = true;
 
-  
+
   uiGmapGoogleMapApi.then(function(maps) {
-    
+
     var geocoder = new google.maps.Geocoder();
        $scope.geocodeAddress = function(nextMethod, nextMethodArg){
-      
+
       debugger;
-    
+
     geocoder.geocode( {"address": $scope.search.locationSearchTerm}, function(results, status){
-        
+
       //latitude
       $rootScope.latitude = results[0].geometry.location.G;
 
       //longitude
-      $rootScope.longitude = results[0].geometry.location.K;  
+      $rootScope.longitude = results[0].geometry.location.K;
 
         if(nextMethod){
           debugger;
           nextMethod(nextMethodArg);
-        }    
-  
+        }
+
     });
   };
-  
+
   });
 
-  
 
-  
-  
+
+
+
 
   $scope.changeLocationPermission = function() {
 
     if(!$scope.locationChecked) {
 
     }
-    
+
   }
 
   $scope.handleIconTap = function(){
@@ -54,19 +54,19 @@ angular.module('starter.controllers', [])
 
 
   }
-  
 
-  $scope.setSearchBarFocusToFalse = function() {   
+
+  $scope.setSearchBarFocusToFalse = function() {
     $scope.tracker.searchBarFocus = false;
     $scope.execute = false;
     console.log("false");
-  }  
+  }
 
   $scope.search = {};
   $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
   $scope.locationFocusPlaceholder = 'Use My Current Location';
   $scope.locationSuggestions = ['Use My Current Location', '300 Longwood Ave', 'Dorchester, MA', 'Jamaica Plain', 'Roxbury, MA', 'Jamaica Plain, MA', '75 Centre St, Jamaica Plain, MA', 'Boston, MA', 'Everett, MA'];
-  $scope.textSearch = function(){  
+  $scope.textSearch = function(){
 
 
 
@@ -77,17 +77,17 @@ angular.module('starter.controllers', [])
     }
 
     $scope.geocodeAddress();
-    
 
-    //user input from search box    
+
+    //user input from search box
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
     ga('send', {
      hitType: 'event',
      eventCategory: 'Text Search',
      eventAction: 'Text Search',
      eventLabel: $rootScope.searchTerm
-          
-   });       
+
+   });
 
     //go to agency list. Specify text search so that proper api endpoint is hit
     $state.go('agencyList', { 'referer':'textSearch'});
@@ -95,16 +95,16 @@ angular.module('starter.controllers', [])
   }
 
   $scope.textSearchFromSuggestion = function(suggestion){
-    
-    //user input from search box    
+
+    //user input from search box
     $rootScope.searchTerm = suggestion.toLowerCase();
     ga('send', {
      hitType: 'event',
      eventCategory: 'Text Search',
      eventAction: 'Text Search From Suggestion',
      eventLabel: $rootScope.searchTerm
-          
-   });       
+
+   });
 
     //go to agency list. Specify text search so that proper api endpoint is hit
     $state.go('agencyList', { 'referer':'textSearch'});
@@ -114,7 +114,7 @@ angular.module('starter.controllers', [])
   HelpStepsApi.GetDomainsAndChildren()
   .then(function(results){
     debugger;
-    $scope.categories = results; 
+    $scope.categories = results;
     $rootScope.categories = results;
 
   });
@@ -128,8 +128,8 @@ angular.module('starter.controllers', [])
     //figure out which categories the user is interested in
     var userSelectedCategories = document.getElementsByClassName('highlighted')
     var categoriesArray = [];
-    
-    
+
+
     angular.forEach(userSelectedCategories, function(value, key){
       categoriesArray.push(angular.element(userSelectedCategories[key]).attr('category-id'));
     });
@@ -142,7 +142,7 @@ angular.module('starter.controllers', [])
     $rootScope.userCategoriesArray = categoriesArray;
     $state.go('serviceList', {'referer': 'selectionSearch'});
   }
-  
+
 })
 
 .controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams){
@@ -150,7 +150,7 @@ angular.module('starter.controllers', [])
   $scope.selectedNames = [];
 
   $scope.categories = $rootScope.categories;
-  
+
   $scope.filteredCategories = [];
   //filter categories to match user's selections
   angular.forEach($scope.categories, function(value, key){
@@ -159,17 +159,17 @@ angular.module('starter.controllers', [])
       $scope.filteredCategories.push(value);
     }
   });
-  
+
 
   $scope.getAgencies = function(){
     //generate list of selected services
     var selectedServices = [];
     angular.forEach($scope.selected, function(value, key){
       if(value){
-        selectedServices.push(key);        
+        selectedServices.push(key);
       }
-    });    
-    $rootScope.selectedServices = selectedServices.join(',');    
+    });
+    $rootScope.selectedServices = selectedServices.join(',');
 
     ga('send', {
      hitType: 'event',
@@ -178,8 +178,8 @@ angular.module('starter.controllers', [])
      eventLabel: $scope.selectedNames.join(',') + ', Latitude: 42.3245296 Longitude: -71.1021299'
 
 
-   });     
-    
+   });
+
     $state.go('agencyList', { 'referer' : 'selectionSearch'});
   }
 
@@ -194,9 +194,9 @@ angular.module('starter.controllers', [])
        eventAction: 'Select Service',
 
        eventLabel: 'Select Service: ' + service + ' In Category: ' + category
-                                     // eventLabel: 'Select ' + category + ' Service'                                     
-                                     
-                                   });     
+                                     // eventLabel: 'Select ' + category + ' Service'
+
+                                   });
     } else {
       //remove from array
       var index = $scope.selectedNames.indexOf("Category: " + category + " - Service: " + service);
@@ -206,34 +206,34 @@ angular.module('starter.controllers', [])
       ga('send', {
        hitType: 'event',
        eventCategory: 'Service Unselection',
-       eventAction: 'Unselect Service',                          
+       eventAction: 'Unselect Service',
        eventLabel: 'Unselect Service ' + service + " In Category: " + category
 
-     });     
+     });
     }
 
   }
 })
 
-.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner){  
+.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner){
 LoadingSpinner.show();
 
   //get by search term if user entered text, get by selection if user tapped/browsed through
-  if($stateParams.referer == "textSearch"){    
-    
-    HelpStepsApi.GetAgenciesUsingKeyword().then(function(results){
-    $scope.agencies = results;    
-    
-    LoadingSpinner.hide();
-  }); 
+  if($stateParams.referer == "textSearch"){
 
-  } else if ($stateParams.referer == "selectionSearch") {    
+    HelpStepsApi.GetAgenciesUsingKeyword().then(function(results){
+    $scope.agencies = results;
+
+    LoadingSpinner.hide();
+  });
+
+  } else if ($stateParams.referer == "selectionSearch") {
      HelpStepsApi.GetAgencies().then(function(results){
     $scope.agencies = results;
     LoadingSpinner.hide();
-  }); 
+  });
   }
-  
+
 
   $scope.getAgency = function(id){
     $state.go('/agencyDetail/' + id);
@@ -244,19 +244,19 @@ LoadingSpinner.show();
      hitType: 'event',
      eventCategory: 'View Agency',
      eventAction: 'View Agency Detail',
-     eventLabel: "View Agency: " + name + " - Agency ID: " + id                                                                          
-   });     
+     eventLabel: "View Agency: " + name + " - Agency ID: " + id
+   });
   }
 
-  
-  
-})   
+
+
+})
 
 .controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal){
 
   debugger;
   $scope.$root.secondaryButtonFunction= function(){
-    
+
     $scope.openModal();
   }
 
@@ -267,12 +267,12 @@ LoadingSpinner.show();
      $scope.$root.showShareButton = false;
    })
 
-  
+
 
   HelpStepsApi.GetAgency($stateParams.id).then(function(result){
     $scope.agency = result.data;
-    
-    
+
+
     var latitude = $scope.agency.latitude;
     var longitude = $scope.agency.longitude;
     $scope.map = {center: {latitude: latitude, longitude: longitude }, zoom: 16 };
@@ -294,7 +294,7 @@ LoadingSpinner.show();
         $scope.modal = modal;
       });
       $scope.openModal = function() {
-        
+
         $scope.modal.show();
       };
       $scope.closeModal = function() {
@@ -308,33 +308,33 @@ LoadingSpinner.show();
     ga('send', {
        hitType: 'event',
        eventCategory: 'Share Agency',
-       eventAction: 'Share Through SMS',                          
+       eventAction: 'Share Through SMS',
        eventLabel: $scope.agency.name
 
-     });     
+     });
   }
 
   $scope.shareThroughEmail = function(){
     ga('send', {
        hitType: 'event',
        eventCategory: 'Share Agency',
-       eventAction: 'Share Through Email',                          
+       eventAction: 'Share Through Email',
        eventLabel: $scope.agency.name
 
-       
 
-     });     
+
+     });
   }
 
   $scope.reportCallAgency = function(){
     ga('send', {
        hitType: 'event',
        eventCategory: 'Contact Agency',
-       eventAction: 'Call Agency on Phone',                          
+       eventAction: 'Call Agency on Phone',
        eventLabel: $scope.agency.name
 
-     });     
+     });
   }
-  
-  
+
+
 })
