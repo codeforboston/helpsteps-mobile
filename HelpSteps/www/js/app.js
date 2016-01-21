@@ -5,6 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives', 'starter.services', 'uiGmapgoogle-maps'])
 
+.constant("apiAddress", "http://ec2-52-23-222-123.compute-1.amazonaws.com")
+
 .run(['$ionicPlatform',function($ionicPlatform) {
   $ionicPlatform.ready(function() {
 
@@ -31,6 +33,10 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
 
   var jsScrolling = (ionic.Platform.isAndroid() ) ? false : true;
   $ionicConfigProvider.scrolling.jsScrolling(jsScrolling);
+
+  if( ionic.Platform.isIPad() ) {
+    $ionicConfigProvider.views.transition('none');
+}
 
 
   $stateProvider
@@ -62,7 +68,6 @@ angular.module('starter', ['ionic',  'starter.controllers', 'starter.directives'
     params: {
     'referer': 'default', 
     }
-    
     
   })
 

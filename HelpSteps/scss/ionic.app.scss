@@ -64,3 +64,8 @@ service-category-icon {
 	background-color: white;	
 }
 
+ion-nav-view[nav-view-transition][nav-view-direction]{
+  background-color: transparent; }
+
+[nav-view-transition="ios"] [nav-view] {
+  box-shadow: none !important; }

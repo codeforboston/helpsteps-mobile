@@ -10,8 +10,7 @@ angular.module('starter.controllers', ["starter.directives"])
 
     var geocoder = new google.maps.Geocoder();
        $scope.geocodeAddress = function(nextMethod, nextMethodArg){
-
-      debugger;
+      
 
     geocoder.geocode( {"address": $scope.search.locationSearchTerm}, function(results, status){
 
@@ -51,8 +50,6 @@ angular.module('starter.controllers', ["starter.directives"])
 
   $scope.handleSearchBarFocus = function(){
     $scope.tracker.searchBarFocus = true;
-
-
   }
 
 
@@ -67,8 +64,6 @@ angular.module('starter.controllers', ["starter.directives"])
   $scope.locationFocusPlaceholder = 'Use My Current Location';
   $scope.locationSuggestions = ['Use My Current Location', '300 Longwood Ave', 'Dorchester, MA', 'Jamaica Plain', 'Roxbury, MA', 'Jamaica Plain, MA', '75 Centre St, Jamaica Plain, MA', 'Boston, MA', 'Everett, MA'];
   $scope.textSearch = function(){
-
-
 
 
     if($scope.search.text == undefined || $scope.search.text.length < 1){
@@ -302,9 +297,15 @@ LoadingSpinner.show();
       };
   });
 
-
+  $scope.userInfoForExporting = {};
   //sharing
-  $scope.shareThroughText = function(){
+  $scope.shareThroughText = function(id, phoneNumber){
+    debugger;
+    HelpStepsApi.ShareAgencyThroughText(id, phoneNumber)
+    .then(function(){
+      debugger;
+    });
+
     ga('send', {
        hitType: 'event',
        eventCategory: 'Share Agency',

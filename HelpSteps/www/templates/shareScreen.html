@@ -8,17 +8,17 @@
 	<h1>{{agency.name}}</h1>
 	<div>
 		<label class="item item-input">
-  <span class="input-label">Phone Number</span>
-  <input type="text">
+  <span class="input-label">Enter Phone Number</span>
+  <input type="tel" ng-model="userInfoForExporting.phoneNumber">
 </label>
-		<button class="button icon-left ion-chatbox-working button-royal" ng-click="shareThroughText()">Send as text message</button>
+		<button class="button icon-left button-block ion-chatbox-working button-royal" ng-click="shareThroughText(agency.id, userInfoForExporting.phoneNumber)">Send as text message</button>
 	</div>
 	<div>
-	<label class="item item-input">
+	<!-- <label class="item item-input">
   <span class="input-label">Email</span>
   <input type="text">
 </label>
-		<button class="button icon-left ion-email button-royal" ng-click="shareThroughEmail()">Email</button>
+		<button class="button icon-left ion-email button-royal" ng-click="shareThroughEmail()">Email</button> -->
 	</div>
 	
 	<!-- <div>
