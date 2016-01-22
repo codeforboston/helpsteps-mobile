@@ -2,40 +2,33 @@ angular.module('starter.controllers', ["starter.directives"])
 
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation){
 
-
-
   $ionicPlatform.ready(function() {
     var posOptions = {
-            enableHighAccuracy: true,
-            timeout: 20000,
-            maximumAge: 0
-        };
- 
-        $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-            var lat  = position.coords.latitude;
-            var long = position.coords.longitude;
-             
-              alert("got it");
-             
-        }, function(err) {
-            alert("oops...");
-            console.log(err);
-        });
-});
-  
+      enableHighAccuracy: true,
+      timeout: 20000,
+      maximumAge: 0
+    };
 
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {            
+      $rootScope.latitude = position.coords.latitude;
+      $rootScope.longitude = position.coords.longitude;    
 
-
+    }, function(err) {
+      alert("We were unable to determine your location. Please try again, or enter a location manually.");
+      console.log(err);
+    });
+  });
 
   $scope.tracker = {};
   $scope.execute = true;
+  $scope.search = {};
+  $scope.search.locationSearchTerm = "Use My Current Location";
 
   $scope.geocodeAddress = function(nextMethod, nextMethodArg){
-    
+
     uiGmapGoogleMapApi.then(function(maps) {
 
-      var geocoder = new google.maps.Geocoder();
-      debugger;
+      var geocoder = new google.maps.Geocoder();      
         //make sure that user has entered a value for search term and for location
         if(nextMethod != "selectionSearch"){
           if(!$scope.validateUserInputForTextSearch(nextMethodArg)) {
@@ -50,24 +43,32 @@ angular.module('starter.controllers', ["starter.directives"])
           }
         }
         
-        geocoder.geocode( {"address": $scope.search.locationSearchTerm}, function(results, status){
+        //if user has not opted to use their physical location, look up their location with Google Geocoder
+        if($scope.search.locationSearchTerm != "Use My Current Location"){
+          geocoder.geocode( {"address": $scope.search.locationSearchTerm}, function(results, status){
 
-      //geocoded coordinates
-      $rootScope.latitude = results[0].geometry.location.G;
-      $rootScope.longitude = results[0].geometry.location.K;
-
-      if(nextMethod && typeof nextMethod === "function"){        
-        nextMethod(nextMethodArg);
-      } else if (nextMethod == "selectionSearch") {
-        $state.go('serviceList', {'referer': 'selectionSearch'});
-      } else if (nextMethod == "textSearch"){
-        $scope.textSearch();
-      }
-
-    });
+            //geocoded coordinates
+            $rootScope.latitude = results[0].geometry.location.G;
+            $rootScope.longitude = results[0].geometry.location.K;
+            
+            $scope.performNextSearchAction(nextMethod, nextMethodArg);
+          });
+        } else {
+          $scope.performNextSearchAction(nextMethod, nextMethodArg);
+        }
+        
       });
 };
 
+$scope.performNextSearchAction = function(nextMethod, nextMethodArg){
+  if(nextMethod && typeof nextMethod === "function"){        
+    nextMethod(nextMethodArg);
+  } else if (nextMethod == "selectionSearch") {
+    $state.go('serviceList', {'referer': 'selectionSearch'});
+  } else if (nextMethod == "textSearch"){
+    $scope.textSearch();
+  }
+}
 $scope.handleIconTap = function(){  
   alert("tap");
 }
@@ -83,7 +84,7 @@ $scope.setSearchBarFocusToFalse = function() {
   console.log("false");
 }
 
-$scope.search = {};
+
 $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
 $scope.locationFocusPlaceholder = 'Use My Current Location';
 $scope.locationSuggestions = ['Use My Current Location', '300 Longwood Ave', 'Dorchester, MA', 'Jamaica Plain', 'Roxbury, MA', 'Jamaica Plain, MA', '75 Centre St, Jamaica Plain, MA', 'Boston, MA', 'Everett, MA'];
@@ -200,7 +201,6 @@ $scope.textSearch = function(){
      eventAction: 'Search for Agencies',
      eventLabel: $scope.selectedNames.join(',') + ', Latitude: 42.3245296 Longitude: -71.1021299'
 
-
    });
 
     $state.go('agencyList', { 'referer' : 'selectionSearch'});
@@ -272,7 +272,7 @@ $scope.reportAgencyClicked = function(name, id){
 })
 
 .controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal){
-  
+
   $scope.$root.secondaryButtonFunction= function(){
 
     $scope.openModal();
