@@ -273,6 +273,10 @@ $scope.reportAgencyClicked = function(name, id){
 
 .controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer){
 
+    $scope.userInfoForExporting = {};
+    $scope.userInfoForExporting.email = "";
+    $scope.userInfoForExporting.phoneNumber = "";
+
   $scope.$root.secondaryButtonFunction= function(){
 
     $scope.openModal();
@@ -315,7 +319,7 @@ $scope.reportAgencyClicked = function(name, id){
     };
   });
 
-  $scope.userInfoForExporting = {};
+  
   //sharing
   $scope.shareThroughText = function(id, phoneNumber){
     

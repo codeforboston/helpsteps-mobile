@@ -9127,5 +9127,8 @@ ion-nav-view[nav-view-transition][nav-view-direction] {
   box-shadow: none !important; }
 
 .categoryIcons {
-  padding-bottom: 100px;
-}
+  padding-bottom: 100px; }
+
+  button.shareScreenButton {
+    opacity: 1.0;
+  }
