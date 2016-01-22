@@ -271,7 +271,7 @@ $scope.reportAgencyClicked = function(name, id){
 
 })
 
-.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal){
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer){
 
   $scope.$root.secondaryButtonFunction= function(){
 
@@ -318,10 +318,11 @@ $scope.reportAgencyClicked = function(name, id){
   $scope.userInfoForExporting = {};
   //sharing
   $scope.shareThroughText = function(id, phoneNumber){
-    debugger;
+    
     HelpStepsApi.ShareAgencyThroughText(id, phoneNumber)
     .then(function(){
-      debugger;
+      //change to toast soon
+      alert("Message sent");
     });
 
     ga('send', {
@@ -333,14 +334,29 @@ $scope.reportAgencyClicked = function(name, id){
    });
   }
 
-  $scope.shareThroughEmail = function(){
-    ga('send', {
-     hitType: 'event',
-     eventCategory: 'Share Agency',
-     eventAction: 'Share Through Email',
-     eventLabel: $scope.agency.name
+  $scope.shareThroughEmail = function(agency,userEmail ){
 
-   });
+    $cordovaEmailComposer.isAvailable().then(function() {
+   // is available
+
+
+   var email = {
+        to: userEmail,        
+        subject: 'Agency Information from HelpSteps',
+        body: agency.name + "\n" + agency.address.address_1 + "\n" + agency.address.city + ", " + agency.address.state_province + "\n" + agency.address.postal_code + "\n" + agency.phones[0].number,
+        isHtml: false
+      };
+
+      $cordovaEmailComposer.open(email).then(null, function () {
+   // user cancelled email
+ });
+
+
+ }, function () {
+   // not available
+ });
+
+    
   }
 
   $scope.reportCallAgency = function(){
