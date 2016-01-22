@@ -3,11 +3,11 @@
 </ion-header-bar> -->
 <ion-view hide-nav-bar="true" view-title="HelpSteps">
 
-<form ng-submit="geocodeAddress(chainTextSearch);">
+<form>
 <ion-header-bar align-title="left" class="bar-royal">
   <div class="item-input-wrapper homeSearchBoxWrapper">
     <i class="icon ion-ios-search placeholder-icon" ng-click="handleIconTap()"></i>
-    <input placeholder="Search" class="homeSearchBox" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false">
+    <input placeholder="Search" class="homeSearchBox" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
   </div>
   <button class="button button-clear" ng-click="tracker.searchBarFocus = false; tracker.locationBarFocus = false; $event.preventDefault();">
     Cancel
@@ -20,7 +20,7 @@
   
   <div class="item-input-wrapper homeSearchBoxWrapper">
     <i class="icon ion-ios-checkmark-outline placeholder-icon"></i>
-    <input class="homeSearchBox" placeholder="{{locationFocusPlaceholder}}" ng-focus="tracker.locationBarFocus = true; tracker.searchBarFocus = false; locationFocusPlaceholder = 'neighborhood, city, state or zip code'" ng-model="search.locationSearchTerm">
+    <input class="homeSearchBox" placeholder="{{locationFocusPlaceholder}}" ng-focus="tracker.locationBarFocus = true; tracker.searchBarFocus = false; locationFocusPlaceholder = 'neighborhood, city, state or zip code'" ng-model="search.locationSearchTerm" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')">
     </div>
     
 
@@ -56,11 +56,10 @@
         <ion-item ng-repeat="suggestion in locationSuggestions" ng-click="search.locationSearchTerm = suggestion; tracker.searchBarFocus = false; tracker.locationBarFocus = false;">
           {{suggestion}}
         </ion-item>
-      </ion-list>        
-    
+      </ion-list>            
                              
 </ion-content>
-<ion-footer-bar align-title="center" class="bar-royal bar-footer" ng-click="selectServices(); geocodeAddress();" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;">
+<ion-footer-bar align-title="center" class="bar-royal bar-footer" ng-click="selectServices(); geocodeAddress('selectionSearch');" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;">
   
   <h1 class="title">SEARCH</h1>
   
