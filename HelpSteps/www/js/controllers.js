@@ -186,8 +186,15 @@ $scope.textSearch = function(){
 .controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams){
   $scope.selected = {};
   $scope.selectedNames = [];
+  $scope.numberOfSelectedServices = 0;
 
   $scope.categories = $rootScope.categories;
+
+  $scope.$watchCollection("selectedNames", function(newVal, oldVal){
+    debugger;
+    $scope.numberOfSelectedServices = newVal.length;
+
+  });
 
   $scope.filteredCategories = [];
   //filter categories to match user's selections
@@ -200,6 +207,13 @@ $scope.textSearch = function(){
 
 
   $scope.getAgencies = function(){
+
+    //make sure user has selected at least one service to search for
+    if($scope.numberOfSelectedServices < 1) {
+      alert("Please select at least one service to continue.");
+      return false;
+    }
+
     //generate list of selected services
     var selectedServices = [];
     angular.forEach($scope.selected, function(value, key){
@@ -225,6 +239,7 @@ $scope.textSearch = function(){
     if(selected){
       //add to array
       $scope.selectedNames.push("Category: " + category + " - Service: " + service);
+      $scope.$apply();
       ga('send', {
        hitType: 'event',
        eventCategory: 'Service Selection',

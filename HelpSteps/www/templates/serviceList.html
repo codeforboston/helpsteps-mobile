@@ -12,9 +12,12 @@
     </ion-list>
                              
 </ion-content>
-<ion-footer-bar align-title="center" class="bar-royal" ng-click="getAgencies()">
+<ion-footer-bar align-title="center" class="bottomSearchButton bar-footer bar" ng-click="getAgencies()">
   
-  <h1 class="title">SEARCH</h1>
+  
+  <button class="button button-block button-royal" ng-disabled="numberOfSelectedServices < 1">
+  NEXT
+</button>
   
 </ion-footer-bar>
 
