@@ -37,7 +37,7 @@
     
     <!-- Service Categories -->
     <div class="row categoryIcons" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;" id="categoryContent">
-      <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories"></service-category-icon>   
+      <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories" selected-service-count="selectedServiceCount"></service-category-icon>   
 
     </div>
     <!-- Text Search Suggestions -->
@@ -59,9 +59,13 @@
       </ion-list>            
                              
 </ion-content>
-<ion-footer-bar align-title="center" class="bar-royal bar-footer" ng-click="selectServices(); geocodeAddress('selectionSearch');" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;">
+<ion-footer-bar align-title="center" class="bottomSearchButton bar-footer" ng-click="selectServices(); geocodeAddress('selectionSearch');" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;">
   
-  <h1 class="title">SEARCH</h1>
+  <!-- <h1 class="title">NEXT</h1> -->
+  <button class="button button-block button-royal" ng-disabled="selectedServiceCount < 1">
+  NEXT
+</button>
+
   
 </ion-footer-bar>
 <ion-footer-bar align-title="center" class="bar-royal" ng-show="tracker.searchBarFocus; tracker.locationBarFocus;" ng-click="tracker.searchBarFocus = false; tracker.locationBarFocus = false;">

@@ -1,7 +1,7 @@
 angular.module('starter.directives', [])
 
 
-.directive('serviceCategoryIcon', function(){
+.directive('serviceCategoryIcon', function($rootScope){
 
 	return {
 		//element
@@ -10,8 +10,10 @@ angular.module('starter.directives', [])
 		//without this specification of a local scope (called isolate in Angular), it would inherit the parent's scope
 		scope: {
 			category: '@',
-			categoryId: '@'
+			categoryId: '@',
+      selectedServiceCount: '='      
 		},
+    // require: '^CategoryListCtrl',
 		templateUrl: 'templates/service-category-icon.html',
 
        link: function ($scope, $element) {
@@ -68,10 +70,15 @@ angular.module('starter.directives', [])
        		}();
 
        		$element.bind('click', function(){
-
+                      
        			$element.toggleClass('highlighted');
-
+                
                             if($element.hasClass('highlighted')){
+                              
+                                $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "increase"});
+                                
+                                
+                                
                                    ga('send', {
                                      hitType: 'event',
                                      eventCategory: 'Category Selection',
@@ -80,6 +87,8 @@ angular.module('starter.directives', [])
 
                                    });
                             } else {
+                              $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "decrease"});
+                              
                               ga('send', {
                                      hitType: 'event',
                                      eventCategory: 'Category Selection',

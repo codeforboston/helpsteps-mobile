@@ -11,7 +11,7 @@
 	
 		<label class="item item-input">
   <span class="input-label">Enter Phone Number</span>
-  <input type="tel" ng-model="userInfoForExporting.phoneNumber">
+  <input type="tel" ng-model="userInfoForExporting.phoneNumber" mask="(999) 999-9999" clean="true">
 </label>
 		<button class="button icon-left button-block ion-chatbox-working button-royal shareScreenButton" ng-click="shareThroughText(agency.id, userInfoForExporting.phoneNumber)" ng-disabled="userInfoForExporting.phoneNumber.length < 1">Send as text message</button>
 
@@ -21,9 +21,9 @@
 		</label>
 
 		<button class="button icon-left button-block ion-email button-royal shareScreenButton" ng-click="shareThroughEmail(agency, userInfoForExporting.email)" ng-disabled="userInfoForExporting.email.length < 1">Email</button>
-	
-		<!-- <button class="button icon-left ion-star button-positive">Add to Favorites</button> -->
-	
+		
+		<input type="text" mask="(999) 999-9999" clean="true" ng-model="userInfoForExporting.phoneNumber">
+		<!-- <button class="button icon-left ion-star button-positive">Add to Favorites</button> -->		
 	</div>
 </div>
 	</ion-content>

@@ -2,6 +2,20 @@ angular.module('starter.controllers', ["starter.directives"])
 
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation){
 
+  $scope.selectedServiceCount = 0;
+
+
+  $scope.$on('selectedServiceCount', function (event, args) {
+    if(args.increaseOrDecrease == "increase"){
+      $scope.selectedServiceCount += 1;
+    } else {
+      $scope.selectedServiceCount -= 1;
+    }
+    $scope.$apply();
+    $scope.$digest();
+  });
+
+  
   $ionicPlatform.ready(function() {
     var posOptions = {
       enableHighAccuracy: true,
@@ -69,9 +83,9 @@ $scope.performNextSearchAction = function(nextMethod, nextMethodArg){
     $scope.textSearch();
   }
 }
-$scope.handleIconTap = function(){  
-  alert("tap");
-}
+// $scope.handleIconTap = function(){  
+//   alert("tap");
+// }
 
 $scope.handleSearchBarFocus = function(){
   $scope.tracker.searchBarFocus = true;
@@ -276,7 +290,7 @@ $scope.reportAgencyClicked = function(name, id){
     $scope.userInfoForExporting = {};
     $scope.userInfoForExporting.email = "";
     $scope.userInfoForExporting.phoneNumber = "";
-
+    
   $scope.$root.secondaryButtonFunction= function(){
 
     $scope.openModal();
