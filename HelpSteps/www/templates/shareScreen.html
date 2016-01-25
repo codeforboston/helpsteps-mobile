@@ -6,14 +6,15 @@
 	</ion-header-bar>
 	<ion-content>
 	<div class="card">
-	<div class="item item-body">
+	<div class="item item-body" ng-form name="sharingForm">
 	<h1>{{agency.name}}</h1>
-	
+	<pre>{{userInfoForExporting.phoneNumber}}           </pre>
 		<label class="item item-input">
   <span class="input-label">Enter Phone Number</span>
-  <input type="tel" ng-model="userInfoForExporting.phoneNumber" mask="(999) 999-9999" clean="true">
+  <input type="tel" ng-model="userInfoForExporting.phoneNumber" mask="(999) 999-9999" clean="true"  name="phoneNumber">
 </label>
-		<button class="button icon-left button-block ion-chatbox-working button-royal shareScreenButton" ng-click="shareThroughText(agency.id, userInfoForExporting.phoneNumber)" ng-disabled="userInfoForExporting.phoneNumber.length < 1">Send as text message</button>
+
+		<button class="button icon-left button-block ion-chatbox-working button-royal shareScreenButton" ng-click="shareThroughText(agency.id, userInfoForExporting.phoneNumber) || phoneNumberInvalidAlert()" ng-disabled="!validatePhoneNumber()">Send as text message</button>
 
 		<label class="item item-input">
 		  <span class="input-label">Email</span>
@@ -22,7 +23,7 @@
 
 		<button class="button icon-left button-block ion-email button-royal shareScreenButton" ng-click="shareThroughEmail(agency, userInfoForExporting.email)" ng-disabled="userInfoForExporting.email.length < 1">Email</button>
 		
-		<input type="text" mask="(999) 999-9999" clean="true" ng-model="userInfoForExporting.phoneNumber">
+		
 		<!-- <button class="button icon-left ion-star button-positive">Add to Favorites</button> -->		
 	</div>
 </div>

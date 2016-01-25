@@ -351,6 +351,10 @@ $scope.reportAgencyClicked = function(name, id){
   
   //sharing
   $scope.shareThroughText = function(id, phoneNumber){
+    if(!validatePhoneNumber()) {
+      alert("Please enter a valid ten-digit phone number to proceed.");
+      return false;
+    }
     
     HelpStepsApi.ShareAgencyThroughText(id, phoneNumber)
     .then(function(){
@@ -400,5 +404,21 @@ $scope.reportAgencyClicked = function(name, id){
      eventLabel: $scope.agency.name
 
    });
+  }
+
+  $scope.phoneNumberInvalidAlert = function(){
+    debugger;
+    if(!validatePhoneNumber()) {
+      alert("Please enter a valid ten-digit phone number to proceed.");
+      return false;
+    }
+  }
+
+  
+  $scope.validatePhoneNumber = function(){
+    $scope.phoneNumberRegex = new RegExp(/^(\d)+$/);
+    debugger;
+    return $scope.phoneNumberRegex.test($scope.userInfoForExporting.phoneNumber) && $scope.userInfoForExporting.phoneNumber.length > 9;
+
   }
 })

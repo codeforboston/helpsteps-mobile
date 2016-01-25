@@ -9099,7 +9099,8 @@ a.button {
   margin: 0 auto; }
 
 .highlighted {
-  background-color: yellow; }
+  background-color: #FFF645;
+  border-radius: 8px; }
 
 button.customIconButton:before {
   font-size: 52px !important; }
@@ -9135,3 +9136,4 @@ ion-nav-view[nav-view-transition][nav-view-direction] {
   margin: 0;
   padding: 0px 5px;
 }
+
