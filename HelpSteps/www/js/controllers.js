@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ["starter.directives"])
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation){
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast){
 
   $scope.selectedServiceCount = 0;
 
@@ -27,7 +27,14 @@ angular.module('starter.controllers', ["starter.directives"])
       $rootScope.longitude = position.coords.longitude;    
 
     }, function(err) {
-      alert("We were unable to determine your location. Please try again, or enter a location manually.");
+      $cordovaToast
+      .show('We were unable to determine your location. Please try again, or enter a location manually.', 'short', 'center')
+      .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
+      
       console.log(err);
     });
   });
@@ -44,14 +51,27 @@ angular.module('starter.controllers', ["starter.directives"])
       var geocoder = new google.maps.Geocoder();      
         //make sure that user has entered a value for search term and for location
         if(nextMethod != "selectionSearch"){
-          if(!$scope.validateUserInputForTextSearch(nextMethodArg)) {
-            alert("Please enter a search term and a location to use text search.");
+          if(!$scope.validateUserInputForTextSearch(nextMethodArg)) {            
+            $cordovaToast
+            .show('Please enter a search term and a location to use text search.', 'short', 'center')
+            .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });        
             return false;
           }
         } else {
           //validate location has been entered          
           if(!$scope.search.locationSearchTerm || $scope.search.locationSearchTerm.length < 0 || !$rootScope.userCategoriesArray || $rootScope.userCategoriesArray.length < 1){
-            alert("Please enter a location and select at least one category to use selection search.");            
+
+            $cordovaToast
+            .show('Please enter a location and select at least one category to use selection search.', 'short', 'center')
+            .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });        
             return false;
           }
         }
@@ -104,7 +124,14 @@ $scope.locationSuggestions = ['Use My Current Location', '300 Longwood Ave', 'Do
 $scope.textSearch = function(){
 
   if($scope.search.text == undefined || $scope.search.text.length < 1){
-    alert("Please enter a search term or select a suggested search term from the list.");
+    
+    $cordovaToast
+      .show('Please enter a search term or select a suggested search term from the list.', 'short', 'center')
+      .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
     return false;
   }
 
@@ -182,7 +209,7 @@ $scope.textSearch = function(){
 
 })
 
-.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams){
+.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast){
   $scope.selected = {};
   $scope.selectedNames = [];
   $scope.numberOfSelectedServices = 0;
@@ -208,8 +235,15 @@ $scope.textSearch = function(){
   $scope.getAgencies = function(){
 
     //make sure user has selected at least one service to search for
-    if($scope.numberOfSelectedServices < 1) {
-      alert("Please select at least one service to continue.");
+    if($scope.numberOfSelectedServices < 1) {      
+      $cordovaToast
+      .show('Please select at least one service to continue.', 'short', 'center')
+      .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
+
       return false;
     }
 
@@ -299,12 +333,12 @@ $scope.reportAgencyClicked = function(name, id){
 
 })
 
-.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer){
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast){
 
-    $scope.userInfoForExporting = {};
-    $scope.userInfoForExporting.email = "";
-    $scope.userInfoForExporting.phoneNumber = "";
-    
+  $scope.userInfoForExporting = {};
+  $scope.userInfoForExporting.email = "";
+  $scope.userInfoForExporting.phoneNumber = "";
+
   $scope.$root.secondaryButtonFunction= function(){
 
     $scope.openModal();
@@ -383,23 +417,45 @@ $scope.reportAgencyClicked = function(name, id){
     };
   });
 
-  
+
   //sharing
   $scope.shareThroughText = function(id, phoneNumber){
     if(!$scope.validatePhoneNumber()) {
-      alert("Please enter a valid ten-digit phone number to proceed.");
+
+      $cordovaToast
+      .show('Please enter a valid 10-digit phone number to proceed.', 'short', 'center')
+      .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
+
       return false;
     }
-    
+
     HelpStepsApi.ShareAgencyThroughText(id, phoneNumber)
     .then(
       //success callback
       function(){
-      //change to toast soon
-      alert("Message sent");
+
+
+        $cordovaToast
+        .show('Message sent.', 'short', 'center')
+        .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
       //failure callback
     }, function(error){
-      alert("We were not able to send your text. Please check the number and try again.");
+      
+      $cordovaToast
+      .show('We were not able to send your text. Please check the number and try again.', 'short', 'center')
+      .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
     });
 
     ga('send', {
@@ -418,22 +474,22 @@ $scope.reportAgencyClicked = function(name, id){
 
 
    var email = {
-        to: userEmail,        
-        subject: 'Agency Information from HelpSteps',
-        body: agency.name + "\n" + agency.address.address_1 + "\n" + agency.address.city + ", " + agency.address.state_province + "\n" + agency.address.postal_code + "\n" + agency.phones[0].number,
-        isHtml: false
-      };
+    to: userEmail,        
+    subject: 'Agency Information from HelpSteps',
+    body: agency.name + "\n" + agency.address.address_1 + "\n" + agency.address.city + ", " + agency.address.state_province + "\n" + agency.address.postal_code + "\n" + agency.phones[0].number,
+    isHtml: false
+  };
 
-      $cordovaEmailComposer.open(email).then(null, function () {
+  $cordovaEmailComposer.open(email).then(null, function () {
    // user cancelled email
  });
 
 
- }, function () {
+}, function () {
    // not available
  });
 
-    
+
   }
 
   $scope.reportCallAgency = function(){
@@ -449,11 +505,19 @@ $scope.reportAgencyClicked = function(name, id){
   $scope.phoneNumberInvalidAlert = function(){
     debugger;
     if(!$scope.validatePhoneNumber()) {
-      alert("Please enter a valid ten-digit phone number to proceed.");
+
+
+      $cordovaToast
+      .show('Please enter a valid 10-digit phone number to proceed.', 'short', 'center')
+      .then(function(success) {
+      // success
+    }, function (error) {
+      // error
+    });
       return false;
     }
   }
-  
+
   $scope.validatePhoneNumber = function(){
     $scope.phoneNumberRegex = new RegExp(/^(\d)+$/);    
     return $scope.phoneNumberRegex.test($scope.userInfoForExporting.phoneNumber) && $scope.userInfoForExporting.phoneNumber.length > 9;
