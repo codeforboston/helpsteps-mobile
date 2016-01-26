@@ -322,6 +322,16 @@ $scope.reportAgencyClicked = function(name, id){
 
     debugger;
 
+    $scope.transportationForAccordion = [];
+    var transportation = JSON.parse($scope.agency.transportation);
+    for (var i = 0; i < transportation.length; i++) {
+      $scope.transportationForAccordion.push(transportation[i].route_name + " " +transportation[i].transit_type + "\n" + transportation[i].stop);
+    };
+
+    $scope.transportationObjectForAccordion = {
+      name: "See Nearby Public Transportation",
+      offered: $scope.transportationForAccordion
+    }
     //goal: get all services, languages, and t stops into generic objects so they can be iterated over by generic ng-repeat
     $scope.servicesForAccordion = [];
     for (var i = 0; i < $scope.agency.services.length; i++) {
@@ -342,7 +352,7 @@ $scope.reportAgencyClicked = function(name, id){
     
 
     // $scope.servicesForAccordion = 
-    $scope.agencyDetails = [$scope.servicesObjectForAccordion, $scope.languagesObjectForAccordion];
+    $scope.agencyDetails = [$scope.servicesObjectForAccordion, $scope.languagesObjectForAccordion, $scope.transportationObjectForAccordion];
     debugger;
 
 
@@ -443,7 +453,6 @@ $scope.reportAgencyClicked = function(name, id){
       return false;
     }
   }
-
   
   $scope.validatePhoneNumber = function(){
     $scope.phoneNumberRegex = new RegExp(/^(\d)+$/);    
@@ -451,22 +460,6 @@ $scope.reportAgencyClicked = function(name, id){
 
   }
 
-
-  //  
-  // for (var i=0; i<3; i++) {
-  //   $scope.groups[i] = {
-  //     name: i,
-  //     items: []
-  //   };
-  //   for (var j=0; j<3; j++) {
-  //     $scope.groups[i].items.push(i + '-' + j);
-  //   }
-  // }
-  
-  /*
-   * if given group is the selected group, deselect it
-   * else, select the given group
-   */
   $scope.toggleGroup = function(group) {
     if ($scope.isGroupShown(group)) {
       $scope.shownGroup = null;
