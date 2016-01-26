@@ -9128,3 +9128,6 @@ ion-nav-view[nav-view-transition][nav-view-direction] {
 
 .categoryIcons {
   padding-bottom: 100px; }
+
+.button.button-royal {
+  opacity: 1; }
