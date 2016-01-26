@@ -1,6 +1,8 @@
 angular.module('starter.controllers', ["starter.directives"])
 
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast){
+  //for testing
+  $scope.greeting = 'Hello World!';
 
   $scope.selectedServiceCount = 0;
 
@@ -536,4 +538,8 @@ $scope.reportAgencyClicked = function(name, id){
   };
 
 
+})
+
+.controller('TestCtrl', function($scope){
+  $scope.greeting = "Hello World!";
 })
