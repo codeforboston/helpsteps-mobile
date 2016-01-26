@@ -11,8 +11,7 @@ angular.module('starter.controllers', ["starter.directives"])
     } else {
       $scope.selectedServiceCount -= 1;
     }
-    $scope.$apply();
-    $scope.$digest();
+    $scope.$apply();    
   });
 
   
@@ -351,15 +350,20 @@ $scope.reportAgencyClicked = function(name, id){
   
   //sharing
   $scope.shareThroughText = function(id, phoneNumber){
-    if(!validatePhoneNumber()) {
+    if(!$scope.validatePhoneNumber()) {
       alert("Please enter a valid ten-digit phone number to proceed.");
       return false;
     }
     
     HelpStepsApi.ShareAgencyThroughText(id, phoneNumber)
-    .then(function(){
+    .then(
+      //success callback
+      function(){
       //change to toast soon
       alert("Message sent");
+      //failure callback
+    }, function(error){
+      alert("We were not able to send your text. Please check the number and try again.");
     });
 
     ga('send', {
@@ -408,7 +412,7 @@ $scope.reportAgencyClicked = function(name, id){
 
   $scope.phoneNumberInvalidAlert = function(){
     debugger;
-    if(!validatePhoneNumber()) {
+    if(!$scope.validatePhoneNumber()) {
       alert("Please enter a valid ten-digit phone number to proceed.");
       return false;
     }
@@ -416,8 +420,7 @@ $scope.reportAgencyClicked = function(name, id){
 
   
   $scope.validatePhoneNumber = function(){
-    $scope.phoneNumberRegex = new RegExp(/^(\d)+$/);
-    debugger;
+    $scope.phoneNumberRegex = new RegExp(/^(\d)+$/);    
     return $scope.phoneNumberRegex.test($scope.userInfoForExporting.phoneNumber) && $scope.userInfoForExporting.phoneNumber.length > 9;
 
   }

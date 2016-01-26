@@ -8121,9 +8121,7 @@ progress {
   .button.button-royal {
     border-color: #6b46e5;
     background-color: #886aea;
-    color: #fff; 
-    opacity: 1;
-    }
+    color: #fff; }
     .button.button-royal:hover {
       color: #fff;
       text-decoration: none; }
@@ -9099,8 +9097,7 @@ a.button {
   margin: 0 auto; }
 
 .highlighted {
-  background-color: #FFF645;
-  border-radius: 8px; }
+  background-color: yellow; }
 
 button.customIconButton:before {
   font-size: 52px !important; }
@@ -9131,9 +9128,3 @@ ion-nav-view[nav-view-transition][nav-view-direction] {
 
 .categoryIcons {
   padding-bottom: 100px; }
-
-.bottomSearchButton {
-  margin: 0;
-  padding: 0px 5px;
-}
-
