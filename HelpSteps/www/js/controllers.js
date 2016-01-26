@@ -319,7 +319,34 @@ $scope.reportAgencyClicked = function(name, id){
 
   HelpStepsApi.GetAgency($stateParams.id).then(function(result){
     $scope.agency = result.data;    
-    $scope.agencyDetails = [$scope.agency];    
+
+    debugger;
+
+    //goal: get all services, languages, and t stops into generic objects so they can be iterated over by generic ng-repeat
+    $scope.servicesForAccordion = [];
+    for (var i = 0; i < $scope.agency.services.length; i++) {
+      $scope.servicesForAccordion.push($scope.agency.services[i].name);
+    };
+    $scope.languagesForAccordion = $scope.agency.languages;
+
+    $scope.servicesObjectForAccordion = {
+      name: 'See All Available Services',
+      offered: $scope.servicesForAccordion
+    }
+
+    $scope.languagesObjectForAccordion = {
+      name: 'See All Languages',
+      offered: $scope.languagesForAccordion
+    }
+
+    
+
+    // $scope.servicesForAccordion = 
+    $scope.agencyDetails = [$scope.servicesObjectForAccordion, $scope.languagesObjectForAccordion];
+    debugger;
+
+
+
     var latitude = $scope.agency.latitude;
     var longitude = $scope.agency.longitude;
     $scope.map = {center: {latitude: latitude, longitude: longitude }, zoom: 16 };

@@ -19,13 +19,13 @@
                       ng-class="{active: isGroupShown(agencyDetail)}">
                 <i class="icon" ng-class="isGroupShown(agencyDetail) ? 'ion-minus' : 'ion-plus'"></i>
               &nbsp;
-              See All Services Available
+              {{agencyDetail.name}}
             </ion-item>
             <ion-item class="item-accordion"
-                      ng-repeat="service in agencyDetail.services"
+                      ng-repeat="service in agencyDetail.offered"
                       ng-show="isGroupShown(agencyDetail)">
-              {{service.name}}
-            </ion-item>
+              {{service}}
+            </ion-item>            
         </div>
       </ion-list>
 
