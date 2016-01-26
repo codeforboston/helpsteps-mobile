@@ -9,12 +9,25 @@
     <a ng-href="tel:1-{{agency.phones[0].number}}" ng-click="reportCallAgency()">
         <h2>{{agency.phones[0].number}}</h2>    
     </a>
-    
+        
 
-    <h3>Services</h3>
-    <ul>
-    	<li ng-repeat="service in agency.services">{{service.name}}</li>
-    </ul>
+    <!-- services accordion -->
+    <ion-list>
+        <div ng-repeat="agencyDetail in agencyDetails">
+            <ion-item class="item-stable"
+                      ng-click="toggleGroup(agencyDetail)"
+                      ng-class="{active: isGroupShown(agencyDetail)}">
+                <i class="icon" ng-class="isGroupShown(agencyDetail) ? 'ion-minus' : 'ion-plus'"></i>
+              &nbsp;
+              See All Services Available
+            </ion-item>
+            <ion-item class="item-accordion"
+                      ng-repeat="service in agencyDetail.services"
+                      ng-show="isGroupShown(agencyDetail)">
+              {{service.name}}
+            </ion-item>
+        </div>
+      </ion-list>
 
     <div id="map_canvas">
 	    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
