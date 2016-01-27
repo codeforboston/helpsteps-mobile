@@ -11,8 +11,7 @@ angular.module('starter.controllers', ["starter.directives"])
       $scope.selectedServiceCount += 1;
     } else {
       $scope.selectedServiceCount -= 1;
-    }
-    $scope.$apply();    
+    }    
   });
 
   $ionicPlatform.ready(function() {
@@ -271,8 +270,7 @@ $scope.textSearch = function(){
 
     if(selected){
       //add to array
-      $scope.selectedNames.push("Category: " + category + " - Service: " + service);
-      $scope.$apply();
+      $scope.selectedNames.push("Category: " + category + " - Service: " + service);      
       ga('send', {
        hitType: 'event',
        eventCategory: 'Service Selection',
@@ -535,5 +533,8 @@ $scope.reportAgencyClicked = function(name, id){
     return $scope.shownGroup === group;
   };
 
+  $scope.openWebsiteInSystemBrowser = function() {
+    cordova.InAppBrowser.open($scope.agency.website, '_system');
+  }
 
 });
