@@ -6,7 +6,6 @@ angular.module('starter.controllers', ["starter.directives"])
 
   $scope.selectedServiceCount = 0;
 
-
   $scope.$on('selectedServiceCount', function (event, args) {
     if(args.increaseOrDecrease == "increase"){
       $scope.selectedServiceCount += 1;
@@ -16,7 +15,6 @@ angular.module('starter.controllers', ["starter.directives"])
     $scope.$apply();    
   });
 
-  
   $ionicPlatform.ready(function() {
     var posOptions = {
       enableHighAccuracy: true,
@@ -383,13 +381,10 @@ $scope.reportAgencyClicked = function(name, id){
     $scope.languagesObjectForAccordion = {
       name: 'See All Languages',
       offered: $scope.languagesForAccordion
-    }
-
-    
+    }    
 
     // $scope.servicesForAccordion = 
     $scope.agencyDetails = [$scope.servicesObjectForAccordion, $scope.languagesObjectForAccordion, $scope.transportationObjectForAccordion];
-    debugger;
 
 
 
@@ -474,11 +469,16 @@ $scope.reportAgencyClicked = function(name, id){
     $cordovaEmailComposer.isAvailable().then(function() {
    // is available
 
+   var servicesString = "";
+
+   for (var i = 0; i < agency.services.length; i++) {
+      servicesString += agency.services[i].name + "\n"
+    }; 
 
    var email = {
     to: userEmail,        
     subject: 'Agency Information from HelpSteps',
-    body: agency.name + "\n" + agency.address.address_1 + "\n" + agency.address.city + ", " + agency.address.state_province + "\n" + agency.address.postal_code + "\n" + agency.phones[0].number,
+    body: agency.name + "\n\n" + agency.description + "\n\nServices:\n" + servicesString + "\n" + agency.phones[0].number + "\n" + agency.website + "\n" + agency.address.address_1 + "\n" + agency.address.city + ", " + agency.address.state_province + "\n" + agency.address.postal_code + "\n",
     isHtml: false
   };
 
@@ -508,7 +508,6 @@ $scope.reportAgencyClicked = function(name, id){
     debugger;
     if(!$scope.validatePhoneNumber()) {
 
-
       $cordovaToast
       .show('Please enter a valid 10-digit phone number to proceed.', 'short', 'center')
       .then(function(success) {
@@ -523,7 +522,6 @@ $scope.reportAgencyClicked = function(name, id){
   $scope.validatePhoneNumber = function(){
     $scope.phoneNumberRegex = new RegExp(/^(\d)+$/);    
     return $scope.phoneNumberRegex.test($scope.userInfoForExporting.phoneNumber) && $scope.userInfoForExporting.phoneNumber.length > 9;
-
   }
 
   $scope.toggleGroup = function(group) {
@@ -538,8 +536,4 @@ $scope.reportAgencyClicked = function(name, id){
   };
 
 
-})
-
-.controller('TestCtrl', function($scope){
-  $scope.greeting = "Hello World!";
-})
+});
