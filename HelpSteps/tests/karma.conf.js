@@ -15,12 +15,25 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        '../www/lib/ionic/js/ionic.bundle.js',
+        
+        '../www/lib/ionic/js/ionic.bundle.js',        
         '../www/lib/ngCordova/dist/ng-cordova.js',
         '../www/lib/angular-mocks/angular-mocks.js',
-        '../www/js/*.js',
+        '../www/lib/ngMask/dist/ngMask.min.js',
+        '../www/js/lodash.min.js',
+        '../www/js/angular-simple-logger.min.js',
+        '../www/js/angular-google-maps.min.js',
+        
+        
+        '../www/js/directives.js',
+
+        //starter.controllers (defined in controllers.js) must be defined before individual controller files are loaded
+        '../www/js/controllers/controllers.js',
+        '../www/js/controllers/*.js',
+
+
+        
         '../tests/**/*.js',
-        '../www/lib/ngMask/dist/ngMask.min.js'
     ],
 
 
