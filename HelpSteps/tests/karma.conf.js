@@ -25,12 +25,13 @@ module.exports = function(config) {
         '../www/js/angular-google-maps.min.js',
         
         
-        '../www/js/directives.js',
+        
 
         //starter.controllers (defined in controllers.js) must be defined before individual controller files are loaded
+        '../www/js/directives.js',
         '../www/js/controllers/controllers.js',
         '../www/js/controllers/*.js',
-
+        '../www/js/*.js',
 
         
         '../tests/**/*.js',
