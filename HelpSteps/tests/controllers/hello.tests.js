@@ -1,19 +1,10 @@
-describe('Hello World example ', function() {
+describe('CategoryListCtrl', function () {
 
-beforeEach(module('starter'));
+  
 
-var CategoryListCtrl,
-scope;
+  it('should do something', function () {
+    expect(1).toEqual(1);
+  });
 
-beforeEach(inject(function ($rootScope, $controller) {
-	scope = $rootScope.$new();
-	CategoryListCtrl = $controller('CategoryListCtrl', {
-	$scope: scope
-	});
-}));
-
-it("says hello world!", function () {
-	expect(scope.greeting).toEqual('Hello World!');
-});
-
+  
 });

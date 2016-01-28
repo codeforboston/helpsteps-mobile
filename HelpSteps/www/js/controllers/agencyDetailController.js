@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('starter')
 
 .controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast){
 
@@ -20,9 +20,7 @@ angular.module('starter.controllers')
 
   HelpStepsApi.GetAgency($stateParams.id).then(function(result){
     $scope.agency = result.data;    
-
-    debugger;
-
+    
     $scope.transportationForAccordion = [];
     var transportation = JSON.parse($scope.agency.transportation);
     for (var i = 0; i < transportation.length; i++) {

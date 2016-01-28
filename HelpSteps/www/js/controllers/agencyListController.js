@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('starter')
 
 .controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner){
   LoadingSpinner.show();

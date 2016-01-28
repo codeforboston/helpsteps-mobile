@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('starter')
 
 .controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast){
   $scope.selected = {};
@@ -8,7 +8,6 @@ angular.module('starter.controllers')
   $scope.categories = $rootScope.categories;
 
   $scope.$watchCollection("selectedNames", function(newVal, oldVal){
-    debugger;
     $scope.numberOfSelectedServices = newVal.length;
 
   });

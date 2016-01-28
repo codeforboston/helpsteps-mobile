@@ -1,19 +1,18 @@
-// describe('Phone Number Validation', function() {
+// describe('Hello World example', function() {
 
 // beforeEach(module('starter'));
 
-// var AgencyDetail,
+// var CategoryListCtrl,
 // scope;
 
 // beforeEach(inject(function ($rootScope, $controller) {
-// 	scope = $rootScope.$new();
-// 	CategoryListCtrl = $controller('CategoryListCtrl', {
-// 	$scope: scope
-// 	});
+// scope = $rootScope.$new();
+// CategoryListCtrl = $controller('CategoryListCtrl', {
+// $scope: scope
+// });
 // }));
-
-// it("says hello world!", function () {
-// 	expect(scope.greeting).toEqual('Hello World!');
+// it('says hello world!', function () {
+// expect(scope.greeting).toEqual("Hello world!”);
 // });
 
 // });

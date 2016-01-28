@@ -1,4 +1,4 @@
-angular.module('starter.controllers')
+angular.module('starter')
 
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast){
   //for testing
