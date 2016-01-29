@@ -9129,5 +9129,8 @@ ion-nav-view[nav-view-transition][nav-view-direction] {
 .categoryIcons {
   padding-bottom: 100px; }
 
-.button.button-royal {
-  opacity: 1; }
+.agencyNameInList {
+  max-width: 85%; }
+
+.agencyListCard {
+  margin: 0 10px; }

@@ -1,12 +1,22 @@
 <ion-view view-title="Select Agency">
   <ion-content>
     <ion-list>
-      <a ng-href="#/agencyDetail/{{agency.id}}" ng-repeat="agency in agencies" ng-click="reportAgencyClicked(agency.name, agency.id)">
-   	<ion-item class="item-text-wrap">
-          <h2>{{agency.name}}</h2>
+    
+      
+    
+    <a ng-href="#/agencyDetail/{{agency.id}}"  ng-click="reportAgencyClicked(agency.name, agency.id)" class="item-icon-right agencyListIcon" ng-repeat="agency in agencies">
+    <div class="card agencyListCard" >
+    <ion-item class="item-text-wrap">
+          <h2 class="agencyNameInList">{{agency.name}}</h2>
           <p>{{agency.distance | prettyDistance}} away</p>
-	</ion-item>
-      </a>
+          <i class="icon ion-chevron-right"></i>
+  </ion-item>
+    </div>
+    </a>
+  
+      
+    
+      
 
     </ion-list>
 

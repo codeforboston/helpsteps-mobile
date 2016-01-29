@@ -4,15 +4,13 @@
     <div class="card">
     <div class="item item-body">
     <h1>{{agency.name}}</h1>
-    <p>{{agency.description}}</p>
-    <h6>Eligibility Requirements: {{agency.services[0].eligibility}}</h6>
+    <p>{{agency.description}}</p>    
+    <h3 ng-if="{{agency.services[0].eligibility.length > 0}}">Eligibility Requirements: {{agency.services[0].eligibility}}</h3>
     <a ng-href="tel:1-{{agency.phones[0].number}}" ng-click="reportCallAgency()">
         <h2>{{agency.phones[0].number}}</h2>    
     </a>
-    <a ng-click="openWebsiteInSystemBrowser()" href="">{{agency.website}}</a>
+    <a ng-click="openWebsiteInSystemBrowser()" href="">Go to website</a>
     
-        
-
     <!-- services accordion -->
     <ion-list>
         <div ng-repeat="agencyDetail in agencyDetails">

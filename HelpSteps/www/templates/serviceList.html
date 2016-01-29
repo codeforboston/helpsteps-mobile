@@ -6,9 +6,11 @@
     
     <!-- Services -->
     <ion-list>
+    <div class="card">
       <ion-item ng-repeat="category in filteredCategories">{{category.name}}
         <ion-checkbox ng-repeat="service in category.services" ng-true-value="true" ng-model="selected[service.id]" ng-click="reportToggle(category.name,service.name,selected[service.id])" class="item-text-wrap">{{service.name}}</ion-checkbox>
       </ion-item>
+      </div>
     </ion-list>
                              
 </ion-content>

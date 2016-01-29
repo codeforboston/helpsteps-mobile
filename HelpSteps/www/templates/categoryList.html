@@ -7,11 +7,11 @@
 <ion-header-bar align-title="left" class="bar-royal">
   <div class="item-input-wrapper homeSearchBoxWrapper">
     <i class="icon ion-ios-search placeholder-icon" ng-click="handleIconTap()"></i>
-    <input placeholder="Search" class="homeSearchBox" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
+    <input placeholder="Search for places, services, or keywords" class="homeSearchBox" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
   </div>
-  <button class="button button-clear" ng-click="tracker.searchBarFocus = false; tracker.locationBarFocus = false; $event.preventDefault();">
+  <!-- <button class="button button-clear" ng-click="tracker.searchBarFocus = false; tracker.locationBarFocus = false; $event.preventDefault();">
     Cancel
-  </button> 
+  </button> -->
   
   
 </ion-header-bar>
