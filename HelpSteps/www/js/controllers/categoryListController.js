@@ -3,6 +3,8 @@ angular.module('starter')
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast){
   
   $scope.selectedServiceCount = 0;
+  $scope.searchBarIcon = "ion-ios-search";
+  $scope.locationBarIcon = "ion-location";
 
   $scope.$on('selectedServiceCount', function (event, args) {
     if(args.increaseOrDecrease == "increase"){
@@ -100,12 +102,18 @@ $scope.performNextSearchAction = function(nextMethod, nextMethodArg){
     $scope.textSearch();
   }
 }
-// $scope.handleIconTap = function(){  
-//   alert("tap");
-// }
+$scope.handleIconTap = function(){  
+  if($scope.searchBarIcon == "ion-ios-search"){
+    return false;
+  }
+  $scope.tracker.searchBarFocus = false; 
+  $scope.tracker.locationBarFocus = false; 
+  $scope.searchBarIcon = "ion-ios-search";
+}
 
 $scope.handleSearchBarFocus = function(){
-  $scope.tracker.searchBarFocus = true;
+  $scope.tracker.searchBarFocus = true;  
+  $scope.searchBarIcon = "ion-arrow-left-c";
 }
 
 
@@ -113,6 +121,13 @@ $scope.setSearchBarFocusToFalse = function() {
   $scope.tracker.searchBarFocus = false;
   $scope.execute = false;
   console.log("false");
+}
+
+$scope.handleLocationBarFocus = function (){
+  $scope.tracker.locationBarFocus = true; 
+  $scope.tracker.searchBarFocus = false; 
+  $scope.searchBarIcon = "ion-arrow-left-c";
+  $scope.locationFocusPlaceholder = 'neighborhood, city, state or zip code';
 }
 
 $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
