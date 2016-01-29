@@ -10,6 +10,7 @@ angular.module('starter')
     } else {
       $scope.selectedServiceCount -= 1;
     }    
+    $scope.$apply();
   });
 
   $ionicPlatform.ready(function() {
