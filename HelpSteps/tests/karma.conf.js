@@ -24,16 +24,13 @@ module.exports = function(config) {
         '../www/js/angular-simple-logger.min.js',
         '../www/js/angular-google-maps.min.js',
         
+        '../www/js/app.js',
         
-        
-
-        //starter.controllers (defined in controllers.js) must be defined before individual controller files are loaded
         '../www/js/directives.js',
-        '../www/js/controllers/controllers.js',
-        '../www/js/controllers/categoryListController.js',
-        '../www/js/controllers/*.js',
-        '../www/js/*.js',
+        '../www/js/services.js',        
+
         
+        '../www/js/controllers/*.js',
         '../tests/**/*.js',
     ],
 

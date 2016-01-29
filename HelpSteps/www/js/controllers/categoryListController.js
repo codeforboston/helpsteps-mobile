@@ -1,9 +1,7 @@
 angular.module('starter')
 
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast){
-  //for testing
-  $scope.greeting = 'Hello World!';
-
+  
   $scope.selectedServiceCount = 0;
 
   $scope.$on('selectedServiceCount', function (event, args) {
@@ -115,7 +113,6 @@ $scope.setSearchBarFocusToFalse = function() {
   $scope.execute = false;
   console.log("false");
 }
-
 
 $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool', 'Tutoring', 'Transportation', 'Therapy', 'Legal', 'Jobs', 'Fitness', 'Primary Care', 'Free Healthcare', 'Pediatric Healthcare', 'Shelter', 'Domestic Violence'];
 $scope.locationFocusPlaceholder = 'Use My Current Location';

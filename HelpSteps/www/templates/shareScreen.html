@@ -8,13 +8,14 @@
 	<div class="card">
 	<div class="item item-body" ng-form name="sharingForm">
 	<h1>{{agency.name}}</h1>	
+	{{userInfoForExporting.phoneNumber}}
 		<label class="item item-input">
   <span class="input-label">Enter Phone Number</span>
   <input type="tel" ng-model="userInfoForExporting.phoneNumber" mask="(999) 999-9999" clean="true"  name="phoneNumber">
 </label>
-	<div ng-click="phoneNumberInvalidAlert()">
-		<button class="button icon-left button-block ion-chatbox-working button-royal shareScreenButton" ng-click="event.preventDefault();
-            event.stopPropagation();shareThroughText(agency.id, userInfoForExporting.phoneNumber);" ng-disabled="!validatePhoneNumber()">Send as text message</button>
+
+	<div ng-click="shareThroughText(agency.id, userInfoForExporting.phoneNumber)">
+		<button class="button icon-left button-block ion-chatbox-working button-royal shareScreenButton" ng-disabled="!validatePhoneNumber(userInfoForExporting.phoneNumber);">Send as text message</button>
 	</div>
 		<label class="item item-input">
 		  <span class="input-label">Email</span>

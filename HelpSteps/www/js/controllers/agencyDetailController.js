@@ -2,6 +2,7 @@ angular.module('starter')
 
 .controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast){
 
+
   $scope.userInfoForExporting = {};
   $scope.userInfoForExporting.email = "";
   $scope.userInfoForExporting.phoneNumber = "";
@@ -20,7 +21,7 @@ angular.module('starter')
 
   HelpStepsApi.GetAgency($stateParams.id).then(function(result){
     $scope.agency = result.data;    
-    
+
     $scope.transportationForAccordion = [];
     var transportation = JSON.parse($scope.agency.transportation);
     for (var i = 0; i < transportation.length; i++) {
@@ -82,7 +83,7 @@ angular.module('starter')
 
   //sharing
   $scope.shareThroughText = function(id, phoneNumber){
-    if(!$scope.validatePhoneNumber()) {
+    if(!$scope.validatePhoneNumber(phoneNumber)) {
 
       $cordovaToast
       .show('Please enter a valid 10-digit phone number to proceed.', 'short', 'center')
@@ -169,24 +170,10 @@ angular.module('starter')
    });
   }
 
-  $scope.phoneNumberInvalidAlert = function(){
-    debugger;
-    if(!$scope.validatePhoneNumber()) {
 
-      $cordovaToast
-      .show('Please enter a valid 10-digit phone number to proceed.', 'short', 'center')
-      .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
-      return false;
-    }
-  }
-
-  $scope.validatePhoneNumber = function(){
+  $scope.validatePhoneNumber = function(phoneNumber){
     $scope.phoneNumberRegex = new RegExp(/^(\d)+$/);    
-    return $scope.phoneNumberRegex.test($scope.userInfoForExporting.phoneNumber) && $scope.userInfoForExporting.phoneNumber.length > 9;
+    return $scope.phoneNumberRegex.test(phoneNumber) && phoneNumber.length == 10;
   }
 
   $scope.toggleGroup = function(group) {

@@ -1,18 +1,52 @@
-// describe('Hello World example', function() {
+describe('Phone Number Validation', function() {
 
-// beforeEach(module('starter'));
+beforeEach(module('starter'));
 
-// var CategoryListCtrl,
-// scope;
+var AgencyDetailCtrl,
+scope;
 
-// beforeEach(inject(function ($rootScope, $controller) {
-// scope = $rootScope.$new();
-// CategoryListCtrl = $controller('CategoryListCtrl', {
-// $scope: scope
-// });
-// }));
-// it('says hello world!', function () {
-// expect(scope.greeting).toEqual("Hello world!”);
-// });
+beforeEach(inject(function ($controller, $rootScope) {
+    scope = $rootScope.$new();
+    $controller('AgencyDetailCtrl', {
+      $scope: scope
+    });
+  }));
 
-// });
+
+it('successfully validates a valid phone number', function () {
+
+	expect(scope.validatePhoneNumber("1234567890")).toEqual(true);
+
+});
+
+it('rejects a phone number that is too short', function () {
+
+	expect(scope.validatePhoneNumber("123456789")).toEqual(false);
+
+});
+
+it('rejects a phone number that is too long', function () {
+
+	expect(scope.validatePhoneNumber("12345678901")).toEqual(false);
+
+});
+
+it('rejects a phone number that contains dashes', function () {
+
+	expect(scope.validatePhoneNumber("123-4567-890")).toEqual(false);
+
+});
+
+it('rejects a phone number that contains letters', function () {
+
+	expect(scope.validatePhoneNumber("123901123F")).toEqual(false);
+
+});
+
+it('rejects a phone number that contains special characters', function () {
+
+	expect(scope.validatePhoneNumber("12390112!%")).toEqual(false);
+
+});
+
+});
