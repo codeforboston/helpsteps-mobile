@@ -9145,3 +9145,6 @@ button.button-royal.footerButton {
   height: 100%;
   margin: 0;
   font-size: 22px; }
+
+.agencyInList {
+  text-decoration: none; }
