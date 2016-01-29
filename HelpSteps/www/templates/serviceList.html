@@ -4,10 +4,10 @@
 <ion-view view-title="Select Services">
 <ion-content>
     
-    <!-- Categories/Cards -->
+    <!-- Services -->
     <ion-list>
       <ion-item ng-repeat="category in filteredCategories">{{category.name}}
-        <ion-checkbox ng-repeat="service in category.services" ng-true-value="true" ng-model="selected[service.id]" ng-click="reportToggle(category.name,service.name,selected[service.id])">{{service.name}}</ion-checkbox>
+        <ion-checkbox ng-repeat="service in category.services" ng-true-value="true" ng-model="selected[service.id]" ng-click="reportToggle(category.name,service.name,selected[service.id])" class="item-text-wrap">{{service.name}}</ion-checkbox>
       </ion-item>
     </ion-list>
                              
