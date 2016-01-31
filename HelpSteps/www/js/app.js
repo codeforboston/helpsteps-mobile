@@ -43,6 +43,7 @@ angular.module('starter', ['ionic', 'starter.directives', 'starter.services', 'u
   
 
   .state('categoryList', {
+    cache: false,
     url: '/categoryList',
     templateUrl: 'templates/categoryList.html',
     controller: 'CategoryListCtrl'

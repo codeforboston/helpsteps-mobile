@@ -7,7 +7,7 @@
 <ion-header-bar align-title="left" class="bar-royal">
   <div class="item-input-wrapper homeSearchBoxWrapper">
     <i class="icon {{searchBarIcon}} placeholder-icon categoryListInputIcons" ng-click="handleIconTap()"></i>
-    <input placeholder="Search for places, services, or keywords" class="homeSearchBox" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
+    <input placeholder="Search for places, services, or keywords" class="homeSearchBox barInput" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
   </div>
   
   
@@ -18,7 +18,7 @@
   
   <div class="item-input-wrapper homeSearchBoxWrapper">
     <i class="icon {{locationBarIcon}} placeholder-icon categoryListInputIcons"></i>
-    <input class="homeSearchBox" placeholder="{{locationFocusPlaceholder}}" ng-focus="handleLocationBarFocus()" ng-model="search.locationSearchTerm" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')">
+    <input class="homeSearchBox barInput" placeholder="{{locationFocusPlaceholder}}" ng-focus="handleLocationBarFocus()" ng-model="search.locationSearchTerm" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')">
     </div>
     
 
@@ -42,7 +42,7 @@
       
       <ion-list ng-show="tracker.searchBarFocus">
 
-        <ion-item ng-repeat="suggestion in suggestions" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion); tracker.locationBarFocus = false;">
+        <ion-item ng-repeat="suggestion in suggestions" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion)">
           {{suggestion}}
         </ion-item>
       </ion-list>        
@@ -65,9 +65,5 @@
 </button>
   
 </ion-footer-bar>
-<ion-footer-bar align-title="center" class="bar-royal footerButton" ng-show="tracker.searchBarFocus; tracker.locationBarFocus;" ng-click="tracker.searchBarFocus = false; tracker.locationBarFocus = false;">
-  
-  <h1 class="title">Back to Browse</h1>
-  
-</ion-footer-bar>
+
 </ion-view>

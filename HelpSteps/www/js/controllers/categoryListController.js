@@ -175,7 +175,7 @@ $scope.textSearch = function(){
      eventLabel: $rootScope.searchTerm
 
    });
-    //go to agency list. Specify text search so that proper api endpoint is hit
+    //go to agency list. Specify text search so that proper api endpoint is hit    
     $state.go('agencyList', { 'referer':'textSearch'});
   }
 

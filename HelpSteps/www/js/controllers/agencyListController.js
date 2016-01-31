@@ -8,7 +8,7 @@ angular.module('starter')
 
     HelpStepsApi.GetAgenciesUsingKeyword().then(function(results){
       $scope.agencies = results;
-
+      debugger;
       LoadingSpinner.hide();
     });
 
@@ -18,7 +18,6 @@ angular.module('starter')
     LoadingSpinner.hide();
   });
  }
-
 
  $scope.getAgency = function(id){
   $state.go('/agencyDetail/' + id);
