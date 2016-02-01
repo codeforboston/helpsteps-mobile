@@ -2,7 +2,6 @@ angular.module('starter')
 
 .controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast){
 
-
   $scope.userInfoForExporting = {};
   $scope.userInfoForExporting.email = "";
   $scope.userInfoForExporting.phoneNumber = "";

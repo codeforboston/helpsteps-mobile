@@ -16,7 +16,7 @@ angular.module('starter.services', [])
 			///locations_with_distance/:location/:search_services/:tags_included'
 			return $http.get(apiAddress + '/api/locations_with_distance/'+ $rootScope.latitude + ',' + $rootScope.longitude + '/' + $rootScope.selectedServices + '/false')
 			.then(function(results){
-								
+
 				selectedAgencies = results.data;
 				return selectedAgencies;
 			});
@@ -51,12 +51,31 @@ angular.module('starter.services', [])
 	};
 })
 
+.factory('SQLite', function(){
+	var db;
+	document.addEventListener('deviceready', onDeviceReady, false);
+	
+	function onDeviceReady() {
+        db = window.sqlitePlugin.openDatabase({name: "my.db", androidDatabaseImplementation: 2, androidLockWorkaround: 1});
+	}
+
+	return {
+		getDb: function(){
+			return db;
+		}
+	}
+
+})
+
+
+
+
 .factory('LoadingSpinner', function($ionicLoading){
 	return {
 		show: function(){
 			$ionicLoading.show({
-      		content: 'Loading...'      		
-    		});			
+				content: 'Loading...'      		
+			});			
 		},
 		hide: function(){
 			$ionicLoading.hide();

@@ -1,7 +1,15 @@
 angular.module('starter')
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast){
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite){
   
+
+  $scope.getDatabase = function(){    
+    $scope.database = SQLite.getDb();    
+  }
+  document.addEventListener('deviceready', $scope.getDatabase, false);
+
+
+
   $scope.selectedServiceCount = 0;
   $scope.searchBarIcon = "ion-ios-search";
   $scope.locationBarIcon = "ion-location";
