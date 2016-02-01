@@ -57,11 +57,43 @@ angular.module('starter.services', [])
 	
 	function onDeviceReady() {
         db = window.sqlitePlugin.openDatabase({name: "my.db", androidDatabaseImplementation: 2, androidLockWorkaround: 1});
+        
+
+        
+
+
+        db.transaction(function(tx) {
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS test_table (id integer primary key, data text, data_num integer)');
+		  	
+
+		  	tx.executeSql('INSERT INTO test_table (data, data_num) VALUES (?,?)', ["my test data", 42]);
+		  	
+
+		  	tx.executeSql('SELECT * FROM test_table', [], function(tx, res){
+		  		debugger;
+		  	});
+		  	
+		
+		}, function(error) {
+			debugger;
+		  console.log('transaction error: ' + error.message);
+		}, function() {
+		  console.log('transaction ok');
+		});
+
+		
 	}
+
+	//            $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
+
 
 	return {
 		getDb: function(){
 			return db;
+		},
+
+		addKeywordSearchToHistory: function(){
+
 		}
 	}
 
