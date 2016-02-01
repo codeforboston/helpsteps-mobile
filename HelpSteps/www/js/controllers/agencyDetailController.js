@@ -191,4 +191,5 @@ angular.module('starter')
     cordova.InAppBrowser.open($scope.agency.website, '_system');
   }
 
+
 });

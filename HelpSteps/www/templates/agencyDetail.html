@@ -30,7 +30,7 @@
         </div>
       </ion-list>
 
-    <div id="map_canvas">
+    <div id="map_canvas" ng-click="$event.preventDefault()">
 	    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
 	        <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
 	        </ui-gmap-marker>

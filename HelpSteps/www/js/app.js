@@ -12,21 +12,26 @@ angular.module('starter', ['ionic', 'starter.directives', 'starter.services', 'u
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
+  if(window.cordova && window.cordova.plugins.Keyboard) {
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+  }
+  if(window.StatusBar) {
+    StatusBar.styleDefault();
+
+
+
+}
+  
+  
+});
 }])
 
 .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-            key: 'AIzaSyDu3ACzX5UEHrISWJyIDEYjN40IppUvbbM',
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyDu3ACzX5UEHrISWJyIDEYjN40IppUvbbM',
         v: '3.20', //defaults to latest 3.X anyhow
         libraries: 'weather,geometry,visualization'
-    });
+      });
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider){
@@ -36,7 +41,7 @@ angular.module('starter', ['ionic', 'starter.directives', 'starter.services', 'u
 
   if( ionic.Platform.isIPad() ) {
     $ionicConfigProvider.views.transition('none');
-}
+  }
 
 
   $stateProvider
@@ -56,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.directives', 'starter.services', 'u
     templateUrl: 'templates/serviceList.html',
     controller: 'ServiceListCtrl',
     params: {
-    'referer': 'default', 
+      'referer': 'default', 
     }
     
   })
@@ -67,7 +72,7 @@ angular.module('starter', ['ionic', 'starter.directives', 'starter.services', 'u
     templateUrl: 'templates/agencyList.html',
     controller: 'AgencyListCtrl',
     params: {
-    'referer': 'default', 
+      'referer': 'default', 
     }
     
   })
