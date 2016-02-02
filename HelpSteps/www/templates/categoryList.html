@@ -29,7 +29,8 @@
 </form>
 
 <ion-content has-header="true" has-subheader="true"  class="has-footer" >
-  
+    
+    <!-- <pre>{{recentSearches}}</pre> -->
 
   
     
@@ -38,8 +39,19 @@
       <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories" selected-service-count="selectedServiceCount"></service-category-icon>   
 
     </div>
-    <!-- Text Search Suggestions -->
+      <h3 ng-if="recentSearches.length > 0">Recent Searches</h3>
+      <!-- Text search suggestions from user's search history -->
+      <ion-list ng-show="tracker.searchBarFocus">
       
+      
+        <ion-item ng-repeat="suggestion in recentSearches track by $index" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion)">      
+          {{suggestion}}
+        </ion-item>
+      </ion-list>            
+
+
+    <!-- Stock Text Search Suggestions -->
+      <h3>More Suggestions</h3>
       <ion-list ng-show="tracker.searchBarFocus">
 
         <ion-item ng-repeat="suggestion in suggestions" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion)">

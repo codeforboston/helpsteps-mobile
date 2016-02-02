@@ -51,28 +51,32 @@ angular.module('starter.services', [])
 	};
 })
 
-.factory('SQLite', function(){
+.factory('SQLite', function($q){
 	var db;
 	document.addEventListener('deviceready', onDeviceReady, false);
 	
 	function onDeviceReady() {
         db = window.sqlitePlugin.openDatabase({name: "my.db", androidDatabaseImplementation: 2, androidLockWorkaround: 1});
-        
+                      
 
-        
+		
+	}
 
+	//            $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
 
-        db.transaction(function(tx) {
-		      tx.executeSql('CREATE TABLE IF NOT EXISTS test_table (id integer primary key, data text, data_num integer)');
+	return {
+		getDb: function(){
+			return db;
+		},
+
+		addKeywordSearchToHistory: function(keywordSearchTerm, locationSearchTerm){
+			db.transaction(function(tx) {
+
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS past_keyword_searches (id integer primary key, keywordSearchTerm text, locationSearchTerm text, timeStamp long)');
 		  	
 
-		  	tx.executeSql('INSERT INTO test_table (data, data_num) VALUES (?,?)', ["my test data", 42]);
-		  	
-
-		  	tx.executeSql('SELECT * FROM test_table', [], function(tx, res){
-		  		debugger;
-		  	});
-		  	
+		  	tx.executeSql('INSERT INTO past_keyword_searches (keywordSearchTerm, locationSearchTerm, timeStamp) VALUES (?,?,?)', [keywordSearchTerm, locationSearchTerm, Date.now()]);
+		  			  			  	
 		
 		}, function(error) {
 			debugger;
@@ -81,26 +85,34 @@ angular.module('starter.services', [])
 		  console.log('transaction ok');
 		});
 
-		
-	}
-
-	//            $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
-
-
-	return {
-		getDb: function(){
-			return db;
 		},
 
-		addKeywordSearchToHistory: function(){
+		findRecentSearches: function(){
+			//return promise
+			var deferred = $q.defer();
+			
+			var responseRows;
+						db.transaction(function(tx) {
+				
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS past_keyword_searches (id integer primary key, keywordSearchTerm text, locationSearchTerm text, timeStamp text)');		  			
 
+		  	tx.executeSql('SELECT keywordSearchTerm FROM past_keyword_searches ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
+		  		deferred.resolve(res.rows);
+		  	});
+		  			
+		}, function(error) {
+			debugger;
+		  console.log('transaction error: ' + error.message);
+		}, function() {
+			return responseRows;
+		  console.log('transaction ok');
+		});
+
+			return deferred.promise;			
 		}
 	}
 
 })
-
-
-
 
 .factory('LoadingSpinner', function($ionicLoading){
 	return {

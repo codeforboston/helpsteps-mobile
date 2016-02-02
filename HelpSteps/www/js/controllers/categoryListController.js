@@ -4,7 +4,15 @@ angular.module('starter')
   
 
   $scope.getDatabase = function(){    
-    $scope.database = SQLite.getDb();    
+    debugger;
+    $scope.database = SQLite.getDb();
+    SQLite.findRecentSearches().then(function(data){
+      $scope.recentSearches = [];
+      for (var i = 0; i < data.length; i++) {
+        $scope.recentSearches.push(data.item(i).keywordSearchTerm);
+      };
+      $scope.$apply();
+    });
   }
   document.addEventListener('deviceready', $scope.getDatabase, false);
 
@@ -26,8 +34,7 @@ angular.module('starter')
   $ionicPlatform.ready(function() {
     var posOptions = {
       enableHighAccuracy: true,
-      timeout: 20000,
-      maximumAge: 0
+      timeout: 10000      
     };
 
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {            
@@ -183,6 +190,9 @@ $scope.textSearch = function(){
      eventLabel: $rootScope.searchTerm
 
    });
+
+    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude)
+    debugger;
     //go to agency list. Specify text search so that proper api endpoint is hit    
     $state.go('agencyList', { 'referer':'textSearch'});
   }
