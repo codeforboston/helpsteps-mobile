@@ -11,7 +11,7 @@ angular.module('starter')
       for (var i = 0; i < data.length; i++) {
         $scope.recentSearches.push(data.item(i).keywordSearchTerm);
       };
-      $scope.$apply();
+      //$scope.$apply();
     });
   }
   document.addEventListener('deviceready', $scope.getDatabase, false);
@@ -180,6 +180,7 @@ $scope.textSearch = function(){
 
    });
 
+    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude)
     //go to agency list. Specify text search so that proper api endpoint is hit
     $state.go('agencyList', { 'referer':'textSearch'});
 
