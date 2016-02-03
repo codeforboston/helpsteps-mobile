@@ -58,11 +58,9 @@ angular.module('starter.services', [])
 	function onDeviceReady() {
         db = window.sqlitePlugin.openDatabase({name: "my.db", androidDatabaseImplementation: 2, androidLockWorkaround: 1});
                       
-
-		
 	}
 
-	//            $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
+	
 
 	return {
 		getDb: function(){
@@ -96,7 +94,7 @@ angular.module('starter.services', [])
 				
 		      tx.executeSql('CREATE TABLE IF NOT EXISTS past_keyword_searches (id integer primary key, keywordSearchTerm text, locationSearchTerm text, timeStamp text)');		  			
 
-		  	tx.executeSql('SELECT keywordSearchTerm FROM past_keyword_searches ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
+		  	tx.executeSql('SELECT DISTINCT keywordSearchTerm FROM past_keyword_searches ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
 		  		deferred.resolve(res.rows);
 		  	});
 		  			

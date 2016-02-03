@@ -32,9 +32,13 @@ angular.module('starter')
   });
 
   $ionicPlatform.ready(function() {
+  
     var posOptions = {
       enableHighAccuracy: true,
-      timeout: 10000      
+      //wait ten seconds before timing out with error
+      timeout: 10000,
+      //accept results up to 30 seconds old
+      maximumAge: 30000      
     };
 
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {            
@@ -42,6 +46,8 @@ angular.module('starter')
       $rootScope.longitude = position.coords.longitude;    
 
     }, function(err) {
+      debugger;
+      alert(err);
       $cordovaToast
       .show('We were unable to determine your location. Please try again, or enter a location manually.', 'short', 'center')
       .then(function(success) {
