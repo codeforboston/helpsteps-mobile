@@ -94,7 +94,7 @@ angular.module('starter.services', [])
 				
 		      tx.executeSql('CREATE TABLE IF NOT EXISTS past_keyword_searches (id integer primary key, keywordSearchTerm text, locationSearchTerm text, timeStamp text)');		  			
 
-		  	tx.executeSql('SELECT DISTINCT keywordSearchTerm FROM past_keyword_searches ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
+		  	tx.executeSql('SELECT DISTINCT LOWER(keywordSearchTerm) FROM past_keyword_searches ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
 		  		deferred.resolve(res.rows);
 		  	});
 		  			
