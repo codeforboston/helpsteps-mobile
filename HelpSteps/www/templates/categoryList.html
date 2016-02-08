@@ -4,8 +4,8 @@
 <ion-view hide-nav-bar="true" view-title="Home">
 
 <form>
-<ion-header-bar align-title="left" class="bar-royal">
-  <div class="item-input-wrapper homeSearchBoxWrapper">
+<ion-header-bar align-title="left" class="bar-royal" >
+  <div class="item-input-wrapper homeSearchBoxWrapper" ng-if="false">
     <i class="icon {{searchBarIcon}} placeholder-icon categoryListInputIcons" ng-click="handleIconTap()"></i>
     <input placeholder="Search for places, services, or keywords" class="homeSearchBox barInput" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
   </div>
