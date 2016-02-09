@@ -106,20 +106,8 @@ angular.module('starter.directives', [])
         return function(miles) {
             if (miles < 0.1) {
                 return "less than 500 feet";
-            } else if (miles >= 1 || miles < 0.2) {
-                var m = miles.toFixed(1).replace(/\.0$/, "");
-                return m + " mile" + (miles == 1 ? "" : "s");
             } else {
-                var denom, num;
-                if (miles > 0.5) {
-                    denom = Math.round(1/(1-miles));
-                    num = Math.round(miles*denom);
-                } else {
-                    denom = Math.round(1/miles);
-                    num = 1;
-                }
-
-                return "about " + num + "/" + denom + " mile";
+              return miles.toFixed(1) + " miles";
             }
         };
     })
