@@ -67,13 +67,13 @@ angular.module('starter.services', [])
 			return db;
 		},
 
-		addKeywordSearchToHistory: function(keywordSearchTerm, locationSearchTerm){
+		addKeywordSearchToHistory: function(keywordSearchTerm, locationSearchTerm, tableName){
 			db.transaction(function(tx) {
 
-		      tx.executeSql('CREATE TABLE IF NOT EXISTS past_keyword_searches (id integer primary key, keywordSearchTerm text, locationSearchTerm text, timeStamp long)');
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS ' +tableName+ ' (id integer primary key, keywordSearchTerm text, locationSearchTerm text, timeStamp long)');
 		  	
 
-		  	tx.executeSql('INSERT INTO past_keyword_searches (keywordSearchTerm, locationSearchTerm, timeStamp) VALUES (?,?,?)', [keywordSearchTerm, locationSearchTerm, Date.now()]);
+		  	tx.executeSql('INSERT INTO ' +tableName+ ' (keywordSearchTerm, locationSearchTerm, timeStamp) VALUES (?,?,?)', [keywordSearchTerm, locationSearchTerm, Date.now()]);
 		  			  			  	
 		
 		}, function(error) {
@@ -85,14 +85,14 @@ angular.module('starter.services', [])
 
 		},
 
-		findRecentSearches: function(){
+		findRecentSearches: function(tableName){
 			//return promise
 			var deferred = $q.defer();
 			
 			var responseRows;
 						db.transaction(function(tx) {
 				
-		      tx.executeSql('CREATE TABLE IF NOT EXISTS past_keyword_searches (id integer primary key, keywordSearchTerm text, locationSearchTerm text, timeStamp text)');		  			
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+' (id integer primary key, keywordSearchTerm text, locationSearchTerm text, timeStamp text)');		  			
 
 		  	tx.executeSql('SELECT DISTINCT keywordSearchTerm, timeStamp  FROM past_keyword_searches GROUP BY keywordSearchTerm ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
 		  		deferred.resolve(res.rows);

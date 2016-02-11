@@ -2,26 +2,29 @@ angular.module('starter')
 
 .controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite){
   
-
-  $scope.getDatabase = function(){    
-    debugger;
-    $scope.database = SQLite.getDb();
-    SQLite.findRecentSearches().then(function(data){
-      $scope.recentSearches = [];
-      for (var i = 0; i < data.length; i++) {
-        $scope.recentSearches.push(data.item(i).keywordSearchTerm);
-      };
-      //$scope.$apply();
-    });
-  }
-  document.addEventListener('deviceready', $scope.getDatabase, false);
-
-
-
   $scope.selectedServiceCount = 0;
   $scope.searchBarIcon = "ion-ios-search";
   $scope.locationBarIcon = "ion-location";
+  $scope.tracker = {};
+  $scope.execute = true;
+  $scope.search = {};
+  $scope.search.locationSearchTerm = "Use My Current Location";
+  $scope.geolocationUpdate = "";
+  $scope.lastLocationUpdateTime = Date.now();
 
+  $scope.getDatabase = function(){    
+    $scope.database = SQLite.getDb();
+
+    //get recent keyword searches
+    SQLite.findRecentSearches('past_keyword_searches').then(function(data){
+      $scope.recentSearches = [];
+      for (var i = 0; i < data.length; i++) {
+        $scope.recentSearches.push(data.item(i).keywordSearchTerm);
+      };    
+    });
+  }
+  document.addEventListener('deviceready', $scope.getDatabase, false);
+  
   $scope.$on('selectedServiceCount', function (event, args) {
     if(args.increaseOrDecrease == "increase"){
       $scope.selectedServiceCount += 1;
@@ -29,41 +32,7 @@ angular.module('starter')
       $scope.selectedServiceCount -= 1;
     }    
     $scope.$apply();
-  });
-
-  $ionicPlatform.ready(function() {
-  
-    var posOptions = {
-      enableHighAccuracy: true,
-      //wait ten seconds before timing out with error
-      timeout: 10000,
-      //accept results up to 30 seconds old
-      maximumAge: 30000      
-    };
-
-    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {            
-      $rootScope.latitude = position.coords.latitude;
-      $rootScope.longitude = position.coords.longitude;    
-
-    }, function(err) {
-      debugger;
-      alert(err);
-      $cordovaToast
-      .show('We were unable to determine your location. Please try again, or enter a location manually.', 'short', 'center')
-      .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
-      
-      console.log(err);
-    });
-  });
-
-  $scope.tracker = {};
-  $scope.execute = true;
-  $scope.search = {};
-  $scope.search.locationSearchTerm = "Use My Current Location";
+  });  
 
   $scope.geocodeAddress = function(nextMethod, nextMethodArg){
 
@@ -95,8 +64,7 @@ angular.module('starter')
     });        
             return false;
           }
-        }
-        
+        }        
         //if user has not opted to use their physical location, look up their location with Google Geocoder
         if($scope.search.locationSearchTerm != "Use My Current Location"){
           geocoder.geocode( {"address": $scope.search.locationSearchTerm}, function(results, status){
@@ -105,15 +73,40 @@ angular.module('starter')
             $rootScope.latitude = results[0].geometry.location.G;
             $rootScope.longitude = results[0].geometry.location.K;
             
+            //continue on with search after location has been determined            
             $scope.performNextSearchAction(nextMethod, nextMethodArg);
           });
         } else {
-          $scope.performNextSearchAction(nextMethod, nextMethodArg);
+          $scope.getUserLocation();
+          //when geolocation information comes back from async call
+          $scope.$on('geolocationUpdate', function(event, args){           
+            //event.stopPropagation();
+            // if (newValue === oldValue) {
+            //   debugger;
+            //   return false;
+            // }
+            if (args === true) {
+              //continue on with search after location has been determined
+              $scope.performNextSearchAction(nextMethod, nextMethodArg);    
+            } else {
+              //if user has denied permission to use location services
+              if(args.code === 1) {
+                 if(Date.now() - $scope.lastLocationUpdateTime > 1000) {
+                  alert("You selected \"Use My Current Location\", but have not given HelpSteps permission to access your location. If you want to allow your location to be used, go to Settings > Privacy > Location Services then set HelpSteps location services to \"While Using\". You may also choose to skip this process and type in an address instead.");
+                  $scope.lastLocationUpdateTime = Date.now();                
+                 }                                                
+              } else {
+                //show error message if user location wasn't found
+              $cordovaToast.show('We were not able to access your location. Please try again or type in a location.', 'short', 'center');
+              }              
+            }            
+          });                                            
         }
-        
       });
 };
 
+//determines if selection search or text search is being performed, then initiates that action
+//this is mostly used because geocoding has to happen before any search can occur
 $scope.performNextSearchAction = function(nextMethod, nextMethodArg){
   if(nextMethod && typeof nextMethod === "function"){        
     nextMethod(nextMethodArg);
@@ -180,7 +173,7 @@ $scope.textSearch = function(){
 
    });
 
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude)
+    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'past_keyword_searches')
     //go to agency list. Specify text search so that proper api endpoint is hit
     $state.go('agencyList', { 'referer':'textSearch'});
 
@@ -198,7 +191,7 @@ $scope.textSearch = function(){
 
    });
 
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude)
+    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'past_keyword_searches')
     debugger;
     //go to agency list. Specify text search so that proper api endpoint is hit    
     $state.go('agencyList', { 'referer':'textSearch'});
@@ -243,5 +236,30 @@ $scope.textSearch = function(){
       return false;
     }    
   };
+
+  $scope.getUserLocation = function() {
+
+    $ionicPlatform.ready(function() {
+  
+    var posOptions = {
+      enableHighAccuracy: true,
+      //wait ten seconds before timing out with error
+      timeout: 10000,
+      //accept results up to 30 seconds old
+      maximumAge: 30000      
+    };
+
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {      
+      $rootScope.latitude = position.coords.latitude;
+      $rootScope.longitude = position.coords.longitude;    
+      $rootScope.$broadcast('geolocationUpdate', true);
+    }, function(err) {
+      console.log("callback failure fires once");
+      $rootScope.$broadcast('geolocationUpdate', err);              
+    });
+  });
+
+  }
+  
 
 })
