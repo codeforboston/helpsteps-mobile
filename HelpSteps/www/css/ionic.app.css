@@ -9097,7 +9097,7 @@ a.button {
   margin: 0 auto; }
 
 .highlighted {
-  background-color: yellow; }
+  background-color: #FFEB2D; }
 
 button.customIconButton:before {
   font-size: 52px !important; }
