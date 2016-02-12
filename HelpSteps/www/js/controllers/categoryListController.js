@@ -16,10 +16,18 @@ angular.module('starter')
     $scope.database = SQLite.getDb();
 
     //get recent keyword searches
-    SQLite.findRecentSearches('past_keyword_searches').then(function(data){
-      $scope.recentSearches = [];
+    SQLite.findRecentSearches('keyword_searches').then(function(data){
+      $scope.recentKeywordSearches = [];
       for (var i = 0; i < data.length; i++) {
-        $scope.recentSearches.push(data.item(i).keywordSearchTerm);
+        $scope.recentKeywordSearches.push(data.item(i).searchTerm);
+      };    
+    });
+
+    //get recent location searches
+    SQLite.findRecentSearches('location_searches').then(function(data){
+      $scope.recentLocationSearches = [];
+      for (var i = 0; i < data.length; i++) {
+        $scope.recentLocationSearches.push(data.item(i).searchTerm);
       };    
     });
   }
@@ -173,7 +181,10 @@ $scope.textSearch = function(){
 
    });
 
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'past_keyword_searches')
+    //save user's keyword search term
+    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches');
+    //save user's location search term
+    SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
     //go to agency list. Specify text search so that proper api endpoint is hit
     $state.go('agencyList', { 'referer':'textSearch'});
 
@@ -191,7 +202,9 @@ $scope.textSearch = function(){
 
    });
 
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'past_keyword_searches')
+    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches')
+    //save user's location search term
+    SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
     debugger;
     //go to agency list. Specify text search so that proper api endpoint is hit    
     $state.go('agencyList', { 'referer':'textSearch'});

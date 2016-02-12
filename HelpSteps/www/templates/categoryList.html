@@ -1,78 +1,88 @@
-<!-- <ion-header-bar class="bar-positive">
-  <h1 class="title">HelpSteps</h1>
-</ion-header-bar> -->
-<ion-view hide-nav-bar="true" view-title="Home" can-swipe-back="false">
+  <!-- <ion-header-bar class="bar-positive">
+    <h1 class="title">HelpSteps</h1>
+  </ion-header-bar> -->
+  <ion-view hide-nav-bar="true" view-title="Home" can-swipe-back="false">
 
-<form>
-<ion-header-bar align-title="left" class="bar-royal" >
-  <div class="item-input-wrapper homeSearchBoxWrapper" >
-    <i class="icon {{searchBarIcon}} placeholder-icon categoryListInputIcons" ng-click="handleIconTap()"></i>
-    <input placeholder="Search for places, services, or keywords" class="homeSearchBox barInput" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
-  </div>
-  
-  
-  
-</ion-header-bar>
-
-<ion-header-bar class="bar bar-subheader bar-royal">
-  
-  <div class="item-input-wrapper homeSearchBoxWrapper">
-    <i class="icon {{locationBarIcon}} placeholder-icon categoryListInputIcons"></i>
-    <input class="homeSearchBox barInput" placeholder="{{locationFocusPlaceholder}}" ng-focus="handleLocationBarFocus()" ng-model="search.locationSearchTerm" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')">
+  <form>
+  <ion-header-bar align-title="left" class="bar-royal" >
+    <div class="item-input-wrapper homeSearchBoxWrapper" >
+      <i class="icon {{searchBarIcon}} placeholder-icon categoryListInputIcons" ng-click="handleIconTap()"></i>
+      <input placeholder="Search for places, services, or keywords" class="homeSearchBox barInput" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
     </div>
     
-
-</ion-header-bar>
-
-
-
-</form>
-
-<ion-content has-header="true" has-subheader="true"  class="has-footer" >
     
-    <!-- <pre>{{recentSearches}}</pre> -->
+    
+  </ion-header-bar>
 
-    <!-- Service Categories -->
-    <div class="row categoryIcons" ng-if="!tracker.searchBarFocus && !tracker.locationBarFocus;" id="categoryContent">
-      <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories" selected-service-count="selectedServiceCount"></service-category-icon>   
-
-    </div>
-      <h3 ng-if="tracker.searchBarFocus">Recent Searches</h3>
-      <!-- Text search suggestions from user's search history -->
-      <ion-list ng-if="tracker.searchBarFocus">
+  <ion-header-bar class="bar bar-subheader bar-royal">
+    
+    <div class="item-input-wrapper homeSearchBoxWrapper">
+      <i class="icon {{locationBarIcon}} placeholder-icon categoryListInputIcons"></i>
+      <input class="homeSearchBox barInput" placeholder="{{locationFocusPlaceholder}}" ng-focus="handleLocationBarFocus()" ng-model="search.locationSearchTerm" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')">
+      </div>
       
-      
-        <ion-item ng-repeat="suggestion in recentSearches track by $index" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion)">      
-          {{suggestion}}
-        </ion-item>
-      </ion-list>            
 
-    <!-- Stock Text Search Suggestions -->
-      <h3 ng-if="tracker.searchBarFocus">Suggestions</h3>
-      <ion-list ng-if="tracker.searchBarFocus">
+  </ion-header-bar>
 
-        <ion-item ng-repeat="suggestion in suggestions" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion)">
-          {{suggestion}}
-        </ion-item>
-      </ion-list>        
+  </form>
 
-    <!-- Location Search Suggestions -->
-      
-      <ion-list ng-if="tracker.locationBarFocus && !tracker.searchBarFocus">
+  <ion-content has-header="true" has-subheader="true"  class="has-footer" >
+            
+      <!-- Service Categories -->
+      <div class="row categoryIcons" ng-if="!tracker.searchBarFocus && !tracker.locationBarFocus;" id="categoryContent">
+        <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories" selected-service-count="selectedServiceCount"></service-category-icon>   
 
-        <ion-item ng-repeat="suggestion in locationSuggestions" ng-click="search.locationSearchTerm = suggestion; tracker.searchBarFocus = false; tracker.locationBarFocus = false;">
-          {{suggestion}}
-        </ion-item>
-      </ion-list>            
-                             
-</ion-content>
-<ion-footer-bar align-title="center" class="bottomSearchButton bar-footer" ng-click="selectServices(); geocodeAddress('selectionSearch');" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;">
-  
-  <!-- <h1 class="title">NEXT</h1> -->
-  <button class="button button-block button-royal footerButton" ng-disabled="selectedServiceCount < 1">
-  NEXT
-</button>
-  
-</ion-footer-bar>
+      </div>
+      <!-- search suggestions -->
+      <div class="card">
+        <h3 ng-if="tracker.searchBarFocus">Recent Searches</h3>
+        <!-- Text search suggestions from user's search history -->
+        <ion-list ng-if="tracker.searchBarFocus">                
+          <ion-item ng-repeat="suggestion in recentKeywordSearches track by $index" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion)">      
+            {{suggestion}}
+          </ion-item>
+        </ion-list>            
 
-</ion-view>
+      <!-- Stock Text Search Suggestions -->
+        <h3 ng-if="tracker.searchBarFocus">Suggestions</h3>
+        <ion-list ng-if="tracker.searchBarFocus">
+          <ion-item ng-repeat="suggestion in suggestions" ng-click="geocodeAddress(textSearchFromSuggestion, suggestion)">
+            {{suggestion}}
+          </ion-item>
+        </ion-list>        
+
+      <!-- Location Search Suggestions -->
+      <h3 ng-if="tracker.locationBarFocus && !tracker.searchBarFocus">Recent Searches</h3>
+
+      <!-- Location search suggestions from user's search history -->
+        <ion-list ng-if="tracker.locationBarFocus && !tracker.searchBarFocus">
+                
+          <ion-item ng-repeat="suggestion in recentLocationSearches track by $index" ng-click="search.locationSearchTerm = suggestion; tracker.searchBarFocus = false; tracker.locationBarFocus = false;">      
+            {{suggestion}}
+          </ion-item>
+        </ion-list>        
+
+      <h3 ng-if="tracker.locationBarFocus && !tracker.searchBarFocus">Suggestions</h3>
+                      
+        <ion-list ng-if="tracker.locationBarFocus && !tracker.searchBarFocus">
+
+          <ion-item ng-repeat="suggestion in locationSuggestions" ng-click="search.locationSearchTerm = suggestion; tracker.searchBarFocus = false; tracker.locationBarFocus = false;">
+            {{suggestion}}
+          </ion-item>
+        </ion-list>    
+
+      </div>
+
+                
+                               
+  </ion-content>
+  <ion-footer-bar align-title="center" class="bottomSearchButton bar-footer" ng-click="selectServices(); geocodeAddress('selectionSearch');" ng-show="!tracker.searchBarFocus && !tracker.locationBarFocus;">
+    
+    <!-- <h1 class="title">NEXT</h1> -->
+    <button class="button button-block button-royal footerButton" ng-disabled="selectedServiceCount < 1">
+    NEXT
+  </button>
+    
+  </ion-footer-bar>
+
+  </ion-view>

@@ -19,9 +19,6 @@ angular.module('starter', ['ionic', 'starter.directives', 'starter.services', 'u
   }
   if(window.StatusBar) {
     StatusBar.styleDefault();
-
-
-
 }
   
   
