@@ -23,14 +23,19 @@ angular.module('starter')
 
     $scope.transportationForAccordion = [];
     var transportation = JSON.parse($scope.agency.transportation);
-    for (var i = 0; i < transportation.length; i++) {
+    if (transportation.length > 0) {
+      for (var i = 0; i < transportation.length; i++) {
       $scope.transportationForAccordion.push(transportation[i].route_name + " " +transportation[i].transit_type + "\n" + transportation[i].stop);
-    };
-
-    $scope.transportationObjectForAccordion = {
-      name: "See Nearby Public Transportation",
-      offered: $scope.transportationForAccordion
+      };
+      $scope.transportationObjectForAccordion = {
+        name: "See Nearby Public Transportation",
+        offered: $scope.transportationForAccordion
+      }
     }
+    
+
+    
+    
     //goal: get all services, languages, and t stops into generic objects so they can be iterated over by generic ng-repeat
     $scope.servicesForAccordion = [];
     for (var i = 0; i < $scope.agency.services.length; i++) {
@@ -49,7 +54,10 @@ angular.module('starter')
     }    
 
     // $scope.servicesForAccordion = 
-    $scope.agencyDetails = [$scope.servicesObjectForAccordion, $scope.languagesObjectForAccordion, $scope.transportationObjectForAccordion];
+    $scope.agencyDetails = [$scope.servicesObjectForAccordion, $scope.languagesObjectForAccordion];
+    if(transportation.length > 0 ) {
+      $scope.agencyDetails.push($scope.transportationObjectForAccordion);
+    } 
 
 
 
