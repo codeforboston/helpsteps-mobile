@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner){
+.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics){
   LoadingSpinner.show();
 
   //get by search term if user entered text, get by selection if user tapped/browsed through
@@ -23,13 +23,8 @@ angular.module('starter')
   $state.go('/agencyDetail/' + id);
 }
 
-$scope.reportAgencyClicked = function(name, id){
-  ga('send', {
-   hitType: 'event',
-   eventCategory: 'View Agency',
-   eventAction: 'View Agency Detail',
-   eventLabel: "View Agency: " + name + " - Agency ID: " + id
- });
+$scope.reportAgencyClicked = function(name, id, distance){
+  $cordovaGoogleAnalytics.trackEvent('View',  'View Agency', "View Agency: " + name + ",  Agency ID: " + id + ", Agency Distance from User in Miles: " + distance);
 }
 
 })

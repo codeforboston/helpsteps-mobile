@@ -4,7 +4,7 @@
     
       
     
-    <a ng-href="#/agencyDetail/{{agency.id}}"  ng-click="reportAgencyClicked(agency.name, agency.id)" class="item-icon-right agencyListIcon agencyInList" ng-repeat="agency in agencies">
+    <a ng-href="#/agencyDetail/{{agency.id}}"  ng-click="reportAgencyClicked(agency.name, agency.id, agency.distance)" class="item-icon-right agencyListIcon agencyInList" ng-repeat="agency in agencies">
     <div class="card agencyListCard" >
     <ion-item class="item-text-wrap">
           <h2 class="agencyNameInList">{{agency.name}}</h2>

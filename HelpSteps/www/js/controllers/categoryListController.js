@@ -177,7 +177,7 @@ $scope.textSearch = function(){
 
     //user input from search box
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
-    $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search', $rootScope.searchTerm);
+    $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search', 'Search Term: ' + $rootScope.searchTerm + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude);
   
   //  save user's keyword search term
   debugger;
@@ -195,12 +195,11 @@ $scope.textSearch = function(){
 
     //user input from search box
     $rootScope.searchTerm = suggestion.toLowerCase();
-    $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search From Suggestion', $rootScope.searchTerm);
+    $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search From Suggestion', $rootScope.searchTerm, + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude);
     
     //SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches')
     //save user's location search term
     //SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
-    debugger;
     //go to agency list. Specify text search so that proper api endpoint is hit    
     $state.go('agencyList', { 'referer':'textSearch'});
   }
@@ -216,7 +215,7 @@ $scope.textSearch = function(){
 
     if($scope.execute == false ) {
       $scope.execute = true;
-      return false;
+      return false; 
     }
     //figure out which categories the user is interested in
     var userSelectedCategories = document.getElementsByClassName('highlighted')
