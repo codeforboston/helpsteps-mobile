@@ -22,8 +22,7 @@ angular.module('starter')
   $scope.geolocationUpdate = "";
   $scope.lastLocationUpdateTime = Date.now();
 
-  $scope.getDatabase = function(){    
-    $scope.database = SQLite.getDb();
+  $scope.getRecentSearchTerms = function(){        
 
     //get recent keyword searches
     SQLite.findRecentSearches('keyword_searches').then(function(data){
@@ -31,17 +30,17 @@ angular.module('starter')
       for (var i = 0; i < data.length; i++) {
         $scope.recentKeywordSearches.push(data.item(i).searchTerm);
       };    
-    });
-
-    //get recent location searches
-    SQLite.findRecentSearches('location_searches').then(function(data){
-      $scope.recentLocationSearches = [];
-      for (var i = 0; i < data.length; i++) {
-        $scope.recentLocationSearches.push(data.item(i).searchTerm);
-      };    
-    });
+        //after getting keyword search results...
+        //get recent location searches
+        SQLite.findRecentSearches('location_searches').then(function(data){
+          $scope.recentLocationSearches = [];
+          for (var i = 0; i < data.length; i++) {
+            $scope.recentLocationSearches.push(data.item(i).searchTerm);
+          };    
+        });
+    });    
   }
-  document.addEventListener('deviceready', $scope.getDatabase, false);
+  document.addEventListener('deviceready', $scope.getRecentSearchTerms, false);
   
   $scope.$on('selectedServiceCount', function (event, args) {
     if(args.increaseOrDecrease == "increase"){
@@ -61,12 +60,7 @@ angular.module('starter')
         if(nextMethod != "selectionSearch"){
           if(!$scope.validateUserInputForTextSearch(nextMethodArg)) {            
             $cordovaToast
-            .show('Please enter a search term and a location to use text search.', 'short', 'center')
-            .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });        
+            .show('Please enter a search term and a location to use text search.', 'short', 'center');        
             return false;
           }
         } else {
@@ -180,17 +174,15 @@ $scope.textSearch = function(){
     return false;
   }
 
-  $scope.geocodeAddress();
-
     //user input from search box
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
     $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search', $rootScope.searchTerm);
   
     //save user's keyword search term
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches').then(function(){
-      alert("callback!");
-      //SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
-    });
+    // SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches').then(function(){
+    //   alert("callback!");
+    //   //SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
+    // });
     //save user's location search term
     
     //go to agency list. Specify text search so that proper api endpoint is hit
@@ -276,5 +268,4 @@ $scope.textSearch = function(){
 
   }
   
-
-})
+});
