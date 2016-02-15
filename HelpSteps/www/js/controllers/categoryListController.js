@@ -161,6 +161,7 @@ $scope.suggestions = ['Food', 'Housing', 'Addiction', 'Diabetes', 'Afterschool',
 $scope.locationFocusPlaceholder = 'Use My Current Location';
 $scope.locationSuggestions = ['Use My Current Location', '300 Longwood Ave', 'Dorchester, MA', 'Jamaica Plain', 'Roxbury, MA', 'Jamaica Plain, MA', '75 Centre St, Jamaica Plain, MA', 'Boston, MA', 'Everett, MA'];
 $scope.textSearch = function(){
+  alert("text search started");
 
   if($scope.search.text == undefined || $scope.search.text.length < 1){
     
@@ -178,13 +179,13 @@ $scope.textSearch = function(){
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
     $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search', $rootScope.searchTerm);
   
-    //save user's keyword search term
-    // SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches').then(function(){
-    //   alert("callback!");
-    //   //SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
-    // });
-    //save user's location search term
-    
+  //  save user's keyword search term
+  debugger;
+    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches').then(function(){            
+      //save user's location search term  //async pattern: this is recorded after keyword search is saved
+      SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches').then(function(){        
+      });
+    });    
     //go to agency list. Specify text search so that proper api endpoint is hit
     $state.go('agencyList', { 'referer':'textSearch'});
 

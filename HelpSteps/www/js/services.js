@@ -79,7 +79,7 @@ angular.module('starter.services', [])
 			deferred.resolve('transaction finished');
 		  console.log('transaction ok');
 		});
-
+			return deferred.promise;
 		},
 
 		findRecentSearches: function(tableName){
