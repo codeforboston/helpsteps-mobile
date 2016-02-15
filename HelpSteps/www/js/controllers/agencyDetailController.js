@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast){
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope){
 
   $scope.userInfoForExporting = {};
   $scope.userInfoForExporting.email = "";
@@ -124,14 +124,14 @@ angular.module('starter')
       // error
     });
     });
+    $cordovaGoogleAnalytics.trackEvent('Share Agency', 'Share Through SMS', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude )
+   //  ga('send', {
+   //   hitType: 'event',
+   //   eventCategory: 'Share Agency',
+   //   eventAction: 'Share Through SMS',
+   //   eventLabel: $scope.agency.name
 
-    ga('send', {
-     hitType: 'event',
-     eventCategory: 'Share Agency',
-     eventAction: 'Share Through SMS',
-     eventLabel: $scope.agency.name
-
-   });
+   // });
   }
 
   $scope.shareThroughEmail = function(agency,userEmail ){
@@ -156,6 +156,7 @@ angular.module('starter')
    // user cancelled email
  });
 
+  $cordovaGoogleAnalytics.trackEvent('Share Agency', 'Share Through Email', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude );
 
 }, function () {
    // not available
@@ -165,13 +166,14 @@ angular.module('starter')
   }
 
   $scope.reportCallAgency = function(){
-    ga('send', {
-     hitType: 'event',
-     eventCategory: 'Contact Agency',
-     eventAction: 'Call Agency on Phone',
-     eventLabel: $scope.agency.name
+   //  ga('send', {
+   //   hitType: 'event',
+   //   eventCategory: 'Contact Agency',
+   //   eventAction: 'Call Agency on Phone',
+   //   eventLabel: $scope.agency.name
 
-   });
+   // });
+   $cordovaGoogleAnalytics.trackEvent('Share Agency', 'Call Agency', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude )
   }
 
 

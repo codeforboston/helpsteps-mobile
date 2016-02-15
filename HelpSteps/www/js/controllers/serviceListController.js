@@ -73,7 +73,7 @@ angular.module('starter')
       if(index > -1){
         $scope.selectedNames.splice(index, 1);
       }
-      $cordovaGoogleAnalytics.trackEvent('Service Deselection','Deselect Service','Deselect Service: ' + service + ', In Category: ' + category + ", Category ID for service: " + serviceId ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
+      $cordovaGoogleAnalytics.trackEvent('Service Deselection','Deselect Service','Deselect Service: ' + service + ', In Category: ' + category + ", Category ID for service: " + serviceId + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
       
     }
   }
