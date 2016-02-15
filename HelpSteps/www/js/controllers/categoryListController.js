@@ -1,7 +1,17 @@
 angular.module('starter')
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite){
-  
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite, $cordovaGoogleAnalytics){
+
+  $ionicPlatform.ready(function() {
+    if (typeof analytics !== 'undefined'){
+      //analytics.startTrackerWithId('UA-XXXXXXX-X');
+      $cordovaGoogleAnalytics.startTrackerWithId('UA-72012743-1');
+       
+    }
+  });
+
+  //$cordovaGoogleAnalytics.trackEvent('Videos', 'Video Load Time', 'Gone With the Wind', 100);
+
   $scope.selectedServiceCount = 0;
   $scope.searchBarIcon = "ion-ios-search";
   $scope.locationBarIcon = "ion-location";
@@ -78,21 +88,22 @@ angular.module('starter')
           geocoder.geocode( {"address": $scope.search.locationSearchTerm}, function(results, status){
 
             //geocoded coordinates
-            $rootScope.latitude = results[0].geometry.location.G;
-            $rootScope.longitude = results[0].geometry.location.K;
-            
+            $rootScope.latitude = results[0].geometry.location.lat();
+            $rootScope.longitude = results[0].geometry.location.lng();
+
+            //if google is unable to find the coordinates
+            if(results[0].geometry.location.lat() == undefined || results[0].geometry.location.lat() == undefined){
+              $cordovaToast.show('We were not able to locate the address you entered. Please type in another address, or select \"Use My Current Location.\"', 'short', 'center');
+            }            
             //continue on with search after location has been determined            
             $scope.performNextSearchAction(nextMethod, nextMethodArg);
           });
         } else {
+          //get location automatically from device
           $scope.getUserLocation();
           //when geolocation information comes back from async call
           $scope.$on('geolocationUpdate', function(event, args){           
-            //event.stopPropagation();
-            // if (newValue === oldValue) {
-            //   debugger;
-            //   return false;
-            // }
+            
             if (args === true) {
               //continue on with search after location has been determined
               $scope.performNextSearchAction(nextMethod, nextMethodArg);    
@@ -173,18 +184,15 @@ $scope.textSearch = function(){
 
     //user input from search box
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
-    ga('send', {
-     hitType: 'event',
-     eventCategory: 'Text Search',
-     eventAction: 'Text Search',
-     eventLabel: $rootScope.searchTerm
-
-   });
-
+    $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search', $rootScope.searchTerm);
+  
     //save user's keyword search term
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches');
+    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches').then(function(){
+      alert("callback!");
+      //SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
+    });
     //save user's location search term
-    SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
+    
     //go to agency list. Specify text search so that proper api endpoint is hit
     $state.go('agencyList', { 'referer':'textSearch'});
 
@@ -194,17 +202,11 @@ $scope.textSearch = function(){
 
     //user input from search box
     $rootScope.searchTerm = suggestion.toLowerCase();
-    ga('send', {
-     hitType: 'event',
-     eventCategory: 'Text Search',
-     eventAction: 'Text Search From Suggestion',
-     eventLabel: $rootScope.searchTerm
-
-   });
-
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches')
+    $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search From Suggestion', $rootScope.searchTerm);
+    
+    //SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches')
     //save user's location search term
-    SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
+    //SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches');
     debugger;
     //go to agency list. Specify text search so that proper api endpoint is hit    
     $state.go('agencyList', { 'referer':'textSearch'});

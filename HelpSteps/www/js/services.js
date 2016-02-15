@@ -66,6 +66,7 @@ angular.module('starter.services', [])
 		},
 
 		addKeywordSearchToHistory: function(searchTerm, locationSearchCoordinates, tableName){
+			var deferred = $q.defer();
 			db.transaction(function(tx) {
 
 		      tx.executeSql('CREATE TABLE IF NOT EXISTS ' +tableName+ ' (id integer primary key, searchTerm text, locationSearchCoordinates text, timeStamp long)');		  	
@@ -75,6 +76,7 @@ angular.module('starter.services', [])
 			debugger;
 		  console.log('transaction error: ' + error.message);
 		}, function() {
+			deferred.resolve('transaction finished');
 		  console.log('transaction ok');
 		});
 

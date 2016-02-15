@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast){
+.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics){
   $scope.selected = {};
   $scope.selectedNames = [];
   $scope.numberOfSelectedServices = 0;
@@ -46,13 +46,14 @@ angular.module('starter')
     });
     $rootScope.selectedServices = selectedServices.join(',');
 
-    ga('send', {
-     hitType: 'event',
-     eventCategory: 'Selection Search',
-     eventAction: 'Search for Agencies',
-     eventLabel: $scope.selectedNames.join(',') + ', Latitude: 42.3245296 Longitude: -71.1021299'
+   //  ga('send', {
+   //   hitType: 'event',
+   //   eventCategory: 'Search',
+   //   eventAction: 'Selection Search',
+   //   eventLabel: $scope.selectedNames.join(',') + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude
 
-   });
+   // });
+    $cordovaGoogleAnalytics.trackEvent('Search', 'Selection Search', $scope.selectedNames.join(',') + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
 
     $state.go('agencyList', { 'referer' : 'selectionSearch'});
   }
@@ -62,26 +63,16 @@ angular.module('starter')
     if(selected){
       //add to array
       $scope.selectedNames.push("Category: " + category + " - Service: " + service);      
-      ga('send', {
-       hitType: 'event',
-       eventCategory: 'Service Selection',
-       eventAction: 'Select Service',
-
-       eventLabel: 'Select Service: ' + service + ' In Category: ' + category
-                                     // eventLabel: 'Select ' + category + ' Service'
-                                   });
+      $cordovaGoogleAnalytics.trackEvent('Service Selection','Select Service','Select Service: ' + service + ' In Category: ' + category)
+      
     } else {
       //remove from array
       var index = $scope.selectedNames.indexOf("Category: " + category + " - Service: " + service);
       if(index > -1){
         $scope.selectedNames.splice(index, 1);
       }
-      ga('send', {
-       hitType: 'event',
-       eventCategory: 'Service Unselection',
-       eventAction: 'Unselect Service',
-       eventLabel: 'Unselect Service ' + service + " In Category: " + category
-     });
+      $cordovaGoogleAnalytics.trackEvent('Service Deselection','Deselect Service','Deselect Service: ' + service + ' In Category: ' + category)
+      
     }
 
   }

@@ -1,7 +1,7 @@
 angular.module('starter.directives', [])
 
 
-.directive('serviceCategoryIcon', function($rootScope){
+.directive('serviceCategoryIcon', function($rootScope, $cordovaGoogleAnalytics){
 
 	return {
 		//element
@@ -78,24 +78,14 @@ angular.module('starter.directives', [])
                                 $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "increase"});
                                 
                                 
-                                
-                                   ga('send', {
-                                     hitType: 'event',
-                                     eventCategory: 'Category Selection',
-                                     eventAction: 'Select Category',
-                                     eventLabel: 'Select ' + $scope.category
-
-                                   });
+                                  $cordovaGoogleAnalytics.trackEvent('Category Selection'                                   
+                                    ,'Select Category',
+                                      'Select ' + $scope.category);
+                                  
                             } else {
                               $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "decrease"});
-                              
-                              ga('send', {
-                                     hitType: 'event',
-                                     eventCategory: 'Category Selection',
-                                     eventAction: 'Unselect Category',
-                                     eventLabel: 'Unselect ' + $scope.category
-
-                                   });
+                              $cordovaGoogleAnalytics.trackEvent('Category Selection',
+                                'Unselect Category','Unselect Category');                              
                             }
        		});
        }

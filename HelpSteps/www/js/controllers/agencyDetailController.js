@@ -32,10 +32,7 @@ angular.module('starter')
         offered: $scope.transportationForAccordion
       }
     }
-    
-
-    
-    
+  
     //goal: get all services, languages, and t stops into generic objects so they can be iterated over by generic ng-repeat
     $scope.servicesForAccordion = [];
     for (var i = 0; i < $scope.agency.services.length; i++) {
