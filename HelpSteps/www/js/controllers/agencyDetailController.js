@@ -195,7 +195,7 @@ angular.module('starter')
 
   $scope.openWebsiteInSystemBrowser = function() {
     cordova.InAppBrowser.open($scope.agency.website, '_system');
+    $cordovaGoogleAnalytics.trackEvent('View', 'View Agency Website', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude );
   }
-
 
 });
