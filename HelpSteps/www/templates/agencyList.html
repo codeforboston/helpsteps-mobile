@@ -1,6 +1,7 @@
 <ion-view view-title="Select Agency" can-swipe-back="false">
   <ion-content>
-    <ion-list>
+    <!-- display search results if results are found -->
+    <ion-list ng-if="agencies.length > 0">
       
     <a ng-href="#/agencyDetail/{{agency.id}}"  ng-click="reportAgencyClicked(agency.name, agency.id, agency.distance)" class="item-icon-right agencyListIcon agencyInList" ng-repeat="agency in agencies">
     <div class="card agencyListCard" >
@@ -13,6 +14,12 @@
     </a>
   
     </ion-list>
+
+    <!-- display message if no search results are found -->
+    <div class="card" ng-if="agencies.length == 0">
+      <h1 class="errorHeader">No results found</h1>
+      <p class="errorText">Please go back and try again.</p>
+    </div>
 
   </ion-content>
 
