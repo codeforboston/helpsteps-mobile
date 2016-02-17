@@ -7,7 +7,31 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 var karma = require('karma').server;
+var preprocess = require('gulp-preprocess');
+var replace = require('gulp-replace-task');  
+var args    = require('yargs').argv;  
+var fs      = require('fs');
 
+gulp.task('replace', function () {  
+  // Get the environment from the command line
+  var env = args.env || 'dev';
+
+  // Read the settings from the right file
+  var filename = env + '.json';
+  var settings = JSON.parse(fs.readFileSync('./config/' + filename, 'utf8'));
+
+// Replace each placeholder with the correct value for the variable.  
+gulp.src('./www/js/settingsBuild/appSettings.js')  
+  .pipe(replace({
+    patterns: [
+      {
+        match: 'googleAnalyticsCode',
+        replacement: settings.googleAnalyticsCode
+      }
+    ]
+  }))
+  .pipe(gulp.dest('./www/js'));
+});
 
 /**
 * Test task, run test once and exit

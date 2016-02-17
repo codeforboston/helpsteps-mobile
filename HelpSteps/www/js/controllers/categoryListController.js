@@ -1,11 +1,13 @@
 angular.module('starter')
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite, $cordovaGoogleAnalytics){
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite, $cordovaGoogleAnalytics, googleAnalyticsCode){
 
   $ionicPlatform.ready(function() {
     if (typeof analytics !== 'undefined'){
       //analytics.startTrackerWithId('UA-XXXXXXX-X');
-      $cordovaGoogleAnalytics.startTrackerWithId('UA-72012743-1');
+      debugger;
+      alert(googleAnalyticsCode);
+      $cordovaGoogleAnalytics.startTrackerWithId(googleAnalyticsCode);
        
     }
   });
