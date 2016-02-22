@@ -5,8 +5,7 @@ angular.module('starter')
   $ionicPlatform.ready(function() {
     if (typeof analytics !== 'undefined'){
       //analytics.startTrackerWithId('UA-XXXXXXX-X');
-      debugger;
-      alert(googleAnalyticsCode);
+            
       $cordovaGoogleAnalytics.startTrackerWithId(googleAnalyticsCode);
        
     }
