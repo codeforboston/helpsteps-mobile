@@ -6,7 +6,7 @@
 angular.module('starter', ['ionic', 'starter.directives', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova', 'ngMask', 'AppSettings'])
 
 // .constant("apiAddress", "http://ec2-52-23-222-123.compute-1.amazonaws.com")
- .constant("apiAddress", "http://api2.helpsteps.com")
+ .constant("apiAddress", "https://api.helpsteps.com")
 
 
 .run(['$ionicPlatform',function($ionicPlatform) {
@@ -20,7 +20,6 @@ angular.module('starter', ['ionic', 'starter.directives', 'starter.services', 'u
   if(window.StatusBar) {
     StatusBar.styleDefault();
 }
-  
   
 });
 }])
