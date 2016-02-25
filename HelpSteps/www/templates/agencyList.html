@@ -1,4 +1,10 @@
 <ion-view view-title="Select Agency" can-swipe-back="false">
+  <ion-header-bar align-title="left" class="bar-royal bar bar-subheader">
+    
+  <div class="buttons text-right">
+    <button class="button" ng-click="showFilterModal()">Filter</button>
+  </div>
+</ion-header-bar>
   <ion-content>
     <!-- display search results if results are found -->
     <ion-list ng-if="agencies.length > 0">

@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics){
+.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics, $ionicModal){
   LoadingSpinner.show();
 
   //get by search term if user entered text, get by selection if user tapped/browsed through
@@ -27,4 +27,23 @@ $scope.reportAgencyClicked = function(name, id, distance){
   $cordovaGoogleAnalytics.trackEvent('View',  'View Agency', "View Agency: " + name + ",  Agency ID: " + id + ", Agency Distance from User in Miles: " + distance);
 }
 
-})
+$scope.showFilterModal = function(){
+  $scope.openModal();
+}
+
+$ionicModal.fromTemplateUrl('templates/filterModal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+
+      $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+    };
+
+
+});
