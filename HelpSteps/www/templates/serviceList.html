@@ -8,7 +8,7 @@
     <ion-list>
     <div class="card">
       <ion-item ng-repeat="category in filteredCategories | orderBy: 'name'">{{category.name}}
-        <ion-checkbox ng-repeat="service in category.services | orderBy: 'name'" ng-true-value="true" ng-model="selected[service.id]" ng-click="reportToggle(category.name,service.name,selected[service.id],service.id)" class="item-text-wrap">{{service.name}}</ion-checkbox>
+        <ion-checkbox ng-repeat="service in category.services | orderBy: 'name'" ng-true-value="true" ng-model="selectedCategoryIds[service.id]" ng-click="reportToggle(category,service,selectedCategoryIds[service.id])" class="item-text-wrap">{{service.name}}</ion-checkbox>
       </ion-item>
       </div>
     </ion-list>

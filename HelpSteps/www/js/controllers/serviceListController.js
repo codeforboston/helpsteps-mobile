@@ -1,9 +1,12 @@
 angular.module('starter')
 
 .controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics){
-  $scope.selected = {};
+  $scope.selectedCategoryIds = {};
   $scope.selectedNames = [];
+  
+  //used to enable/disable 'NEXT' button
   $scope.numberOfSelectedServices = 0;
+
   $scope.categories = $rootScope.categories;
 
   $scope.$watchCollection("selectedNames", function(newVal, oldVal){
@@ -39,7 +42,7 @@ angular.module('starter')
 
     //generate list of selected services
     var selectedServices = [];
-    angular.forEach($scope.selected, function(value, key){
+    angular.forEach($scope.selectedCategoryIds, function(value, key){
       if(value){
         selectedServices.push(key);
       }
@@ -47,33 +50,27 @@ angular.module('starter')
     $rootScope.selectedServices = selectedServices.join(',');
     $rootScope.selectedNames = $scope.selectedNames;
     debugger;
-   //  ga('send', {
-   //   hitType: 'event',
-   //   eventCategory: 'Search',
-   //   eventAction: 'Selection Search',
-   //   eventLabel: $scope.selectedNames.join(',') + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude
-
-   // });
+   
     $cordovaGoogleAnalytics.trackEvent('Search', 'Selection Search', $scope.selectedNames.join(',') + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
 
     $state.go('agencyList', { 'referer' : 'selectionSearch'});
   }
 
-  $scope.reportToggle = function(category, service, selected, serviceId){
+  $scope.reportToggle = function(category, service, selected){
 
     if(selected){
       //add to array
       debugger;
-      $scope.selectedNames.push("Category: " + category + ",  Service: " + service+ ", Category ID for service: " + serviceId);      
-      $cordovaGoogleAnalytics.trackEvent('Service Selection','Select Service','Select Service: ' + service + ', In Category: ' + category + ", Category ID for service: " + serviceId + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
+      $scope.selectedNames.push("Category: " + category.name + ",  Service: " + service.name+ ", Category ID for service: " + service.id);      
+      $cordovaGoogleAnalytics.trackEvent('Service Selection','Select Service','Select Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
       
     } else {
       //remove from array
-      var index = $scope.selectedNames.indexOf("Category: " + category + ",  Service: " + service+ ", Category ID for service: " + serviceId);
+      var index = $scope.selectedNames.indexOf("Category: " + category.name + ",  Service: " + service.name+ ", Category ID for service: " + service.id);
       if(index > -1){
         $scope.selectedNames.splice(index, 1);
       }
-      $cordovaGoogleAnalytics.trackEvent('Service Deselection','Deselect Service','Deselect Service: ' + service + ', In Category: ' + category + ", Category ID for service: " + serviceId + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
+      $cordovaGoogleAnalytics.trackEvent('Service Deselection','Deselect Service','Deselect Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
       
     }
   }
