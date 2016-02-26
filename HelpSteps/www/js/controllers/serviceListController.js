@@ -3,6 +3,7 @@ angular.module('starter')
 .controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics){
   $scope.selectedCategoryIds = {};
   $scope.selectedNames = [];
+  $scope.fullSelectionObject = {};
   
   //used to enable/disable 'NEXT' button
   $scope.numberOfSelectedServices = 0;
@@ -61,6 +62,23 @@ angular.module('starter')
     if(selected){
       //add to array
       debugger;
+
+      //check if the category is in the fullSelectionObject
+      if($scope.fullSelectionObject[category.id]){
+        //if it already exists, add service id to serviceCategoryIds array
+        $scope.fullSelectionObject[category.id]['services'].push({"serviceId":service.id, "serviceName": service.name})
+
+        debugger;
+      } else {
+        //category doesn't exist in object yet
+        //set name of category
+        $scope.fullSelectionObject[category.id]= {};
+        $scope.fullSelectionObject[category.id]['categoryName'] = category.name;
+        //create array for service ids
+        $scope.fullSelectionObject[category.id]['services']['serviceId'] = {"serviceId":service.id, "serviceName": service.name}
+        debugger;
+      }
+
       $scope.selectedNames.push("Category: " + category.name + ",  Service: " + service.name+ ", Category ID for service: " + service.id);      
       $cordovaGoogleAnalytics.trackEvent('Service Selection','Select Service','Select Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
       
