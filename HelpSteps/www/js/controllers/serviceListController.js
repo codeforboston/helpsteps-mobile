@@ -2,7 +2,6 @@ angular.module('starter')
 
 .controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics){
   $scope.selectedCategoryIds = {};
-  $scope.selectedNames = [];
   $scope.fullSelectionObject = {};
   
   //used to enable/disable 'NEXT' button
@@ -10,21 +9,21 @@ angular.module('starter')
 
   $scope.categories = $rootScope.categories;
 
-  $scope.$watchCollection("selectedNames", function(newVal, oldVal){
-    $scope.numberOfSelectedServices = newVal.length;
-
+  $scope.$watchCollection("fullSelectionObject", function(newVal, oldVal){
+    
+    $scope.numberOfSelectedServices = Object.keys(newVal).length;
+    debugger;
+    
   });
 
   $scope.filteredCategories = [];
   //filter categories to match user's selections
   angular.forEach($scope.categories, function(value, key){
 
-
     if($rootScope.userCategoriesArray.indexOf(value.id.toString()) > -1){
       $scope.filteredCategories.push(value);
     }
   });
-
 
   $scope.getAgencies = function(){
 
@@ -42,17 +41,17 @@ angular.module('starter')
     }
 
     //generate list of selected services
+    debugger;
     var selectedServices = [];
     angular.forEach($scope.selectedCategoryIds, function(value, key){
       if(value){
         selectedServices.push(key);
       }
     });
-    $rootScope.selectedServices = selectedServices.join(',');
-    $rootScope.selectedNames = $scope.selectedNames;
+    $rootScope.selectedServices = selectedServices.join(',');    
     debugger;
    
-    $cordovaGoogleAnalytics.trackEvent('Search', 'Selection Search', $scope.selectedNames.join(',') + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
+    $cordovaGoogleAnalytics.trackEvent('Search', 'Selection Search', JSON.stringify( $scope.fullSelectionObject) + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
 
     $state.go('agencyList', { 'referer' : 'selectionSearch'});
   }
@@ -60,39 +59,38 @@ angular.module('starter')
   $scope.reportToggle = function(category, service, selected){
 
     if(selected){
-      //add to array
-      debugger;
-
+      
       //check if the category is in the fullSelectionObject
       if($scope.fullSelectionObject[category.id]){
         //if it already exists, add service id to serviceCategoryIds array
-        $scope.fullSelectionObject[category.id]['services'].push({"serviceId":service.id, "serviceName": service.name})
-
-        debugger;
+        $scope.fullSelectionObject[category.id]['services'][service.id] = service.name;
+        
       } else {
         //category doesn't exist in object yet
-        //set name of category
+      
         $scope.fullSelectionObject[category.id]= {};
+        //set name of category
         $scope.fullSelectionObject[category.id]['categoryName'] = category.name;
-        //create array for service ids
-        $scope.fullSelectionObject[category.id]['services']['serviceId'] = {"serviceId":service.id, "serviceName": service.name}
-        debugger;
+        //create empty object for services
+        $scope.fullSelectionObject[category.id]['services'] = {};
+        //add service to object
+        $scope.fullSelectionObject[category.id]['services'][service.id] = service.name;        
       }
 
-      $scope.selectedNames.push("Category: " + category.name + ",  Service: " + service.name+ ", Category ID for service: " + service.id);      
+      //$scope.selectedNames.push("Category: " + category.name + ",  Service: " + service.name+ ", Category ID for service: " + service.id);      
       $cordovaGoogleAnalytics.trackEvent('Service Selection','Select Service','Select Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
       
     } else {
-      //remove from array
-      var index = $scope.selectedNames.indexOf("Category: " + category.name + ",  Service: " + service.name+ ", Category ID for service: " + service.id);
-      if(index > -1){
-        $scope.selectedNames.splice(index, 1);
+      //remove from fullSelectionObject
+      delete $scope.fullSelectionObject[category.id]['services'][service.id];
+
+      //if no services left in category, also delete the category
+
+      if(Object.keys($scope.fullSelectionObject[category.id]['services']).length < 1){
+        delete $scope.fullSelectionObject[category.id];
       }
       $cordovaGoogleAnalytics.trackEvent('Service Deselection','Deselect Service','Deselect Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
       
     }
   }
-})
-
-
-
+});
