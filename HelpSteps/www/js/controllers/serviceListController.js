@@ -1,7 +1,6 @@
 angular.module('starter')
 
 .controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics){
-  
   $scope.selected = {};
   $scope.selectedNames = [];
   $scope.numberOfSelectedServices = 0;
@@ -46,6 +45,7 @@ angular.module('starter')
       }
     });
     $rootScope.selectedServices = selectedServices.join(',');
+    $rootScope.selectedNames = $scope.selectedNames;
     debugger;
    //  ga('send', {
    //   hitType: 'event',
