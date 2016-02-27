@@ -73,7 +73,7 @@ angular.module('starter.services', [])
 		  	tx.executeSql('INSERT INTO ' +tableName+ ' (searchTerm, locationSearchCoordinates, timeStamp) VALUES (?,?,?)', [searchTerm, locationSearchCoordinates, Date.now()]);
 		  			  			  			
 		}, function(error) {
-			debugger;
+			
 		  console.log('transaction error: ' + error.message);
 		}, function() {
 			deferred.resolve('transaction finished');
@@ -122,6 +122,16 @@ angular.module('starter.services', [])
 	};
 })
 
-.factory('GetUserLocationFromDevice', function($cordovaGeolocation){
+.service('UserSearchSelections', function () {
+  var searchObject = {};
 
+  return  {
+      getSearchObject: function(){
+      	return searchObject;
+      },
+      setSearchObject: function(searchObjectParam){
+      	searchObject = searchObjectParam;
+      }
+
+  };
 });

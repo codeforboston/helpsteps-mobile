@@ -1,7 +1,11 @@
 angular.module('starter')
 
-.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics, $ionicModal){
+.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics, $ionicModal,UserSearchSelections ){
   LoadingSpinner.show();
+
+  //load user's search selections from previous screen
+  $scope.userSearchSelections = UserSearchSelections.getSearchObject();
+  debugger;
 
   //get by search term if user entered text, get by selection if user tapped/browsed through
   if($stateParams.referer == "textSearch"){

@@ -4,8 +4,16 @@
 		<h1 class="title">Share</h1>
 	</ion-header-bar>
 	<ion-content>
-	<div class="card">
+	
 	<h1>Hello. I am a modal!</h1>
-</div>
+	<p>Test 2</p>
+	<pre>{{userSearchSelections}}</pre>
+	<pre>{{1 +1 == 2}}</pre>
+	<ul>
+		<li ng-repeat="(category, thing2) in userSearchSelections">category name: {{category}} category name: {{thing2.categoryName}} services: {{thing2.services}}
+		<p ng-repeat="(key,value) in thing2.services">service key: {{key}} service value: {{value}}</p>
+		</li>
+	</ul>
+
 	</ion-content>
 </ion-modal-view>

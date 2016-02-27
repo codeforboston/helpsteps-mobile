@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics){
+.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics, UserSearchSelections){
   $scope.selectedCategoryIds = {};
   $scope.fullSelectionObject = {};
   
@@ -49,6 +49,9 @@ angular.module('starter')
       }
     });
     $rootScope.selectedServices = selectedServices.join(',');    
+    debugger;
+
+    UserSearchSelections.setSearchObject($scope.fullSelectionObject);
     debugger;
    
     $cordovaGoogleAnalytics.trackEvent('Search', 'Selection Search', JSON.stringify( $scope.fullSelectionObject) + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
