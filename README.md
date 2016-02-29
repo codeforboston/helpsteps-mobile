@@ -9,8 +9,10 @@ you'll need to install
 [Node.js](https://docs.npmjs.com/getting-started/installing-node), a JavaScript
 runtime that comes with `npm`, a package manager.
 
-You will also need to have either Xcode, for iOS development, or Android Studio,
-for Android development.  Both are available as free downloads.
+You will also need to have either
+[Xcode](https://developer.apple.com/xcode/download/), for iOS development, or
+[Android Studio](https://developer.android.com/sdk/index.html), for Android
+development. Both are available as free downloads.
 
 Then, to install Ionic, run:
 
