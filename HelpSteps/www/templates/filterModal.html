@@ -1,20 +1,15 @@
 <ion-modal-view>
 	<ion-header-bar class="bar-royal">		
 		<button class="button button-icon icon ion-close" ng-click="closeModal()"></button>
-		<h1 class="title">Filter</h1>
+		<h1 class="title">Filter Agencies</h1>
 	</ion-header-bar>
 	<ion-content>
-
 	<ion-list>
     <div class="card">
-      <ion-item ng-repeat="(category, thing2) in userSearchSelections">category name: {{thing2.categoryName}}  
-
-        <ion-checkbox ng-repeat="(key,value) in thing2.services" class="item-text-wrap">{{value}}</ion-checkbox>
-      
+      <ion-item ng-repeat="(category, thing2) in userSearchSelections">{{thing2.categoryName}}  
+        <ion-checkbox ng-repeat="(key,value) in thing2.services" ng-model="filteredUserSearchSelectionsObject[key]['active']" class="item-text-wrap">{{value}}{{key}}</ion-checkbox>      
       </ion-item>
       </div>
     </ion-list>
-
-
 	</ion-content>
 </ion-modal-view>

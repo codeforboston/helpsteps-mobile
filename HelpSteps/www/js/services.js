@@ -132,6 +132,5 @@ angular.module('starter.services', [])
       setSearchObject: function(searchObjectParam){
       	searchObject = searchObjectParam;
       }
-
   };
 });

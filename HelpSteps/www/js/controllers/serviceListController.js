@@ -6,13 +6,10 @@ angular.module('starter')
   
   //used to enable/disable 'NEXT' button
   $scope.numberOfSelectedServices = 0;
-
   $scope.categories = $rootScope.categories;
-
   $scope.$watchCollection("fullSelectionObject", function(newVal, oldVal){
     
-    $scope.numberOfSelectedServices = Object.keys(newVal).length;
-    debugger;
+    $scope.numberOfSelectedServices = Object.keys(newVal).length;    
     
   });
 
@@ -41,7 +38,7 @@ angular.module('starter')
     }
 
     //generate list of selected services
-    debugger;
+    
     var selectedServices = [];
     angular.forEach($scope.selectedCategoryIds, function(value, key){
       if(value){
@@ -49,10 +46,10 @@ angular.module('starter')
       }
     });
     $rootScope.selectedServices = selectedServices.join(',');    
-    debugger;
+    
 
     UserSearchSelections.setSearchObject($scope.fullSelectionObject);
-    debugger;
+    
    
     $cordovaGoogleAnalytics.trackEvent('Search', 'Selection Search', JSON.stringify( $scope.fullSelectionObject) + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
 

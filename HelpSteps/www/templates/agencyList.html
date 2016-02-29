@@ -1,17 +1,16 @@
 <ion-view view-title="Select Agency" can-swipe-back="false">
-  <ion-header-bar align-title="left" class="bar-royal bar bar-subheader">
+  <ion-header-bar align-title="left" class="bar-royal bar bar-subheader" ng-if="referer == 'selectionSearch'">
     
   <div class="buttons text-right">
     <button class="button" ng-click="showFilterModal()">Filter</button>
   </div>
 </ion-header-bar>
   <ion-content>
-  <h1>Test</h1>
-  <pre>{{$scope.userSearchSelections}}</pre>
+  
     <!-- display search results if results are found -->
     <ion-list ng-if="agencies.length > 0">
       
-    <a ng-href="#/agencyDetail/{{agency.id}}"  ng-click="reportAgencyClicked(agency.name, agency.id, agency.distance)" class="item-icon-right agencyListIcon agencyInList" ng-repeat="agency in agencies">
+    <a ng-href="#/agencyDetail/{{agency.id}}"  ng-click="reportAgencyClicked(agency.name, agency.id, agency.distance)" class="item-icon-right agencyListIcon agencyInList" ng-repeat="agency in agencies" ng-hide="filterAgencies(agency.array_of_category_ids_for_location)">
     <div class="card agencyListCard" >
     <ion-item class="item-text-wrap">
           <h2 class="agencyNameInList">{{agency.name}}</h2>

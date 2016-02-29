@@ -7,7 +7,7 @@
     <p>{{agency.description}}</p>    
     <h3 ng-if="agency.services[0].eligibility.length > 0">Eligibility Requirements: {{agency.services[0].eligibility}}</h3>
     <h3 ng-if="agency.services[0].fees != 'call for details'">Fees: {{agency.services[0].fees}}</h3>
-    <a ng-href="tel:1-{{agency.phones[0].number}}" ng-click="reportCallAgency()" class="button icon-left ion-ios-telephone button-royal button-full">
+    <a ng-href="tel:1-{{agency.phones[0].number}}" ng-click="reportCallAgency()" class="button icon-left ion-ios-telephone button-royal button-full" ng-if="agency.phones[0].number">
         {{agency.phones[0].number}}        
     </a>
     <a ng-click="openWebsiteInSystemBrowser()" href="" class="button icon-left ion-android-globe button-royal button-full" ng-if="agency.website">Go to website    
