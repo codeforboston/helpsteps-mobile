@@ -47,7 +47,7 @@ Interactive Development
 Since Ionic uses a web view, you can connect to your running app using browser
 dev tools.
 
-# iOS #
+### iOS ###
 
   * Launch Safari.
   * If you don't see a *Develop* menu item, go to *Safari* -> *Settings* and
