@@ -2,10 +2,10 @@
   <ion-header-bar align-title="left" class="bar-royal bar bar-subheader" ng-if="referer == 'selectionSearch'">
     
   <div class="buttons text-right">
-    <button class="button" ng-click="showFilterModal()">Filter</button>
+    <button class="button bar-button" ng-click="showFilterModal()">Filter</button>
   </div>
 </ion-header-bar>
-  <ion-content>
+  <ion-content ng-class="{'has-subheader' : referer == 'selectionSearch'}">
   
     <!-- display search results if results are found -->
     <ion-list ng-if="agencies.length > 0">
