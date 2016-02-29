@@ -21,7 +21,8 @@ Then, to install Ionic, run:
     cordova platform add ios
     # For Android development:
     cordova platform android
-    cordova plugin add ionic-plugin-keyboard
+    cordova plugin add ionic-plugin-keyboard cordova-plugin-google-analytics
+    cordova plugin add https://github.com/litehelpers/Cordova-sqlite-storage
 ```
 
 Running
@@ -30,10 +31,21 @@ Running
 To run the app in a simulator:
 
 ```sh
-    ionic emulate <platform>
+    ionic emulate --livereload <platform>
 ```
 
-Where `<platform>` is either `ios` or `android`.
+Where `<platform>` is either `ios` or `android`.  Including the `--livereload`
+option will cause the app to refresh when you make changes.
+
+If you want to specify a device to simulate other than the default (currently
+iPhone 6S for iOS), you can add a `--target` argument; e.g.:
+
+```sh
+    ionic emulate ios --target="iPhone-4S, 9.2"
+```
+
+(To find a list of device types available to your simulator, type `ios-sim
+showdevicetypes` at the terminal.)
 
 To run the app on a device:
 
