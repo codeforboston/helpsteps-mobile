@@ -52,6 +52,24 @@ angular.module('starter')
     $scope.$apply();
   });  
 
+
+  $scope.loadCategoriesFromApi = function() {
+    HelpStepsApi.GetDomainsAndChildren()
+  .then(function(results){
+    $scope.categories = results;
+    $rootScope.categories = results;
+    $scope.connectionError = false;
+
+  }, function errorCallback(response) {
+    alert("There was an error connecting to HelpSteps. Please check your internet connection and try again.");
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    $scope.connectionError = true;
+  });
+  }
+
+  $scope.loadCategoriesFromApi();
+
   $scope.geocodeAddress = function(nextMethod, nextMethodArg){
 
     uiGmapGoogleMapApi.then(function(maps) {
@@ -148,7 +166,6 @@ $scope.handleSearchBarFocus = function(){
 $scope.setSearchBarFocusToFalse = function() {
   $scope.tracker.searchBarFocus = false;
   $scope.execute = false;
-  console.log("false");
 }
 
 $scope.handleLocationBarFocus = function (){
@@ -180,7 +197,6 @@ $scope.textSearch = function(){
     $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search', 'Search Term: ' + $rootScope.searchTerm + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude);
   
   //  save user's keyword search term
-  debugger;
     SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches').then(function(){            
       //save user's location search term  //async pattern: this is recorded after keyword search is saved
       SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches').then(function(){        
@@ -208,12 +224,8 @@ $scope.textSearch = function(){
     $state.go('agencyList', { 'referer':'textSearch'});
   }
 
-  HelpStepsApi.GetDomainsAndChildren()
-  .then(function(results){
-    $scope.categories = results;
-    $rootScope.categories = results;
 
-  });
+  
 
   $scope.selectServices = function() {
 
