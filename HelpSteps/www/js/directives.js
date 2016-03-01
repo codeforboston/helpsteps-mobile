@@ -24,7 +24,7 @@ angular.module('starter.directives', [])
        					return 'ion-heart-broken';
        				//food
        				case '27':
-       					return 'ion-ios-nutrition';
+       					return 'ion-apple';
        				//housing
        				case '40':
        					return 'ion-home';
@@ -39,7 +39,7 @@ angular.module('starter.directives', [])
        					return 'ion-medkit';
        				//addiction and recovery
        				case '108':
-       					return 'ion-android-bar';
+       					return 'ion-road-perspective';
        				//sexual health
        				case '187':
        					return 'ion-heart';
@@ -57,7 +57,7 @@ angular.module('starter.directives', [])
        					return 'ion-person-stalker';
        				//education
        				case '306':
-       					return 'ion-paper-airplane';
+       					return 'ion-hat-icon';
        				//work
        				case '350':
        					return 'ion-briefcase';
