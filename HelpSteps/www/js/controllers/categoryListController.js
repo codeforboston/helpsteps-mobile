@@ -143,6 +143,12 @@ $scope.performNextSearchAction = function(nextMethod, nextMethodArg){
   if(nextMethod && typeof nextMethod === "function"){        
     nextMethod(nextMethodArg);
   } else if (nextMethod == "selectionSearch") {
+    
+    //record user's search term
+    SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches').then(function(){        
+    });
+
+    //go to next screen and continue selection search
     $state.go('serviceList', {'referer': 'selectionSearch'});
   } else if (nextMethod == "textSearch"){
     $scope.textSearch();
@@ -223,9 +229,6 @@ $scope.textSearch = function(){
     //go to agency list. Specify text search so that proper api endpoint is hit    
     $state.go('agencyList', { 'referer':'textSearch'});
   }
-
-
-  
 
   $scope.selectServices = function() {
 

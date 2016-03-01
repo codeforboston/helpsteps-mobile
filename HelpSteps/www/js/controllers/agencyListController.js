@@ -61,16 +61,11 @@ angular.module('starter')
   //update array of selected ids to read from current fullSelectionOb
   
   $scope.filterAgencies = function(agencyServiceIds) {
-    debugger;
+
     return _.intersection(agencyServiceIds, $scope.arrayOfServiceIdsUserHasSelected).length > 0 === false;
   }
   }
-  
 
-
-  debugger;
-
-  
 
   //get by search term if user entered text, get by selection if user tapped/browsed through
   if($stateParams.referer == "textSearch"){
