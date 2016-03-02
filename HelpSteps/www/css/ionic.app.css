@@ -34,6 +34,7 @@ $dark:                            #444 !default;
   font-style: normal; }
 
 .ion, .ionicons,
+.ion-apple:before,
 .ion-alert:before,
 .ion-alert-circled:before,
 .ion-android-add:before,
@@ -778,6 +779,9 @@ $dark:                            #444 !default;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
+
+.ion-apple:before {
+  content: ""; }
 
 .ion-alert:before {
   content: ""; }
