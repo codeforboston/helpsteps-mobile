@@ -24,7 +24,7 @@ angular.module('starter.directives', [])
        					return 'ion-heart-broken';
        				//food
        				case '27':
-       					return 'ion-ios-nutrition';
+       					return 'ion-apple';
        				//housing
        				case '40':
        					return 'ion-home';

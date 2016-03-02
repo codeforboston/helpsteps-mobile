@@ -1,1 +1,26 @@
 /* Empty. Add your own CSS if you like */
+@font-face {
+    font-family: 'ionicons';
+    src:    url('fonts/ionicons.eot?nagihb');
+    src:    url('fonts/ionicons.eot?nagihb#iefix') format('embedded-opentype'),
+        url('fonts/ionicons.ttf?nagihb') format('truetype'),
+        url('fonts/ionicons.woff?nagihb') format('woff'),
+        url('fonts/ionicons.svg?nagihb#ionicons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="ion-"], [class*=" ion-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'ionicons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

@@ -2,6 +2,11 @@
 // --------------------------
 
 .ionicons,
+
+// Custom Font Additions
+.#{$ionicons-prefix}apple:before,
+
+
 .#{$ionicons-prefix}alert:before,
 .#{$ionicons-prefix}alert-circled:before,
 .#{$ionicons-prefix}android-add:before,
@@ -738,6 +743,10 @@
 {
   @extend .ion;
 }
+
+//custom font additions
+.#{$ionicons-prefix}apple:before { content: $ionicon-var-apple; }
+
 .#{$ionicons-prefix}alert:before { content: $ionicon-var-alert; }
 .#{$ionicons-prefix}alert-circled:before { content: $ionicon-var-alert-circled; }
 .#{$ionicons-prefix}android-add:before { content: $ionicon-var-android-add; }
