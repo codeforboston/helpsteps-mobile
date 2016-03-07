@@ -9171,3 +9171,7 @@ button.button-royal.footerButton {
 
 .bar-button {
   opacity: 1; }
+
+/* make back buttons darker on iOS */
+.button.back-button.buttons.button-clear.header-item {
+  opacity: 0.8; }
