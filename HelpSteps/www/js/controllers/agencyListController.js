@@ -11,6 +11,8 @@ angular.module('starter')
   $scope.userSearchSelections = UserSearchSelections.getSearchObject();
 
   $scope.filteredUserSearchSelectionsObject = {};
+
+
   
 
   //get all service ids out of userSearchSelections and add them to object for filtering
@@ -21,11 +23,16 @@ angular.module('starter')
   //create filtering model on page load
   $scope.arrayOfServiceIdsUserHasSelected = [];
   angular.forEach($scope.userSearchSelections, 
-    function(value,parentCategory){       
-      angular.forEach(value.services, function(value, key){  
-
+    function(outerValue,parentCategory){       
+      var tempOuterValue = outerValue;
+      var services = outerValue.services;
+      debugger;
+      angular.forEach(services, function(value, key){  
+        debugger;
         $scope.filteredUserSearchSelectionsObject[key] = {};
         $scope.filteredUserSearchSelectionsObject[key]['active'] = true;
+        debugger;
+        $scope.filteredUserSearchSelectionsObject[key]['name'] = true;
         $scope.filteredUserSearchSelectionsObject[key]['parentCategory'] = parentCategory;
         $scope.arrayOfServiceIdsUserHasSelected.push(key);
         debugger;
@@ -45,16 +52,12 @@ angular.module('starter')
 
      //if it's actively selected
      if(serviceObject.active === true) {
-      $scope.arrayOfServiceIdsUserHasSelected.push(key);
+      $scope.arrayOfServiceIdsUserHasSelected.push(key);      
      }
 
-
     }) 
-     $scope.$apply();
-
-
 }
-
+  //true means deep watch on the collection (all changes to the collection, not just the top level)
   }, true);
 
   

@@ -5,7 +5,8 @@
 
 // Custom Font Additions
 .#{$ionicons-prefix}apple:before,
-
+.#{$ionicons-prefix}hat-icon:before,
+.#{$ionicons-prefix}road-perspective:before,
 
 .#{$ionicons-prefix}alert:before,
 .#{$ionicons-prefix}alert-circled:before,
@@ -746,6 +747,8 @@
 
 //custom font additions
 .#{$ionicons-prefix}apple:before { content: $ionicon-var-apple; }
+.#{$ionicons-prefix}hat-icon:before { content: $ionicon-var-hat-icon; }
+.#{$ionicons-prefix}road-perspective:before { content: $ionicon-var-road-perspective; }
 
 .#{$ionicons-prefix}alert:before { content: $ionicon-var-alert; }
 .#{$ionicons-prefix}alert-circled:before { content: $ionicon-var-alert-circled; }
