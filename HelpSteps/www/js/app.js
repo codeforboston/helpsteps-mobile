@@ -5,8 +5,15 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic','underscore', 'starter.directives', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova', 'ngMask', 'AppSettings'])
 
-// .constant("apiAddress", "http://ec2-52-23-222-123.compute-1.amazonaws.com")
- .constant("apiAddress", "https://api.helpsteps.com")
+//dev api
+// .constant("apiAddress", "https://devapi.helpsteps.com")
+//local api
+.constant("apiAddress", "http://localhost:3000")
+//production api  
+// .constant("apiAddress", "https://api.helpsteps.com")
+
+
+ 
 
 
 .run(['$ionicPlatform',function($ionicPlatform) {

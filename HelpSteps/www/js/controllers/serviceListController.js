@@ -93,4 +93,29 @@ angular.module('starter')
       
     }
   }
+
+  $scope.selectAllServicesInCategory = function(services){
+
+    //consider calling reportToggle in a loop
+
+      angular.forEach(services, 
+        function(value, key){ 
+
+          $scope.selectedCategoryIds[value.id] = true;
+      });
+    
+    }
+
+
+    $scope.unselectAllServicesInCategory = function(services){
+
+    //consider calling reportToggle in a loop
+
+      angular.forEach(services, 
+        function(value, key){ 
+
+          $scope.selectedCategoryIds[value.id] = false;
+      });
+    
+    }
 });

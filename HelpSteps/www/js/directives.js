@@ -65,6 +65,10 @@ angular.module('starter.directives', [])
        				case '374':
        					return 'ion-earth';
 
+              //care transitions
+              case '396':
+                return 'ion-shuffle';
+
        			}
 
        		}();

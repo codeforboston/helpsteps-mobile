@@ -6,8 +6,15 @@
     <!-- Services -->
     <ion-list>
     <div class="card">
-      <ion-item ng-repeat="category in filteredCategories | orderBy: 'name'">{{category.name}}
-        <ion-checkbox ng-repeat="service in category.services | orderBy: 'name'" ng-true-value="true" ng-model="selectedCategoryIds[service.id]" ng-click="reportToggle(category,service,selectedCategoryIds[service.id])" class="item-text-wrap">{{service.name}}</ion-checkbox>
+      <ion-item ng-repeat="category in filteredCategories | orderBy: 'name'">
+      <!-- card header -->
+      <h3>{{category.name}}</h3>
+      <div class="row">
+         <button class="button button-royal col col-50 short-button" ng-click="selectAllServicesInCategory(category.services)">Select All</button>
+        <button class="button button-royal col col-50 short-button">Unselect All</button>
+      </div>
+       
+        <ion-checkbox ng-repeat="service in category.services | orderBy: 'name'" ng-true-value="true" ng-model="selectedCategoryIds[service.id]" ng-click="reportToggle(category,service,selectedCategoryIds[service.id])" class="item-text-wrap">{{service.name}} {{service.id}}</ion-checkbox>
       </ion-item>
       </div>
     </ion-list>

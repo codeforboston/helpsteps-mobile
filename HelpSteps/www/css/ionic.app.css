@@ -9175,3 +9175,7 @@ button.button-royal.footerButton {
 /* make back buttons darker on iOS */
 .button.back-button.buttons.button-clear.header-item {
   opacity: 0.9; }
+
+.short-button {
+  line-height: 5px !important;
+  min-height: 24px !important; }
