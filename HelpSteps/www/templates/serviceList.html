@@ -8,7 +8,7 @@
     <div class="card">
       <ion-item ng-repeat="category in filteredCategories | orderBy: 'name'">
       <!-- card header -->
-      <h3>{{category.name}}</h3>
+      <h3>{{category.name}} {{getIcon(category.id)}}</h3>
       <div class="row">
          <button class="button button-royal col col-50 short-button" ng-click="selectAllServicesInCategory(category.services)">Select All</button>
         <button class="button button-royal col col-50 short-button">Unselect All</button>

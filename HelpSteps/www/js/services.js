@@ -133,4 +133,72 @@ angular.module('starter.services', [])
       	searchObject = searchObjectParam;
       }
   };
+})
+
+//sets the appropriate icons for service categories. Food category displays an apple, etc
+.service('GetCategoryIconService', function () {
+  
+  return {
+  	getIcon: function(categoryId){
+
+  		//convert to number, if necessary
+  		if(typeof categoryId == "string") {
+  			categoryId = parseFloat(categoryId);
+  		}
+
+  		switch (categoryId) {
+       				//help escape violence
+       				case 15:
+       					return 'ion-heart-broken';
+       				//food
+       				case 27:
+       					return 'ion-apple';
+       				//housing
+       				case 40:
+       					return 'ion-home';
+       				//safety equipment resources
+       				case 91:
+       					return 'ion-help-buoy';
+       				//transit
+       				case 97:
+       					return 'ion-android-bus';
+       				//health
+       				case 107:
+       					return 'ion-medkit';
+       				//addiction and recovery
+       				case 108:
+       					return 'ion-road-perspective';
+       				//sexual health
+       				case 187:
+       					return 'ion-heart';
+       				//mental health
+       				case 192:
+       					return 'ion-android-person';
+       				//nutrition and fitness
+       				case 195:
+       					return 'ion-ios-basketball';
+       				//afterschool
+       				case 253:
+       					return 'ion-ios-body';
+       				//parenting
+       				case 298:
+       					return 'ion-person-stalker';
+       				//education
+       				case 306:
+       					return 'ion-hat-icon';
+       				//work
+       				case 350:
+       					return 'ion-briefcase';
+       				//legal
+       				case 374:
+       					return 'ion-earth';
+
+	              //care transitions
+	              case 396:
+	                return 'ion-shuffle';
+
+       			}
+  	}
+  }
+  
 });

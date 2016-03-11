@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics, UserSearchSelections){
+.controller('ServiceListCtrl', function($scope, $rootScope, $state, $stateParams, $cordovaToast, $cordovaGoogleAnalytics, UserSearchSelections, GetCategoryIconService){
   $scope.selectedCategoryIds = {};
   $scope.fullSelectionObject = {};
   
@@ -117,5 +117,11 @@ angular.module('starter')
           $scope.selectedCategoryIds[value.id] = false;
       });
     
+    }
+
+    //local function that calls the get icon service
+    $scope.getIcon = function(categoryId){
+      debugger;
+      return GetCategoryIconService.getIcon(categoryId);
     }
 });
