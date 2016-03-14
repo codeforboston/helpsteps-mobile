@@ -28,8 +28,11 @@
 
   <ion-content has-header="true" has-subheader="true"  class="has-footer" >
       <div ng-if="connectionError" class="card">
-        <h3>There was a problem connecting to HelpSteps. Please check your internet connection, then try again.</h1>
-        <button class="button button-royal button-full" ng-click="loadCategoriesFromApi();">Connect</button>
+        
+        <h1 class="errorHeader">There was a problem connecting to HelpSteps.</h1>
+      <p class="errorText">Please check your internet connection, then try again.</p>
+      <button class="button button-royal button-full footerButton" ng-click="loadCategoriesFromApi();">Connect</button>
+
       </div>            
       <!-- Service Categories -->
       <div class="row categoryIcons" ng-if="!tracker.searchBarFocus && !tracker.locationBarFocus;" id="categoryContent">
