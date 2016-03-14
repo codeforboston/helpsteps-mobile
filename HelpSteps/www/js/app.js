@@ -6,11 +6,11 @@
 angular.module('starter', ['ionic','underscore', 'starter.directives', 'starter.services', 'uiGmapgoogle-maps', 'ngCordova', 'ngMask', 'AppSettings'])
 
 //dev api
-// .constant("apiAddress", "https://devapi.helpsteps.com")
+.constant("apiAddress", "https://devapi.helpsteps.com")
 //local api
 // .constant("apiAddress", "http://localhost:3000")
 //production api  
-.constant("apiAddress", "https://api.helpsteps.com")
+// .constant("apiAddress", "https://api.helpsteps.com")
 
 
  

@@ -11,10 +11,24 @@
     <ion-list ng-if="agencies.length > 0">
       
     <a ng-href="#/agencyDetail/{{agency.id}}"  ng-click="reportAgencyClicked(agency.name, agency.id, agency.distance)" class="item-icon-right agencyListIcon agencyInList" ng-repeat="agency in agencies" ng-hide="filterAgencies(agency.array_of_category_ids_for_location)">
+    
     <div class="card agencyListCard" >
-    <ion-item class="item-text-wrap">
+    <ion-item class="item-text-wrap agencyListIonItem">
           <h2 class="agencyNameInList">{{agency.name}}</h2>
-          <p>{{agency.distance | prettyDistance}} away</p>
+          <p class="distanceDescription">{{agency.distance | prettyDistance}} away</p>
+          <button class="button serviceCategoryIconInAgencyList" ng-repeat="id in agency.array_of_parent_category_ids_for_location | limitTo:3">
+                        <i class="icon {{getIcon(id)}}"></i>
+                    </button>
+          <p ng-if="agency.array_of_parent_category_ids_for_location.length > 3">More services avaialable. Tap for full list.</p>
+
+          <!-- <div class="agencyListCategoryIconWrapper" >
+                    <button class="button serviceCategoryIconInAgencyList" ng-repeat="id in agency.array_of_parent_category_ids_for_location">
+                        <i class="icon {{getIcon(id)}}"></i>
+                    </button>
+                    
+                </div> -->
+         
+          
           <i class="icon ion-chevron-right"></i>
   </ion-item>
     </div>

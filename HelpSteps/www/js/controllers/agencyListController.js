@@ -9,11 +9,10 @@ angular.module('starter')
   if($scope.referer === "selectionSearch") {
       //load user's search selections from previous screen
   $scope.userSearchSelections = UserSearchSelections.getSearchObject();
-
+  debugger;
   $scope.filteredUserSearchSelectionsObject = {};
 
 
-  
 
   //get all service ids out of userSearchSelections and add them to object for filtering
   //this allows us to keep track of updated changes to query
@@ -38,6 +37,8 @@ angular.module('starter')
       
       });
   });
+
+  debugger;
   //$scope.$apply();
 
   //update filtering model
@@ -81,7 +82,7 @@ angular.module('starter')
 
   } else if ($stateParams.referer == "selectionSearch") {
    HelpStepsApi.GetAgencies().then(function(results){
-    
+    debugger;
     $scope.agencies = results;
     
     LoadingSpinner.hide();
@@ -100,8 +101,6 @@ $scope.showFilterModal = function(){
   
   $scope.openModal();
 }
-
-
 
 
 $ionicModal.fromTemplateUrl('templates/filterModal.html', {
@@ -124,6 +123,5 @@ $ionicModal.fromTemplateUrl('templates/filterModal.html', {
       
       return GetCategoryIconService.getIcon(categoryId);
     }
-
 
 });

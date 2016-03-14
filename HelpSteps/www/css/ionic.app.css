@@ -9190,3 +9190,21 @@ h2.col-80.serviceCategoryName.ng-binding {
 
 .headerAndIconInList {
   margin-bottom: 10px; }
+
+.iconOnAgencyListing {
+  font-size: 30px; }
+
+.serviceCategoryIconInAgencyList {
+  background-color: white;
+  border: none;
+  opacity: 1;
+  margin: 0 -5px;
+  padding: 0;
+  display: inline-block; }
+
+p.distanceDescription {
+  display: inline-block;
+  margin-top: 4%; }
+
+.agencyListIonItem {
+  padding-bottom: 5px; }

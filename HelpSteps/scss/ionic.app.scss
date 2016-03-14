@@ -131,9 +131,7 @@ button.button-royal.footerButton {
 /* service category names in list*/
 h2.col-80.serviceCategoryName.ng-binding {
 	font-size: 20px;	 
-	line-height: 50px;
-
-	
+	line-height: 50px;	
 }
 
 .serviceCategoryIconInList {
@@ -146,4 +144,31 @@ h2.col-80.serviceCategoryName.ng-binding {
 	margin-bottom: 10px;
 	
 
+}
+
+.iconOnAgencyListing {
+	font-size: 30px;
+	
+
+}
+
+
+.serviceCategoryIconInAgencyList {
+	background-color: white;
+	border: none;
+	opacity: 1;
+	margin: 0 -5px;
+	padding: 0;
+	display: inline-block;
+	
+}
+
+
+p.distanceDescription {
+	display: inline-block;	
+	margin-top: 4%;
+}
+
+.agencyListIonItem {
+	padding-bottom: 5px;
 }
