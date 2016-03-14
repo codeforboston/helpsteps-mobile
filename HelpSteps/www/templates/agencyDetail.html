@@ -24,7 +24,7 @@
               {{agencyDetail.name}}
             </ion-item>
             <ion-item class="item-accordion item-text-wrap"
-                      ng-repeat="service in agencyDetail.offered"
+                      ng-repeat="service in agencyDetail.offered | orderBy:'toString()'"
                       ng-show="isGroupShown(agencyDetail)">
               {{service}}
             </ion-item>            

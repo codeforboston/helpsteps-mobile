@@ -73,7 +73,7 @@ angular.module('starter')
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
-      alert("success load1");
+      
       $scope.modal = modal;
     });
     $scope.openModal = function() {
