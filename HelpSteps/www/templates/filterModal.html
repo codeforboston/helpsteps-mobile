@@ -7,9 +7,14 @@
 	<ion-content>
 	<ion-list>
     <div class="card">
-      <ion-item ng-repeat="(key, categoryObject) in userSearchSelections">{{categoryObject.
-      categoryName}}        
-      key: {{key}}
+      <ion-item ng-repeat="(key, categoryObject) in userSearchSelections" class="item-text-wrap">
+
+      <div class="row headerAndIconInList">
+        <h2 class="col-80 serviceCategoryName ">{{categoryObject.
+      categoryName}} </h2>
+        <i class="icon {{getIcon(key)}} serviceCategoryIconInList col-20"></i>
+      </div>
+        
         <ion-checkbox ng-repeat="(key,value) in categoryObject.services" ng-model="filteredUserSearchSelectionsObject[key]['active']" class="item-text-wrap">{{value}}</ion-checkbox>      
       </ion-item>
       </div>

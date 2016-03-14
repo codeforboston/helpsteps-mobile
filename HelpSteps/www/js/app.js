@@ -8,14 +8,12 @@ angular.module('starter', ['ionic','underscore', 'starter.directives', 'starter.
 //dev api
 // .constant("apiAddress", "https://devapi.helpsteps.com")
 //local api
-.constant("apiAddress", "http://localhost:3000")
+// .constant("apiAddress", "http://localhost:3000")
 //production api  
-// .constant("apiAddress", "https://api.helpsteps.com")
+.constant("apiAddress", "https://api.helpsteps.com")
 
 
  
-
-
 .run(['$ionicPlatform',function($ionicPlatform) {
   $ionicPlatform.ready(function() {
 

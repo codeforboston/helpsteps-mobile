@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics, $ionicModal,UserSearchSelections ){
+.controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics, $ionicModal,UserSearchSelections, GetCategoryIconService ){
   LoadingSpinner.show();
 
   $scope.referer = $stateParams.referer;
@@ -26,19 +26,19 @@ angular.module('starter')
     function(outerValue,parentCategory){       
       var tempOuterValue = outerValue;
       var services = outerValue.services;
-      debugger;
+      
       angular.forEach(services, function(value, key){  
-        debugger;
+      
         $scope.filteredUserSearchSelectionsObject[key] = {};
         $scope.filteredUserSearchSelectionsObject[key]['active'] = true;
-        debugger;
+      
         $scope.filteredUserSearchSelectionsObject[key]['name'] = true;
         $scope.filteredUserSearchSelectionsObject[key]['parentCategory'] = parentCategory;
         $scope.arrayOfServiceIdsUserHasSelected.push(key);
-        debugger;
+      
       });
   });
-  $scope.$apply();
+  //$scope.$apply();
 
   //update filtering model
   $scope.$watch('filteredUserSearchSelectionsObject', function(newVal, oldVal){
@@ -75,7 +75,7 @@ angular.module('starter')
 
     HelpStepsApi.GetAgenciesUsingKeyword().then(function(results){
       $scope.agencies = results;
-      debugger;
+      
       LoadingSpinner.hide();
     });
 
@@ -83,7 +83,7 @@ angular.module('starter')
    HelpStepsApi.GetAgencies().then(function(results){
     
     $scope.agencies = results;
-    debugger;
+    
     LoadingSpinner.hide();
   });
  }
@@ -97,22 +97,33 @@ $scope.reportAgencyClicked = function(name, id, distance){
 }
 
 $scope.showFilterModal = function(){
+  
   $scope.openModal();
 }
+
+
+
 
 $ionicModal.fromTemplateUrl('templates/filterModal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
-      $scope.modal = modal;
+      $scope.modal = modal;      
     });
     $scope.openModal = function() {
 
       $scope.modal.show();
     };
     $scope.closeModal = function() {
-      $scope.modal.hide();
+      
+       $scope.modal.hide();
     };
+
+  //local function that calls the get icon service
+    $scope.getIcon = function(categoryId){
+      
+      return GetCategoryIconService.getIcon(categoryId);
+    }
 
 
 });

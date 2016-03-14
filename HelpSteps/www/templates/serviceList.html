@@ -6,15 +6,19 @@
     <!-- Services -->
     <ion-list>
     <div class="card">
-      <ion-item ng-repeat="category in filteredCategories | orderBy: 'name'">
+      <ion-item ng-repeat="category in filteredCategories | orderBy: 'name'" class="item-text-wrap">
       <!-- card header -->
-      <h3>{{category.name}} {{getIcon(category.id)}}</h3>
+      <div class="row headerAndIconInList">
+        <h2 class="col-80 serviceCategoryName ">{{category.name}}</h2>
+        <i class="icon {{getIcon(category.id)}} serviceCategoryIconInList col-20"></i>
+      </div>
+       
       <div class="row">
          <button class="button button-royal col col-50 short-button" ng-click="selectAllServicesInCategory(category.services)">Select All</button>
         <button class="button button-royal col col-50 short-button">Unselect All</button>
       </div>
        
-        <ion-checkbox ng-repeat="service in category.services | orderBy: 'name'" ng-true-value="true" ng-model="selectedCategoryIds[service.id]" ng-click="reportToggle(category,service,selectedCategoryIds[service.id])" class="item-text-wrap">{{service.name}} {{service.id}}</ion-checkbox>
+        <ion-checkbox ng-repeat="service in category.services | orderBy: 'name'" ng-true-value="true" ng-model="selectedCategoryIds[service.id]" ng-click="reportToggle(category,service,selectedCategoryIds[service.id])" class="item-text-wrap">{{service.name}}</ion-checkbox>
       </ion-item>
       </div>
     </ion-list>

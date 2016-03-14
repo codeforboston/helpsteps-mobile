@@ -121,7 +121,7 @@ angular.module('starter')
 
     //local function that calls the get icon service
     $scope.getIcon = function(categoryId){
-      debugger;
+      
       return GetCategoryIconService.getIcon(categoryId);
     }
 });
