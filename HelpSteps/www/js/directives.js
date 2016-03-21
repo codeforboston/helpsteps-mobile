@@ -10,8 +10,8 @@ angular.module('starter.directives', [])
 		//without this specification of a local scope (called isolate in Angular), it would inherit the parent's scope
 		scope: {
 			category: '@',
-			categoryId: '@',
-      selectedServiceCount: '='      
+			categoryId: '@'
+      // selectedServiceCount: '='      
 		},
     // require: '^CategoryListCtrl',
 		templateUrl: 'templates/service-category-icon.html',
@@ -74,14 +74,12 @@ angular.module('starter.directives', [])
        		}();
 
        		$element.bind('click', function(){
-                      
+                      debugger;
        			$element.toggleClass('highlighted');
                 
                             if($element.hasClass('highlighted')){
                               
-                                $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "increase"});
-                                
-                                
+                                $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "increase"});                                                              
                                   $cordovaGoogleAnalytics.trackEvent('Category Selection'                                   
                                     ,'Select Category',
                                       'Select ' + $scope.category);

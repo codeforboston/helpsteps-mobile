@@ -10,8 +10,6 @@
       <input placeholder="Search for places, services, or keywords" class="homeSearchBox barInput" ng-model="search.text" ng-focus="handleSearchBarFocus()"  ng-init="tracker.searchBarFocus = false" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')" >
     </div>
     
-    
-    
   </ion-header-bar>
 
   <ion-header-bar class="bar bar-subheader bar-royal">
@@ -21,12 +19,12 @@
       <input class="homeSearchBox barInput" placeholder="{{locationFocusPlaceholder}}" ng-focus="handleLocationBarFocus()" ng-model="search.locationSearchTerm" ng-keyup="$event.keyCode == 13 && geocodeAddress('textSearch')">
       </div>
       
-
   </ion-header-bar>
 
   </form>
 
   <ion-content has-header="true" has-subheader="true"  class="has-footer" >
+    {{selectedServiceCount}}
       <div ng-if="connectionError" class="card">
         
         <h1 class="errorHeader">There was a problem connecting to HelpSteps.</h1>

@@ -5,14 +5,11 @@ angular.module('starter')
 
   $scope.referer = $stateParams.referer;
 
-  
   if($scope.referer === "selectionSearch") {
       //load user's search selections from previous screen
   $scope.userSearchSelections = UserSearchSelections.getSearchObject();
   debugger;
   $scope.filteredUserSearchSelectionsObject = {};
-
-
 
   //get all service ids out of userSearchSelections and add them to object for filtering
   //this allows us to keep track of updated changes to query

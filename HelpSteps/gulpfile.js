@@ -31,6 +31,7 @@ gulp.src('./www/js/settingsBuild/appSettings.js')
     ]
   }))
   .pipe(gulp.dest('./www/js'));
+
 });
 
 /**
@@ -87,3 +88,15 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+/********************************
+Load in public font icons, or load in production font icons. 
+Production font icons are kept off of github by request of copyright owner
+If you are working on this project, email noah@helpsteps.com to gain access
+********************************/
+
+gulp.task('load-fonts', function(){
+  gulp.src('')
+
+  .pipe(gulp.dest('./www/ionic/fonts'));
+})
