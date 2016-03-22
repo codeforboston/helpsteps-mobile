@@ -12,7 +12,6 @@ angular.module('starter', ['ionic','underscore', 'starter.directives', 'starter.
 //production api  
 // .constant("apiAddress", "https://api.helpsteps.com")
 
-
  
 .run(['$ionicPlatform',function($ionicPlatform) {
   $ionicPlatform.ready(function() {

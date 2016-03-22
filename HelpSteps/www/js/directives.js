@@ -1,7 +1,7 @@
 angular.module('starter.directives', [])
 
 
-.directive('serviceCategoryIcon', function($rootScope, $cordovaGoogleAnalytics){
+.directive('serviceCategoryIcon', function($rootScope, $cordovaGoogleAnalytics, foodIcon, educationIcon, addictionAndRecoveryIcon){
 
 	return {
 		//element
@@ -11,7 +11,7 @@ angular.module('starter.directives', [])
 		scope: {
 			category: '@',
 			categoryId: '@'
-      // selectedServiceCount: '='      
+       //selectedServiceCount: '='      
 		},
     // require: '^CategoryListCtrl',
 		templateUrl: 'templates/service-category-icon.html',
@@ -24,7 +24,7 @@ angular.module('starter.directives', [])
        					return 'ion-heart-broken';
        				//food
        				case '27':
-       					return 'ion-apple';
+       					return foodIcon;
        				//housing
        				case '40':
        					return 'ion-home';
@@ -39,7 +39,7 @@ angular.module('starter.directives', [])
        					return 'ion-medkit';
        				//addiction and recovery
        				case '108':
-       					return 'ion-road-perspective';
+       					return addictionAndRecoveryIcon;
        				//sexual health
        				case '187':
        					return 'ion-heart';
@@ -57,7 +57,7 @@ angular.module('starter.directives', [])
        					return 'ion-person-stalker';
        				//education
        				case '306':
-       					return 'ion-hat-icon';
+       					return educationIcon;
        				//work
        				case '350':
        					return 'ion-briefcase';

@@ -7,6 +7,7 @@ angular.module('starter')
       //analytics.startTrackerWithId('UA-XXXXXXX-X');
             
       $cordovaGoogleAnalytics.startTrackerWithId(googleAnalyticsCode);
+      
        
     }
   });
@@ -49,7 +50,7 @@ angular.module('starter')
     } else {
       $scope.selectedServiceCount -= 1;
     }    
-    //$scope.$apply();
+    $scope.$apply();
   });  
 
 
@@ -71,18 +72,20 @@ angular.module('starter')
   $scope.loadCategoriesFromApi();
 
   $scope.geocodeAddress = function(nextMethod, nextMethodArg){
-
+    debugger;
     uiGmapGoogleMapApi.then(function(maps) {
 
       var geocoder = new google.maps.Geocoder();      
         //make sure that user has entered a value for search term and for location
         if(nextMethod != "selectionSearch"){
+          debugger;
           if(!$scope.validateUserInputForTextSearch(nextMethodArg)) {            
             $cordovaToast
             .show('Please enter a search term and a location to use text search.', 'short', 'center');        
             return false;
           }
         } else {
+          debugger;
           //validate location has been entered          
           if(!$scope.search.locationSearchTerm || $scope.search.locationSearchTerm.length < 0 || !$rootScope.userCategoriesArray || $rootScope.userCategoriesArray.length < 1){
 
@@ -246,7 +249,7 @@ $scope.textSearch = function(){
     });
 
     $rootScope.userCategoriesArray = categoriesArray;  
-
+    debugger;
     if (categoriesArray.length < 1) {           
       return false;
     }  
