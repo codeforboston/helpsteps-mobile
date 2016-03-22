@@ -12,16 +12,86 @@ var replace = require('gulp-replace-task');
 var args    = require('yargs').argv;  
 var fs      = require('fs');
 
-gulp.task('replace', function () {  
+gulp.task('development', ['load-development-fonts', 'load-development-google-analytics'])
+
+gulp.task('production', ['load-production-fonts','load-production-google-analytics'])
+
+//alter google analytics tracking code. Can be dev or prod
+gulp.task('load-development-google-analytics', function () {  
+  
+  var settings = JSON.parse(fs.readFileSync('./config/' + 'dev.json', 'utf8'));
+
+//Replace each placeholder with the correct value for the variable.  
+gulp.src('./config/appSettings.js')  
+  .pipe(replace({
+    patterns: [
+      {
+        match: 'googleAnalyticsCode',
+        replacement: settings.googleAnalyticsCode
+      },
+      {
+        match: 'foodIcon',
+        replacement: 'ion-ios-nutrition'
+      },
+      //education
+      {
+        match: 'educationIcon',
+        replacement: 'ion-paper-airplane'
+      },
+      //addiction and recovery
+      {
+        match: 'addictionAndRecoveryIcon',
+        replacement: 'ion-android-bar'
+      }
+    ]
+  }))
+  .pipe(gulp.dest('./www/js'));
+
+});
+
+gulp.task('load-production-google-analytics', function () {  
+  
+  var settings = JSON.parse(fs.readFileSync('./config/' + 'prod.json', 'utf8'));
+
+//Replace each placeholder with the correct value for the variable.  
+gulp.src('./config/appSettings.js')  
+  .pipe(replace({
+    patterns: [
+      {
+        match: 'googleAnalyticsCode',
+        replacement: settings.googleAnalyticsCode
+      },
+      //food
+      {
+        match: 'foodIcon',
+        replacement: 'ion-apple'
+      },
+      //education
+      {
+        match: 'educationIcon',
+        replacement: 'ion-hat-icon'
+      },
+      //addiction and recovery
+      {
+        match: 'addictionAndRecoveryIcon',
+        replacement: 'ion-road-perspective'
+      }
+    ]
+  }))
+  .pipe(gulp.dest('./www/js'));
+
+});
+
+gulp.task('set-google-analytics', function () {  
   // Get the environment from the command line
   var env = args.env || 'dev';
 
-  // Read the settings from the right file
+  // // Read the settings from the right file
   var filename = env + '.json';
   var settings = JSON.parse(fs.readFileSync('./config/' + filename, 'utf8'));
 
-// Replace each placeholder with the correct value for the variable.  
-gulp.src('./www/js/settingsBuild/appSettings.js')  
+//Replace each placeholder with the correct value for the variable.  
+gulp.src('./config/appSettings.js')  
   .pipe(replace({
     patterns: [
       {
@@ -50,8 +120,8 @@ var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
-
+//set fonts and google analytics to dev by default
+gulp.task('default', ['sass', 'development']);
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
     .pipe(sass())
@@ -89,14 +159,43 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-/********************************
-Load in public font icons, or load in production font icons. 
-Production font icons are kept off of github by request of copyright owner
-If you are working on this project, email noah@helpsteps.com to gain access
-********************************/
+gulp.task('load-production-fonts', function () {  
+  
+gulp.src('./config/private-fonts/*').pipe(gulp.dest('./www/lib/ionic/fonts'));
+//replace icons on home page
 
-gulp.task('load-fonts', function(){
-  gulp.src('')
 
-  .pipe(gulp.dest('./www/ionic/fonts'));
-})
+  
+});
+
+gulp.task('load-development-fonts', function () {  
+  
+gulp.src('./config/public-fonts/*').pipe(gulp.dest('./www/lib/ionic/fonts'));
+
+//replace icons on home page
+
+  // gulp.src('./www/js/settingsBuild/appSettings.js')  
+  // .pipe(replace({
+  //   patterns: [      
+  //     //food
+  //     {
+  //       match: 'foodIcon',
+  //       replacement: 'ion-ios-nutrition'
+  //     },
+  //     //education
+  //     {
+  //       match: 'educationIcon',
+  //       replacement: 'ion-paper-airplane'
+  //     },
+  //     //addiction and recovery
+  //     {
+  //       match: 'addictionAndRecoveryIcon',
+  //       replacement: 'ion-android-bar'
+  //     }
+  //   ]
+  // }))
+  // .pipe(gulp.dest('./www/js'));
+  
+});
+
+
