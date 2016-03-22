@@ -1,0 +1,30 @@
+<ion-modal-view>
+	<ion-header-bar class="bar-royal">		
+		<button class="button button-icon icon ion-close" ng-click="closeModal()"></button>
+		<h1 class="title">Share</h1>
+	</ion-header-bar>
+	<ion-content>
+	<div class="card">
+	<div class="item item-body" ng-form name="sharingForm">
+	<h1>{{agency.name}}</h1>		
+		<label class="item item-input">
+  <span class="input-label">Enter Phone Number</span>
+  <input type="tel" ng-model="userInfoForExporting.phoneNumber" mask="(999) 999-9999" clean="true"  name="phoneNumber">
+</label>
+
+	<div ng-click="shareThroughText(agency.id, userInfoForExporting.phoneNumber)">
+		<button class="button icon-left button-block ion-chatbox-working button-royal shareScreenButton" ng-disabled="!validatePhoneNumber(userInfoForExporting.phoneNumber);">Send as text message</button>
+	</div>
+		<label class="item item-input">
+		  <span class="input-label">Enter email</span>
+		  <input type="email" ng-model="userInfoForExporting.email">
+		</label>
+
+		<button class="button icon-left button-block ion-email button-royal shareScreenButton" ng-click="shareThroughEmail(agency, userInfoForExporting.email)" ng-disabled="userInfoForExporting.email.length < 1">Send as email</button>
+		
+		
+		<!-- <button class="button icon-left ion-star button-positive">Add to Favorites</button> -->		
+	</div>
+</div>
+	</ion-content>
+</ion-modal-view>

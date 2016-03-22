@@ -1,0 +1,45 @@
+
+<ion-view view-title="Agency Details" can-swipe-back="false">
+<ion-content>
+    <div class="card">
+    <div class="item item-body">    
+    <h1>{{agency.name}}</h1>
+    <p>{{agency.description}}</p>    
+    <h3 ng-if="agency.services[0].eligibility.length > 0">Eligibility Requirements: {{agency.services[0].eligibility}}</h3>
+    <h3 ng-if="agency.services[0].fees != 'call for details'">Fees: {{agency.services[0].fees}}</h3>
+    <a ng-href="tel:1-{{agency.phones[0].number}}" ng-click="reportCallAgency()" class="button icon-left ion-ios-telephone button-royal button-full" ng-if="agency.phones[0].number">
+        {{agency.phones[0].number}}        
+    </a>
+    <a ng-click="openWebsiteInSystemBrowser()" href="" class="button icon-left ion-android-globe button-royal button-full" ng-if="agency.website">Go to website    
+</a>
+    
+    <!-- services accordion -->
+    <ion-list>
+        <div ng-repeat="agencyDetail in agencyDetails">
+            <ion-item class="item-stable"
+                      ng-click="toggleGroup(agencyDetail)"
+                      ng-class="{active: isGroupShown(agencyDetail)}">
+                <i class="icon" ng-class="isGroupShown(agencyDetail) ? 'ion-minus' : 'ion-plus'"></i>
+              &nbsp;
+              {{agencyDetail.name}}
+            </ion-item>
+            <ion-item class="item-accordion item-text-wrap"
+                      ng-repeat="service in agencyDetail.offered | orderBy:'toString()'"
+                      ng-show="isGroupShown(agencyDetail)">
+              {{service}}
+            </ion-item>            
+        </div>
+      </ion-list>
+
+    <div id="map_canvas" ng-click="$event.preventDefault()">
+	    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
+	        <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+	        </ui-gmap-marker>
+	    </ui-gmap-google-map>
+	</div>
+    </div>
+    </div>                               
+</ion-content>
+
+
+</ion-view>

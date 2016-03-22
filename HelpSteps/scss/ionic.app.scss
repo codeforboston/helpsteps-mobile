@@ -1,0 +1,174 @@
+
+
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/css
+  $ionicons-font-path: "../lib/ionic/fonts" !default; 
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+
+service-category-icon {
+	@extend .col-33
+}
+
+.categoryIcon {
+	font-size: 70px;
+}
+
+.centerBlock {
+                display: table;
+                margin: 0 auto;
+ }
+
+ .highlighted {
+ 	background-color: #FFEB2D; 	
+ }
+
+ button.customIconButton:before {
+    font-size: 52px !important;
+}
+
+.button {
+	background-color: #FFEB5E;
+	opacity: 0.5;
+}
+
+.categoryIcons {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.angular-google-map-container { height: 200px; }
+
+.homeSearchBox {
+	border: none;
+	width: 100%;
+}
+
+.homeSearchBoxWrapper {
+	background-color: white;	
+}
+
+ion-nav-view[nav-view-transition][nav-view-direction]{
+  background-color: transparent; }
+
+[nav-view-transition="ios"] [nav-view] {
+  box-shadow: none !important; }
+
+.categoryIcons {
+	padding-bottom: 100px;
+}
+
+.agencyNameInList {
+	max-width: 85%;
+}
+
+.agencyListCard {
+	margin: 0 10px;
+}
+
+.button-royal {
+	opacity: 1;
+}
+
+.categoryListInputIcons {
+	font-size: 32px;
+}
+
+button.button-royal.footerButton {
+	height: 100%;
+    margin: 0;
+    font-size: 22px;
+}
+
+.agencyInList {
+	text-decoration: none;
+}
+
+.barInput {
+	height: 33px;
+}
+
+.errorHeader {
+	text-align: center;
+}
+
+.errorText {
+	text-align: center;
+}
+
+.bar-button {
+	opacity: 1;
+}
+
+/* make back buttons darker on iOS */
+.button.back-button.buttons.button-clear.header-item {
+	opacity: 0.9;
+}
+
+.short-button {
+	line-height: 5px !important;
+    min-height: 24px !important;
+}
+
+/* service category names in list*/
+h2.col-80.serviceCategoryName.ng-binding {
+	font-size: 20px;	 
+	line-height: 50px;	
+}
+
+.serviceCategoryIconInList {
+	
+	 font-size: 50px;
+	 
+}
+
+.headerAndIconInList {
+	margin-bottom: 10px;
+	
+
+}
+
+.iconOnAgencyListing {
+	font-size: 30px;
+	
+
+}
+
+
+.serviceCategoryIconInAgencyList {
+	background-color: white;
+	border: none;
+	opacity: 1;
+	margin: 0 -5px;
+	padding: 0;
+	display: inline-block;
+	
+}
+
+
+p.distanceDescription {
+	display: inline-block;	
+	margin-top: 4%;
+}
+
+.agencyListIonItem {
+	padding-bottom: 5px;
+}

@@ -1,0 +1,13 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.1.1",
+    "angular-mocks": "1.4.3",
+    "underscore": "~1.8.3",
+    "angular-underscore-module": "~1.0.3"
+  },
+  "dependencies": {
+    "ngMask": "angular-mask#~3.0.16"
+  }
+}
