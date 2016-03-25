@@ -33,10 +33,14 @@
 
       </div>            
       <!-- Service Categories -->
-      <div class="row categoryIcons" ng-if="!tracker.searchBarFocus && !tracker.locationBarFocus;" id="categoryContent">
-        <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories" selected-service-count="selectedServiceCount"></service-category-icon>   
-
+      <div class="row categoryIcons" ng-if="!tracker.searchBarFocus && !tracker.locationBarFocus;" id="categoryContent">    
+      
+        <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories" selected-service-count="selectedServiceCount" selected-categories-object="selectedCategoriesObject" ng-class="{'highlighted': selectedCategoriesObject[{{category.id}}]==true}"></service-category-icon>
+        
+           
+              
       </div>
+      
       <!-- search suggestions -->
       <div class="card">
         <h3 ng-if="tracker.searchBarFocus">Recent Searches</h3>

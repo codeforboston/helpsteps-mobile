@@ -14,6 +14,8 @@ angular.module('starter')
 
   //$cordovaGoogleAnalytics.trackEvent('Videos', 'Video Load Time', 'Gone With the Wind', 100);
 
+  $scope.selectedCategoriesObject = {};
+
   $scope.selectedServiceCount = 0;
   $scope.searchBarIcon = "ion-ios-search";
   $scope.locationBarIcon = "ion-location";

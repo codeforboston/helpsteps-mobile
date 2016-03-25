@@ -11,17 +11,12 @@ angular.module('starter.directives', [])
 		scope: {
 			category: '@',
 			categoryId: '@',
-      selected: '@'
-       //selectedServiceCount: '='      
+      selectedCategoriesObject: '=' 
 		},
-    // require: '^CategoryListCtrl',
+    
 		templateUrl: 'templates/service-category-icon.html',
 
        link: function ($scope, $element) {
-
-          attr.$observe('selected', function(value) { 
-
-          })
 
        		$scope.icon = function(){
        			switch ($scope.categoryId) {
@@ -81,11 +76,15 @@ angular.module('starter.directives', [])
 
        		$element.bind('click', function(){
                       debugger;
-       			$element.toggleClass('highlighted');
-                
-                            if($element.hasClass('highlighted')){
+                      if($scope.selectedCategoriesObject[$scope.categoryId] != true){
+                        $scope.selectedCategoriesObject[$scope.categoryId] = true;  
+                      } else {
+                        $scope.selectedCategoriesObject[$scope.categoryId] = false;
+                      }
+                             			                
+                            if($scope.selectedCategoriesObject[$scope.categoryId] == true){
                               
-                                $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "increase"});                                                              
+                                 $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "increase"});                                                              
                                   $cordovaGoogleAnalytics.trackEvent('Category Selection'                                   
                                     ,'Select Category',
                                       'Select ' + $scope.category);
