@@ -80,7 +80,7 @@ angular.module('starter')
       var geocoder = new google.maps.Geocoder();      
         //make sure that user has entered a value for search term and for location
         if(nextMethod != "selectionSearch"){
-          debugger;
+          
           if(!$scope.validateUserInputForTextSearch(nextMethodArg)) {            
             $cordovaToast
             .show('Please enter a search term and a location to use text search.', 'short', 'center');        
@@ -121,11 +121,12 @@ angular.module('starter')
           $scope.getUserLocation();
           //when geolocation information comes back from async call
           $scope.$on('geolocationUpdate', function(event, args){           
-            
+            debugger;
             if (args === true) {
               //continue on with search after location has been determined
               $scope.performNextSearchAction(nextMethod, nextMethodArg);    
             } else {
+              
               //if user has denied permission to use location services
               if(args.code === 1) {
                  if(Date.now() - $scope.lastLocationUpdateTime > 1000) {
@@ -251,7 +252,7 @@ $scope.textSearch = function(){
     });
 
     $rootScope.userCategoriesArray = categoriesArray;  
-    debugger;
+    
     if (categoriesArray.length < 1) {           
       return false;
     }  
@@ -281,7 +282,8 @@ $scope.textSearch = function(){
 
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {      
       $rootScope.latitude = position.coords.latitude;
-      $rootScope.longitude = position.coords.longitude;    
+      $rootScope.longitude = position.coords.longitude; 
+      debugger;   
       $rootScope.$broadcast('geolocationUpdate', true);
     }, function(err) {
       console.log("callback failure fires once");

@@ -1,7 +1,7 @@
 <ion-view view-title="Select Agency" can-swipe-back="false">
-  <ion-header-bar align-title="left" class="bar-royal bar bar-subheader" ng-if="referer == 'selectionSearch'">
+  <ion-header-bar align-title="left" class="bar-royal bar bar-subheader" ng-if="referer == 'selectionSearch' && agencies.length > 0">
     
-  <div class="buttons text-right">
+  <div class="buttons text-right" >
     <button class="button bar-button" ng-click="showFilterModal()">Filter</button>
   </div>
 </ion-header-bar>

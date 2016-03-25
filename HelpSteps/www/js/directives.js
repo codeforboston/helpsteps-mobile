@@ -75,7 +75,6 @@ angular.module('starter.directives', [])
        		}();
 
        		$element.bind('click', function(){
-                      debugger;
                       if($scope.selectedCategoriesObject[$scope.categoryId] != true){
                         $scope.selectedCategoriesObject[$scope.categoryId] = true;  
                       } else {
