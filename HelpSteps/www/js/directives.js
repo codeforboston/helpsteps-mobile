@@ -10,13 +10,19 @@ angular.module('starter.directives', [])
 		//without this specification of a local scope (called isolate in Angular), it would inherit the parent's scope
 		scope: {
 			category: '@',
-			categoryId: '@'
+			categoryId: '@',
+      selected: '@'
        //selectedServiceCount: '='      
 		},
     // require: '^CategoryListCtrl',
 		templateUrl: 'templates/service-category-icon.html',
 
        link: function ($scope, $element) {
+
+          attr.$observe('selected', function(value) { 
+
+          })
+
        		$scope.icon = function(){
        			switch ($scope.categoryId) {
        				//help escape violence
@@ -90,6 +96,8 @@ angular.module('starter.directives', [])
                                 'Unselect Category','Unselect Category');                              
                             }
        		});
+
+          
        }
 	};
 })

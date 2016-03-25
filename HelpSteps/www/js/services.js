@@ -136,7 +136,7 @@ angular.module('starter.services', [])
 })
 
 //sets the appropriate icons for service categories. Food category displays an apple, etc
-.service('GetCategoryIconService', function () {
+.service('GetCategoryIconService', function (foodIcon, educationIcon, addictionAndRecoveryIcon) {
   
   return {
   	getIcon: function(categoryId){
@@ -152,7 +152,7 @@ angular.module('starter.services', [])
        					return 'ion-heart-broken';
        				//food
        				case 27:
-       					return 'ion-apple';
+       					return foodIcon;
        				//housing
        				case 40:
        					return 'ion-home';
@@ -167,7 +167,7 @@ angular.module('starter.services', [])
        					return 'ion-medkit';
        				//addiction and recovery
        				case 108:
-       					return 'ion-road-perspective';
+       					return addictionAndRecoveryIcon;
        				//sexual health
        				case 187:
        					return 'ion-heart';
@@ -185,7 +185,7 @@ angular.module('starter.services', [])
        					return 'ion-person-stalker';
        				//education
        				case 306:
-       					return 'ion-hat-icon';
+       					return educationIcon;
        				//work
        				case 350:
        					return 'ion-briefcase';
