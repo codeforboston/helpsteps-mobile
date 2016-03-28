@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite, $cordovaGoogleAnalytics, googleAnalyticsCode){
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite, $cordovaGoogleAnalytics, googleAnalyticsCode, $window){
 
   $ionicPlatform.ready(function() {
     if (typeof analytics !== 'undefined'){
@@ -291,6 +291,11 @@ $scope.textSearch = function(){
     });
   });
 
+  }
+
+  $scope.refreshPage = function(){
+    $window.location.reload(true);
+    $scope.connectionError = false;
   }
   
 });
