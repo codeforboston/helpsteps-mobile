@@ -94,7 +94,7 @@ angular.module('starter')
     }
   }
 
-  $scope.selectAllServicesInCategory = function(services){
+  $scope.selectAllServicesInCategory = function(category,services){
 
     //consider calling reportToggle in a loop
 
@@ -102,12 +102,18 @@ angular.module('starter')
         function(value, key){ 
 
           $scope.selectedCategoryIds[value.id] = true;
+          
+          //handle services that are already selected differently 
+          //(to avoid reporting the same service as selected more than once)
+          $scope.reportToggle(category,value,true);
+
+          //update full selection object
       });
     
     }
 
 
-    $scope.unselectAllServicesInCategory = function(services){
+    $scope.unselectAllServicesInCategory = function(category,services){
 
     //consider calling reportToggle in a loop
 
@@ -115,6 +121,8 @@ angular.module('starter')
         function(value, key){ 
 
           $scope.selectedCategoryIds[value.id] = false;
+          //pass in category, pass in service, pass in "false" because service is being deselected
+          $scope.reportToggle(category,value,false);
       });
     
     }

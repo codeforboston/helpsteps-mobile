@@ -60,15 +60,15 @@ angular.module('starter.directives', [])
        				case '306':
        					return educationIcon;
        				//work
-       				case '350':
+       				case '351':
        					return 'ion-briefcase';
        				//legal
-       				case '374':
+       				case '375':
        					return 'ion-earth';
 
               //care transitions
-              case '396':
-                return 'ion-shuffle';
+              case '397':
+                return 'ion-shuffle';              
 
        			}
 

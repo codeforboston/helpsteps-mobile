@@ -25,12 +25,24 @@ angular.module('starter')
       
       angular.forEach(services, function(value, key){  
       
-        $scope.filteredUserSearchSelectionsObject[key] = {};
-        $scope.filteredUserSearchSelectionsObject[key]['active'] = true;
-      
-        $scope.filteredUserSearchSelectionsObject[key]['name'] = true;
-        $scope.filteredUserSearchSelectionsObject[key]['parentCategory'] = parentCategory;
         $scope.arrayOfServiceIdsUserHasSelected.push(key);
+        $scope.filteredUserSearchSelectionsObject[parentCategory] = {};
+        $scope.filteredUserSearchSelectionsObject[parentCategory]['services'] = {};
+
+        //make service objects in each category object
+        
+
+        angular.forEach($scope.userSearchSelections[parseInt(parentCategory)]['services'], 
+          function(serviceName,serviceId ){ 
+            console.log("key: " + serviceId + serviceName)
+            $scope.filteredUserSearchSelectionsObject[parentCategory]['services'][serviceId] = {};
+            $scope.filteredUserSearchSelectionsObject[parentCategory]['services'][serviceId]['active'] = true;
+            $scope.filteredUserSearchSelectionsObject[parentCategory]['services'][serviceId]['name'] = serviceName;
+            $scope.filteredUserSearchSelectionsObject[parentCategory]['services'][serviceId]['parentCategory'] = parentCategory;
+            
+          })
+        
+        
       
       });
   });
@@ -41,12 +53,23 @@ angular.module('starter')
   //update filtering model
   $scope.$watch('filteredUserSearchSelectionsObject', function(newVal, oldVal){
     
+    //this check is necessary, because otherwise this method will fire on page load (which we don't need)
     if(newVal !== oldVal) {
 
      $scope.arrayOfServiceIdsUserHasSelected = []; 
-     angular.forEach($scope.filteredUserSearchSelectionsObject, function(serviceObject, key){ 
-     
-     console.log("serviceObject : " + serviceObject + " thing2: " + key);
+
+     //go through all categories
+     angular.forEach($scope.filteredUserSearchSelectionsObject, function(categoryObject, categoryKey){ 
+      
+      //go through all services in each category
+      angular.forEach(categoryObject.services, function(serviceObject, serviceKey){
+        //if the service is actively selected, add it to an array of services that are actively selected
+        if(serviceObject.active == true) {
+          $scope.arrayOfServiceIdsUserHasSelected.push(serviceKey);
+        }
+      });
+
+     //console.log("serviceObject : " + serviceObject + " thing2: " + key);
 
      //if it's actively selected
      if(serviceObject.active === true) {
@@ -97,6 +120,28 @@ $scope.reportAgencyClicked = function(name, id, distance){
 $scope.showFilterModal = function(){
   
   $scope.openModal();
+}
+
+$scope.selectAllServicesInCategory = function(categoryId){
+  
+angular.forEach($scope.filteredUserSearchSelectionsObject[categoryId].services, function(serviceObject, key){ 
+
+debugger;
+$scope.filteredUserSearchSelectionsObject[parseInt(categoryId)]['services'][key]['active'] = true;
+
+});
+
+}
+
+$scope.unselectAllServicesInCategory = function(categoryId){
+  
+angular.forEach($scope.filteredUserSearchSelectionsObject[categoryId].services, function(serviceObject, key){ 
+
+debugger;
+$scope.filteredUserSearchSelectionsObject[parseInt(categoryId)]['services'][key]['active'] = false;
+
+});
+
 }
 
 

@@ -16,6 +16,8 @@ angular.module('starter')
 
   $scope.selectedCategoriesObject = {};
 
+  
+
   $scope.selectedServiceCount = 0;
   $scope.searchBarIcon = "ion-ios-search";
   $scope.locationBarIcon = "ion-location";
@@ -87,7 +89,7 @@ angular.module('starter')
             return false;
           }
         } else {
-          debugger;
+          
           //validate location has been entered          
           if(!$scope.search.locationSearchTerm || $scope.search.locationSearchTerm.length < 0 || !$rootScope.userCategoriesArray || $rootScope.userCategoriesArray.length < 1){
 

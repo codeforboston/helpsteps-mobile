@@ -33,6 +33,7 @@
 
       </div>            
       <!-- Service Categories -->
+      <!-- <pre>{{categories}}</pre> -->
       <div class="row categoryIcons" ng-if="!tracker.searchBarFocus && !tracker.locationBarFocus;" id="categoryContent">    
 
         <service-category-icon category="{{category.name}}" category-id="{{category.id}}" ng-repeat="category in categories" selected-service-count="selectedServiceCount" selected-categories-object="selectedCategoriesObject" ng-class="{'highlighted': selectedCategoriesObject[{{category.id}}]==true}"></service-category-icon>

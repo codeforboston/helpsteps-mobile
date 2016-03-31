@@ -14,8 +14,8 @@
       </div>
        
       <div class="row">
-         <button class="button button-royal col col-50 short-button" ng-click="selectAllServicesInCategory(category.services)">Select All</button>
-        <button class="button button-royal col col-50 short-button" ng-click="unselectAllServicesInCategory(category.services)">Unselect All</button>
+         <button class="button button-royal col col-50 short-button" ng-click="selectAllServicesInCategory(category,category.services)">Select All</button>
+        <button class="button button-royal col col-50 short-button" ng-click="unselectAllServicesInCategory(category,category.services)">Unselect All</button>
       </div>
         
         <ion-checkbox ng-repeat="service in category.services" ng-true-value="true" ng-model="selectedCategoryIds[service.id]" ng-click="reportToggle(category,service,selectedCategoryIds[service.id])" class="item-text-wrap">{{service.name}}</ion-checkbox>

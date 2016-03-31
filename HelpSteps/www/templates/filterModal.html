@@ -7,15 +7,23 @@
 	<ion-content>
 	<ion-list>
     <div class="card">
-      <ion-item ng-repeat="(key, categoryObject) in userSearchSelections" class="item-text-wrap">
-
+      <ion-item ng-repeat="(categoryId, categoryObject) in userSearchSelections" class="item-text-wrap">
+      <!-- <pre>cat object: {{categoryObject}}</pre>
+      <pre>key: {{key}}</pre> -->
       <div class="row headerAndIconInList">
-        <h2 class="col-80 serviceCategoryName ">{{categoryObject.
-      categoryName}} </h2>
-        <i class="icon {{getIcon(key)}} serviceCategoryIconInList col-20"></i>
+     
+        <h2 class="col-80 serviceCategoryName ">{{categoryObject.categoryName}}
+      </h2>
+        <i class="icon {{getIcon(categoryId)}} serviceCategoryIconInList col-20"></i>
       </div>
-        
-        <ion-checkbox ng-repeat="(key,value) in categoryObject.services" ng-model="filteredUserSearchSelectionsObject[key]['active']" class="item-text-wrap">{{value}}</ion-checkbox>      
+      <pre>category id: {{categoryId}} categoryObject: {{categoryObject}}</pre>
+      <pre>filtered object: {{filteredUserSearchSelectionsObject}}</pre>
+
+      <div class="row">
+         <button class="button button-royal col col-50 short-button" ng-click="selectAllServicesInCategory(categoryId)">Select All</button>
+        <button class="button button-royal col col-50 short-button" ng-click="unselectAllServicesInCategory(categoryId)">Unselect All</button>
+      </div>      
+        <ion-checkbox ng-repeat="(key,value) in categoryObject.services" ng-model="filteredUserSearchSelectionsObject[categoryId]['services'][key]['active']" class="item-text-wrap" >value: {{value}} categoryId: {{categoryId}} key: {{key}}</ion-checkbox>      
       </ion-item>
       </div>
     </ion-list>
