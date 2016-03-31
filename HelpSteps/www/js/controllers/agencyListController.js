@@ -7,9 +7,9 @@ angular.module('starter')
 
   if($scope.referer === "selectionSearch") {
       //load user's search selections from previous screen
-  $scope.userSearchSelections = UserSearchSelections.getSearchObject();
-  debugger;
-  $scope.filteredUserSearchSelectionsObject = {};
+      $scope.userSearchSelections = UserSearchSelections.getSearchObject();
+
+      $scope.filteredUserSearchSelectionsObject = {};
 
   //get all service ids out of userSearchSelections and add them to object for filtering
   //this allows us to keep track of updated changes to query
@@ -24,14 +24,12 @@ angular.module('starter')
       var services = outerValue.services;
       
       angular.forEach(services, function(value, key){  
-      
+
         $scope.arrayOfServiceIdsUserHasSelected.push(key);
         $scope.filteredUserSearchSelectionsObject[parentCategory] = {};
         $scope.filteredUserSearchSelectionsObject[parentCategory]['services'] = {};
 
-        //make service objects in each category object
-        
-
+        //make service objects in each category object      
         angular.forEach($scope.userSearchSelections[parseInt(parentCategory)]['services'], 
           function(serviceName,serviceId ){ 
             console.log("key: " + serviceId + serviceName)
@@ -41,18 +39,14 @@ angular.module('starter')
             $scope.filteredUserSearchSelectionsObject[parentCategory]['services'][serviceId]['parentCategory'] = parentCategory;
             
           })
-        
-        
-      
       });
-  });
+    });
 
-  debugger;
   //$scope.$apply();
 
   //update filtering model
   $scope.$watch('filteredUserSearchSelectionsObject', function(newVal, oldVal){
-    
+
     //this check is necessary, because otherwise this method will fire on page load (which we don't need)
     if(newVal !== oldVal) {
 
@@ -60,7 +54,7 @@ angular.module('starter')
 
      //go through all categories
      angular.forEach($scope.filteredUserSearchSelectionsObject, function(categoryObject, categoryKey){ 
-      
+
       //go through all services in each category
       angular.forEach(categoryObject.services, function(serviceObject, serviceKey){
         //if the service is actively selected, add it to an array of services that are actively selected
@@ -74,12 +68,12 @@ angular.module('starter')
      //if it's actively selected
      if(serviceObject.active === true) {
       $scope.arrayOfServiceIdsUserHasSelected.push(key);      
-     }
+    }
 
-    }) 
-}
+  }) 
+   }
   //true means deep watch on the collection (all changes to the collection, not just the top level)
-  }, true);
+}, true);
 
   
   //update array of selected ids to read from current fullSelectionOb
@@ -88,7 +82,7 @@ angular.module('starter')
 
     return _.intersection(agencyServiceIds, $scope.arrayOfServiceIdsUserHasSelected).length > 0 === false;
   }
-  }
+}
 
 
   //get by search term if user entered text, get by selection if user tapped/browsed through
@@ -102,7 +96,7 @@ angular.module('starter')
 
   } else if ($stateParams.referer == "selectionSearch") {
    HelpStepsApi.GetAgencies().then(function(results){
-    debugger;
+
     $scope.agencies = results;
     
     LoadingSpinner.hide();
@@ -118,52 +112,51 @@ $scope.reportAgencyClicked = function(name, id, distance){
 }
 
 $scope.showFilterModal = function(){
-  
+
   $scope.openModal();
 }
 
 $scope.selectAllServicesInCategory = function(categoryId){
-  
-angular.forEach($scope.filteredUserSearchSelectionsObject[categoryId].services, function(serviceObject, key){ 
 
-debugger;
-$scope.filteredUserSearchSelectionsObject[parseInt(categoryId)]['services'][key]['active'] = true;
+  angular.forEach($scope.filteredUserSearchSelectionsObject[categoryId].services, function(serviceObject, key){ 
 
-});
+
+    $scope.filteredUserSearchSelectionsObject[parseInt(categoryId)]['services'][key]['active'] = true;
+
+  });
 
 }
 
 $scope.unselectAllServicesInCategory = function(categoryId){
-  
-angular.forEach($scope.filteredUserSearchSelectionsObject[categoryId].services, function(serviceObject, key){ 
 
-debugger;
-$scope.filteredUserSearchSelectionsObject[parseInt(categoryId)]['services'][key]['active'] = false;
+  angular.forEach($scope.filteredUserSearchSelectionsObject[categoryId].services, function(serviceObject, key){ 
 
-});
+    $scope.filteredUserSearchSelectionsObject[parseInt(categoryId)]['services'][key]['active'] = false;
+
+  });
 
 }
 
 
 $ionicModal.fromTemplateUrl('templates/filterModal.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal = modal;      
-    });
-    $scope.openModal = function() {
+  scope: $scope,
+  animation: 'slide-in-up'
+}).then(function(modal) {
+  $scope.modal = modal;      
+});
+$scope.openModal = function() {
 
-      $scope.modal.show();
-    };
-    $scope.closeModal = function() {
-      
-       $scope.modal.hide();
-    };
+  $scope.modal.show();
+};
+$scope.closeModal = function() {
+
+ $scope.modal.hide();
+};
 
   //local function that calls the get icon service
-    $scope.getIcon = function(categoryId){
-      
-      return GetCategoryIconService.getIcon(categoryId);
-    }
+  $scope.getIcon = function(categoryId){
+
+    return GetCategoryIconService.getIcon(categoryId);
+  }
 
 });

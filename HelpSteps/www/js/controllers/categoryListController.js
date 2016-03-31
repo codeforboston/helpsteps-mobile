@@ -76,7 +76,7 @@ angular.module('starter')
   $scope.loadCategoriesFromApi();
 
   $scope.geocodeAddress = function(nextMethod, nextMethodArg){
-    debugger;
+    
     uiGmapGoogleMapApi.then(function(maps) {
 
       var geocoder = new google.maps.Geocoder();      
@@ -123,7 +123,7 @@ angular.module('starter')
           $scope.getUserLocation();
           //when geolocation information comes back from async call
           $scope.$on('geolocationUpdate', function(event, args){           
-            debugger;
+            
             if (args === true) {
               //continue on with search after location has been determined
               $scope.performNextSearchAction(nextMethod, nextMethodArg);    
@@ -285,7 +285,7 @@ $scope.textSearch = function(){
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {      
       $rootScope.latitude = position.coords.latitude;
       $rootScope.longitude = position.coords.longitude; 
-      debugger;   
+      
       $rootScope.$broadcast('geolocationUpdate', true);
     }, function(err) {
       console.log("callback failure fires once");
