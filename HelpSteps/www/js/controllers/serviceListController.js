@@ -101,13 +101,13 @@ angular.module('starter')
       angular.forEach(services, 
         function(value, key){ 
 
-          $scope.selectedCategoryIds[value.id] = true;
           
-          //handle services that are already selected differently 
-          //(to avoid reporting the same service as selected more than once)
-          $scope.reportToggle(category,value,true);
+          //don't count it again if it's already selected
+          if($scope.selectedCategoryIds[value.id] != true){
+            $scope.selectedCategoryIds[value.id] = true;
+            $scope.reportToggle(category,value,true);  
+          }
 
-          //update full selection object
       });
     
     }
@@ -120,9 +120,13 @@ angular.module('starter')
       angular.forEach(services, 
         function(value, key){ 
 
-          $scope.selectedCategoryIds[value.id] = false;
-          //pass in category, pass in service, pass in "false" because service is being deselected
-          $scope.reportToggle(category,value,false);
+          //don't count it again if it's already unselected
+          if($scope.selectedCategoryIds[value.id] != false){
+            $scope.selectedCategoryIds[value.id] = false;
+            $scope.reportToggle(category,value,false);
+          }
+
+          
       });
     
     }
