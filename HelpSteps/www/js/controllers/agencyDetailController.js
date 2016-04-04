@@ -11,7 +11,9 @@ angular.module('starter')
     $scope.openModal();
   }
 
-  //only show the share button on the agency detail page
+  $scope.$root.secondaryButtonText = "Share";
+
+  //only show the share button on appropriate pages
   $scope.$root.showShareButton = true;
 
   $scope.$on("$stateChangeStart", function() {

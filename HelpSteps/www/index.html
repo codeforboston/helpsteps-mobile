@@ -44,9 +44,11 @@
     <ion-nav-bar class="bar-royal doubleHeaderSelector">
   <ion-nav-back-button>
   </ion-nav-back-button>
+  <!-- this is the butotn that appears on the right in the nav bar at the top -->
   <ion-nav-buttons side="secondary"  >
       <button class="button bar-button" ng-if="$root.showShareButton" ng-click="$root.secondaryButtonFunction()">
-        Share        
+        <!-- Share         -->
+        {{$root.secondaryButtonText}}
       </button>
     </ion-nav-buttons>
 </ion-nav-bar>

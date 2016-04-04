@@ -62,13 +62,15 @@ angular.module('starter.directives', [])
        				//work
        				case '351':
        					return 'ion-briefcase';
-       				//legal
+       				// //legal
        				case '375':
        					return 'ion-earth';
 
               //care transitions
               case '397':
-                return 'ion-shuffle';              
+                return 'ion-shuffle';
+              default:
+                return 'ion-load-d';              
 
        			}
 
@@ -126,9 +128,11 @@ angular.module('starter.directives', [])
       for(var x=0;x<headers.length;x++)
       {
           // If this is not a footer bar, adjust it's position and calculate offset
+
           if(headers[x].className.indexOf('bar-footer') === -1) {
             
             // If this is not the main header or nav-bar, adjust its position to be below the previous header
+            debugger;
             if(x > 0) {
               headers[x].style.top = offsetTop + 'px';
             }

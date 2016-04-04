@@ -3,6 +3,19 @@ angular.module('starter')
 .controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics, $ionicModal,UserSearchSelections, GetCategoryIconService ){
   LoadingSpinner.show();
 
+  $scope.$root.showShareButton = true;
+
+  $scope.$on("$stateChangeStart", function() {
+   $scope.$root.showShareButton = false;
+ });
+
+  $scope.$root.secondaryButtonFunction= function(){
+
+    $scope.showFilterModal()
+  }
+
+  $scope.$root.secondaryButtonText = "Filter";
+
   $scope.referer = $stateParams.referer;
 
   if($scope.referer === "selectionSearch") {

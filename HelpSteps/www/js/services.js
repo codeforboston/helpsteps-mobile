@@ -196,6 +196,9 @@ angular.module('starter.services', [])
 	              //care transitions
 	              case 397:
 	                return 'ion-shuffle';
+	              //if no match is found, use placeholder  
+		              default:
+	                return 'ion-load-d';       
 
        			}
   	}
