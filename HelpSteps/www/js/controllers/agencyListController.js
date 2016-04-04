@@ -18,6 +18,7 @@ angular.module('starter')
   //this will let him do that
   //create filtering model on page load
   $scope.arrayOfServiceIdsUserHasSelected = [];
+  $scope.namesOfServicesUserHasSelected = [];
   angular.forEach($scope.userSearchSelections, 
     function(outerValue,parentCategory){       
       var tempOuterValue = outerValue;
@@ -25,6 +26,7 @@ angular.module('starter')
       
       angular.forEach(services, function(value, key){  
 
+        $scope.namesOfServicesUserHasSelected.push(value);
         $scope.arrayOfServiceIdsUserHasSelected.push(key);
         $scope.filteredUserSearchSelectionsObject[parentCategory] = {};
         $scope.filteredUserSearchSelectionsObject[parentCategory]['services'] = {};
@@ -51,6 +53,7 @@ angular.module('starter')
     if(newVal !== oldVal) {
 
      $scope.arrayOfServiceIdsUserHasSelected = []; 
+     $scope.namesOfServicesUserHasSelected = [];
 
      //go through all categories
      angular.forEach($scope.filteredUserSearchSelectionsObject, function(categoryObject, categoryKey){ 
@@ -60,15 +63,13 @@ angular.module('starter')
         //if the service is actively selected, add it to an array of services that are actively selected
         if(serviceObject.active == true) {
           $scope.arrayOfServiceIdsUserHasSelected.push(serviceKey);
+          $scope.namesOfServicesUserHasSelected.push(serviceObject.name);
         }
       });
 
      //console.log("serviceObject : " + serviceObject + " thing2: " + key);
 
-     //if it's actively selected
-     if(serviceObject.active === true) {
-      $scope.arrayOfServiceIdsUserHasSelected.push(key);      
-    }
+     
 
   }) 
    }

@@ -1,14 +1,42 @@
 <ion-view view-title="Select Agency" can-swipe-back="false">
-  <ion-header-bar align-title="left" class="bar-royal bar bar-subheader" ng-if="referer == 'selectionSearch' && agencies.length > 0">
+  
+  <!-- <ion-header-bar align-title="left" class="bar-royal bar bar-subheader doubleHeaderSelector" ng-if="referer == 'selectionSearch' && agencies.length > 0" >
+    
+  <p class="selectedServicesAboveAgencyList">
+      <span ng-if="namesOfServicesUserHasSelected.length > 0">Viewing </span> 
+        <span ng-repeat="name in namesOfServicesUserHasSelected | limitTo:3">{{name}}<span ng-if="$index < 2 && namesOfServicesUserHasSelected.length > 1">, </span></span>
+      <span ng-if="namesOfServicesUserHasSelected.length > 3">and {{namesOfServicesUserHasSelected.length - 3}} more</span>
+    </p>
+  
+</ion-header-bar> -->
+
+  <ion-header-bar class="bar-royal bar bar-subheader doubleHeaderSelector" ng-if="referer == 'selectionSearch' && agencies.length > 0" >
     
   <div class="buttons text-right" >
+    
     <button class="button bar-button" ng-click="showFilterModal()">Filter</button>
   </div>
+  
 </ion-header-bar>
+
+
+
+
+
+<!-- ng-class="{'has-subheader' : referer == 'selectionSearch'}" -->
+  <!-- position-bars-and-content //custom directive for handling multiple subheaders-->
   <ion-content ng-class="{'has-subheader' : referer == 'selectionSearch'}">
   
     <!-- display search results if results are found -->
     <ion-list ng-if="agencies.length > 0">
+    
+    <!-- Display services user has selected above agency listings-->
+    <!-- <p class="selectedServicesAboveAgencyList">
+      <span ng-if="namesOfServicesUserHasSelected.length > 0">Viewing </span> 
+        <span ng-repeat="name in namesOfServicesUserHasSelected | limitTo:3">{{name}}<span ng-if="$index < 2 && namesOfServicesUserHasSelected.length > 1">, </span></span>
+      <span ng-if="namesOfServicesUserHasSelected.length > 3">and {{namesOfServicesUserHasSelected.length - 3}} more</span>
+    </p> -->
+    
       
     <a ng-href="#/agencyDetail/{{agency.id}}"  ng-click="reportAgencyClicked(agency.name, agency.id, agency.distance)" class="item-icon-right agencyListIcon agencyInList" ng-repeat="agency in agencies" ng-hide="filterAgencies(agency.array_of_category_ids_for_location)">
     

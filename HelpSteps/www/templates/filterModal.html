@@ -21,7 +21,7 @@
          <button class="button button-royal col col-50 short-button" ng-click="selectAllServicesInCategory(categoryId)">Select All</button>
         <button class="button button-royal col col-50 short-button" ng-click="unselectAllServicesInCategory(categoryId)">Unselect All</button>
       </div>      
-        <ion-checkbox ng-repeat="(key,value) in categoryObject.services" ng-model="filteredUserSearchSelectionsObject[categoryId]['services'][key]['active']" class="item-text-wrap" >value: {{value}} categoryId: {{categoryId}} key: {{key}}</ion-checkbox>      
+        <ion-checkbox ng-repeat="(key,value) in categoryObject.services" ng-model="filteredUserSearchSelectionsObject[categoryId]['services'][key]['active']" class="item-text-wrap" >{{value}}</ion-checkbox>      
       </ion-item>
       </div>
     </ion-list>
