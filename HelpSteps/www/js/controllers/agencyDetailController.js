@@ -8,7 +8,10 @@ angular.module('starter')
   //check if device is running android 6 because of new method of implementing permissions
   $scope.deviceIsRunningAndroid6 = (ionic.Platform.version() >= 6) && ionic.Platform.isAndroid()
 
-  
+  $scope.$root.secondaryButtonFunction= function(){
+
+    $scope.openModal();
+  }
 
   $scope.$root.secondaryButtonText = "Share";
 
@@ -27,16 +30,14 @@ angular.module('starter')
     //load up email information for android 6 mailto link
 
     $scope.encodedEmailSubject = encodeURIComponent('Agency Information from HelpSteps');
-  $scope.servicesString = "";
+    $scope.servicesString = "";
 
    for (var i = 0; i < $scope.agency.services.length; i++) {
-      $scope.servicesString += $scope.agency.services[i].name + "\n"
+      $scope.servicesString += $scope.agency.services[i].name + "\n";
     }; 
 
     $scope.encodedEmailBody = encodeURIComponent($scope.agency.name + "\n\n" + $scope.agency.description + "\n\nServices:\n" + $scope.servicesString + "\n" + $scope.agency.phones[0].number + "\n" + $scope.agency.website + "\n" + $scope.agency.address.address_1 + "\n" + $scope.agency.address.city + ", " + $scope.agency.address.state_province + "\n" + $scope.agency.address.postal_code + "\n");
-    //$scope.$apply();
-
-
+    $scope.emailBody = $scope.agency.name + "\n\n" + $scope.agency.description + "\n\nServices:\n" + $scope.servicesString + "\n" + $scope.agency.phones[0].number + "\n" + $scope.agency.website + "\n" + $scope.agency.address.address_1 + "\n" + $scope.agency.address.city + ", " + $scope.agency.address.state_province + "\n" + $scope.agency.address.postal_code + "\n";
 
 
     $scope.transportationForAccordion = [];
@@ -93,22 +94,14 @@ angular.module('starter')
     }).then(function(modal) {
       
       $scope.modal = modal;
-      
-      $scope.openModal = function() {
+    });
+    $scope.openModal = function() {
 
       $scope.modal.show();
     };
     $scope.closeModal = function() {
       $scope.modal.hide();
     };
-
-      $scope.$root.secondaryButtonFunction= function(){
-
-        $scope.openModal();
-      }
-
-    });
-    
   });
 
 
@@ -167,7 +160,7 @@ $cordovaEmailComposer.isAvailable().then(function() {
    var email = {
     to: userEmail,        
     subject: 'Agency Information from HelpSteps',
-    body: emailBody,
+    body: $scope.emailBody,
     isHtml: false
   };
 
