@@ -31,7 +31,7 @@
     "ionic-plugin-keyboard",
     "cordova-plugin-inappbrowser",
     {
-      "locator": "https://github.com/katzer/cordova-plugin-email-composer.git",
+      "locator": "https://github.com/kentalogic/cordova-plugin-email-composer.git",
       "id": "cordova-plugin-email-composer"
     }
   ],

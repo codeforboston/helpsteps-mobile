@@ -1,15 +1,14 @@
 angular.module('starter')
 
-.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope, $cordovaInAppBrowser, $ionicPlatform){
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope, $cordovaInAppBrowser, $ionicPlatform, $timeout){
 
   $scope.userInfoForExporting = {};
   $scope.userInfoForExporting.email = "";
-  $scope.userInfoForExporting.phoneNumber = "";
+  $scope.userInfoForExporting.phoneNumber = ""; 
+  //check if device is running android 6 because of new method of implementing permissions
+  $scope.deviceIsRunningAndroid6 = (ionic.Platform.version() >= 6) && ionic.Platform.isAndroid()
 
-  $scope.$root.secondaryButtonFunction= function(){
-
-    $scope.openModal();
-  }
+  
 
   $scope.$root.secondaryButtonText = "Share";
 
@@ -22,6 +21,23 @@ angular.module('starter')
 
   HelpStepsApi.GetAgency($stateParams.id).then(function(result){
     $scope.agency = result.data;    
+
+
+
+    //load up email information for android 6 mailto link
+
+    $scope.encodedEmailSubject = encodeURIComponent('Agency Information from HelpSteps');
+  $scope.servicesString = "";
+
+   for (var i = 0; i < $scope.agency.services.length; i++) {
+      $scope.servicesString += $scope.agency.services[i].name + "\n"
+    }; 
+
+    $scope.encodedEmailBody = encodeURIComponent($scope.agency.name + "\n\n" + $scope.agency.description + "\n\nServices:\n" + $scope.servicesString + "\n" + $scope.agency.phones[0].number + "\n" + $scope.agency.website + "\n" + $scope.agency.address.address_1 + "\n" + $scope.agency.address.city + ", " + $scope.agency.address.state_province + "\n" + $scope.agency.address.postal_code + "\n");
+    //$scope.$apply();
+
+
+
 
     $scope.transportationForAccordion = [];
     var transportation = JSON.parse($scope.agency.transportation);
@@ -77,14 +93,22 @@ angular.module('starter')
     }).then(function(modal) {
       
       $scope.modal = modal;
-    });
-    $scope.openModal = function() {
+      
+      $scope.openModal = function() {
 
       $scope.modal.show();
     };
     $scope.closeModal = function() {
       $scope.modal.hide();
     };
+
+      $scope.$root.secondaryButtonFunction= function(){
+
+        $scope.openModal();
+      }
+
+    });
+    
   });
 
 
@@ -128,33 +152,22 @@ angular.module('starter')
     });
     });
     $cordovaGoogleAnalytics.trackEvent('Share Agency', 'Share Through SMS', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude )
-   //  ga('send', {
-   //   hitType: 'event',
-   //   eventCategory: 'Share Agency',
-   //   eventAction: 'Share Through SMS',
-   //   eventLabel: $scope.agency.name
-
-   // });
   }
 
-  $scope.shareThroughEmail = function(agency,userEmail ){
-    debugger;
+  $scope.shareThroughEmail = function(agency,userEmail ){    
 
     $ionicPlatform.ready(function() { 
-      alert("plastform ready");
-        $cordovaEmailComposer.isAvailable().then(function() {
+      
+      
+$cordovaEmailComposer.isAvailable().then(function() {
    // is available
 
-   var servicesString = "";
 
-   for (var i = 0; i < agency.services.length; i++) {
-      servicesString += agency.services[i].name + "\n"
-    }; 
 
    var email = {
     to: userEmail,        
     subject: 'Agency Information from HelpSteps',
-    body: agency.name + "\n\n" + agency.description + "\n\nServices:\n" + servicesString + "\n" + agency.phones[0].number + "\n" + agency.website + "\n" + agency.address.address_1 + "\n" + agency.address.city + ", " + agency.address.state_province + "\n" + agency.address.postal_code + "\n",
+    body: emailBody,
     isHtml: false
   };
 
@@ -168,23 +181,11 @@ angular.module('starter')
    // not aveailable
    alert("There was a problem accessing your email. Please try again or send a text message instead.");
  });
-
-
+      
     });
-
-    
-
-
   }
 
-  $scope.reportCallAgency = function(){
-   //  ga('send', {
-   //   hitType: 'event',
-   //   eventCategory: 'Contact Agency',
-   //   eventAction: 'Call Agency on Phone',
-   //   eventLabel: $scope.agency.name
-
-   // });
+  $scope.reportCallAgency = function(){   
    $cordovaGoogleAnalytics.trackEvent('Share Agency', 'Call Agency', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude )
   }
 
@@ -208,6 +209,10 @@ angular.module('starter')
   $scope.openWebsiteInSystemBrowser = function() {
     $cordovaInAppBrowser.open($scope.agency.website, '_system');
     $cordovaGoogleAnalytics.trackEvent('View', 'View Agency Website', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude );
+  }
+
+  $scope.openMailtoLink = function() {
+    $cordovaInAppBrowser.open($scope.agency.website, '_system');
   }
 
 });
