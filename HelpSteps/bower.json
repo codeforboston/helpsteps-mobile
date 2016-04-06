@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "ngMask": "angular-mask#~3.0.16"
+  },
+  "resolutions": {
+    "ionic": "^1.2.4"
   }
 }

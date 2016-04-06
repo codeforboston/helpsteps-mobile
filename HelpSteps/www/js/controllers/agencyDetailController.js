@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope, $cordovaInAppBrowser){
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope, $cordovaInAppBrowser, $ionicPlatform){
 
   $scope.userInfoForExporting = {};
   $scope.userInfoForExporting.email = "";
@@ -138,8 +138,11 @@ angular.module('starter')
   }
 
   $scope.shareThroughEmail = function(agency,userEmail ){
+    debugger;
 
-    $cordovaEmailComposer.isAvailable().then(function() {
+    $ionicPlatform.ready(function() { 
+      alert("plastform ready");
+        $cordovaEmailComposer.isAvailable().then(function() {
    // is available
 
    var servicesString = "";
@@ -162,8 +165,14 @@ angular.module('starter')
   $cordovaGoogleAnalytics.trackEvent('Share Agency', 'Share Through Email', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude );
 
 }, function () {
-   // not available
+   // not aveailable
+   alert("There was a problem accessing your email. Please try again or send a text message instead.");
  });
+
+
+    });
+
+    
 
 
   }

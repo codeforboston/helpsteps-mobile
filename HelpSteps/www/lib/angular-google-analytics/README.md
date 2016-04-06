@@ -1,8 +1,9 @@
 # angular-google-analytics
 
-![Bower Version](https://img.shields.io/bower/v/angular-google-analytics.svg)
-![NPM Version](https://img.shields.io/npm/v/angular-google-analytics.svg)
-![Master Build Status](https://codeship.com/projects/ba7a0af0-33fe-0133-927c-127922174191/status?branch=master)
+[![Bower Version](https://img.shields.io/bower/v/angular-google-analytics.svg)](https://github.com/revolunet/angular-google-analytics)
+[![NPM Version](https://img.shields.io/npm/v/angular-google-analytics.svg)](https://www.npmjs.com/package/angular-google-analytics)
+[![Master Build Status](https://codeship.com/projects/ba7a0af0-33fe-0133-927c-127922174191/status?branch=master)](https://codeship.com/projects)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/revolunet/angular-google-analytics/blob/master/LICENSE)
 
 This service lets you integrate google analytics tracker in your AngularJS applications easily.
 
@@ -218,6 +219,33 @@ Set `trackEcommerce: false` for an account object that is not tracking e-commerc
   // RegEx to scrub location before sending to analytics.
   // Internally replaces all matching segments with an empty string.
   AnalyticsProvider.setRemoveRegExp(/\/\d+?$/);
+
+  // Activate reading custom tracking urls from $routeProvider config (default is false)
+  // This is more flexible than using RegExp and easier to maintain for multiple parameters.
+  // It also reduces tracked pages to routes defined in the $routeProvider and therefor reduces
+  // bounce rate created by redirects. You can also exclude certain routes from tracking by
+  // adding 'doNotTrack' property
+  AnalyticsProvider.readFromRoute(true);
+  // Add custom routes to the $routeProvider like this
+  $routeProvider
+    .when('/sessions', {
+      templateUrl: 'list.html',
+      controller: 'ListController'
+    })
+    .when('/session/:id',{
+      templateUrl : 'master.html',
+      controller: 'MasterController',
+      pageTrack: '/session'
+    })
+    .when('/member/:sessionId/:memberId', {
+      templateUrl : 'member.html',
+      controller: 'CardController',
+      pageTrack: '/member',
+    })
+    .otherwise({
+      templateUrl: '404.html',
+      doNotTrack: true
+    });
 ```
 
 ### Set Domain Name

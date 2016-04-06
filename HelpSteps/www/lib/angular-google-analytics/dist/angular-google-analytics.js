@@ -1,6 +1,6 @@
 /**
  * Angular Google Analytics - Easy tracking for your AngularJS application
- * @version v1.1.5 - 2015-12-19
+ * @version v1.1.7 - 2016-03-25
  * @link http://github.com/revolunet/angular-google-analytics
  * @author Julien Bouquillon <julien@revolunet.com> (https://github.com/revolunet)
  * @contributors Julien Bouquillon (https://github.com/revolunet),Justin Saunders (https://github.com/justinsa),Chris Esplin (https://github.com/deltaepsilon),Adam Misiorny (https://github.com/adam187)
@@ -41,6 +41,7 @@
           hybridMobileSupport = false,
           offlineMode = false,
           pageEvent = '$routeChangeSuccess',
+          readFromRoute = false,
           removeRegExp,
           testMode = false,
           traceDebuggingMode = false,
@@ -192,23 +193,28 @@
         traceDebuggingMode = !!enableTraceDebugging;
         return this;
       };
+      
+      // Enable reading page url from route object
+      this.readFromRoute = function(val) {
+        readFromRoute = !!val;
+        return this;
+      };
 
       /**
        * Public Service
        */
-      this.$get = ['$document', '$location', '$log', '$rootScope', '$window', function ($document, $location, $log, $rootScope, $window) {
+      this.$get = ['$document', // To read title 
+                   '$location', // 
+                   '$log',      //
+                   '$rootScope',// 
+                   '$window',   //
+                   '$injector', // To access ngRoute module without declaring a fixed dependency
+                   function ($document, $location, $log, $rootScope, $window, $injector) {
         var that = this;
 
         /**
          * Side-effect Free Helper Methods
          **/
-
-        var generateCommandName = function (commandName, config) {
-          if (angular.isString(config)) {
-            return config + '.' + commandName;
-          }
-          return isPropertyDefined('name', config) ? (config.name + '.' + commandName) : commandName;
-        };
 
         var isPropertyDefined = function (key, config) {
           return angular.isObject(config) && angular.isDefined(config[key]);
@@ -218,8 +224,32 @@
           return isPropertyDefined(key, config) && config[key] === value;
         };
 
+        var generateCommandName = function (commandName, config) {
+          if (angular.isString(config)) {
+            return config + '.' + commandName;
+          }
+          return isPropertyDefined('name', config) ? (config.name + '.' + commandName) : commandName;
+        };
+        
+        // Try to read route configuration and log warning if not possible
+        var $route = {};
+        if (readFromRoute) {
+          if (!$injector.has('$route')) {
+            $log.warn('$route service is not available. Make sure you have included ng-route in your application dependencies.');
+          } else {
+            $route = $injector.get('$route');
+          }
+        }
+
+        // Get url for current page 
         var getUrl = function () {
-          var url = trackUrlParams ? $location.url() : $location.path();
+          // Using ngRoute provided tracking urls
+          if (readFromRoute && $route.current && ('pageTrack' in $route.current)) {
+            return $route.current.pageTrack;
+          }
+           
+          // Otherwise go the old way
+          var url = trackUrlParams ? $location.url() : $location.path(); 
           return removeRegExp ? url.replace(removeRegExp, '') : url;
         };
 
@@ -636,6 +666,9 @@
             if (angular.isObject(custom)) {
               angular.extend(opt_fieldObject, custom);
             }
+            if (!angular.isDefined(opt_fieldObject.page)) {
+              opt_fieldObject.page = getUrl();
+            }
             _gaMultipleTrackers(includeFn, 'send', 'event', category, action, label, value, opt_fieldObject);
           });
         };
@@ -1029,7 +1062,9 @@
          * @private
          */
         this._trackTimings = function (timingCategory, timingVar, timingValue, timingLabel) {
-          this._send('timing', timingCategory, timingVar, timingValue, timingLabel);
+          _analyticsJs(function () {
+            _gaMultipleTrackers(undefined, 'send', 'timing', timingCategory, timingVar, timingValue, timingLabel);
+          });
         };
 
         /**
@@ -1040,7 +1075,9 @@
          * @private
          */
         this._trackException = function (description, isFatal) {
-          this._send('exception', { exDescription: description, exFatal: !!isFatal});
+          _analyticsJs(function () {
+            _gaMultipleTrackers(undefined, 'send', 'exception', { exDescription: description, exFatal: !!isFatal});
+          });
         };
 
         // creates the Google Analytics tracker
@@ -1055,6 +1092,15 @@
         // activates page tracking
         if (trackRoutes) {
           $rootScope.$on(pageEvent, function () {
+            // Apply $route based filtering if configured
+            if (readFromRoute) {
+              // Avoid tracking undefined routes, routes without template (e.g. redirect routes)
+              // and those explicitly marked as 'do not track'
+              if (!$route.current || !$route.current.templateUrl || $route.current.doNotTrack) {
+                return;
+              }
+            }
+            
             that._trackPage();
           });
         }
@@ -1081,6 +1127,7 @@
             ignoreFirstPageLoad: ignoreFirstPageLoad,
             logAllCalls: logAllCalls,
             pageEvent: pageEvent,
+            readFromRoute: readFromRoute,
             removeRegExp: removeRegExp,
             testMode: testMode,
             traceDebuggingMode: traceDebuggingMode,

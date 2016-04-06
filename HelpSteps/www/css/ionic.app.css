@@ -20,6 +20,7 @@ $dark:                            #444 !default;
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
   https://twitter.com/benjsperry  https://twitter.com/ionicframework
   MIT License: https://github.com/driftyco/ionicons
+
   Android-style icons originally built by Google’s
   Material Design Icons: https://github.com/google/material-design-icons
   used under CC BY http://creativecommons.org/licenses/by/4.0/
@@ -33,9 +34,6 @@ $dark:                            #444 !default;
   font-style: normal; }
 
 .ion, .ionicons,
-.ion-apple:before,
-.ion-hat-icon:before,
-.ion-road-perspective:before,
 .ion-alert:before,
 .ion-alert-circled:before,
 .ion-android-add:before,
@@ -780,15 +778,6 @@ $dark:                            #444 !default;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
-
-.ion-apple:before {
-  content: ""; }
-
-.ion-hat-icon:before {
-  content: ""; }
-
-.ion-road-perspective:before {
-  content: ""; }
 
 .ion-alert:before {
   content: ""; }
