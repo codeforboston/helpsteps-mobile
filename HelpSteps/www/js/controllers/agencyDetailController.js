@@ -208,12 +208,5 @@ $cordovaEmailComposer.isAvailable().then(function() {
     $cordovaInAppBrowser.open($scope.agency.website, '_system');
   }
 
-  $scope.scrollToBottom = function() {
-    debugger;
-    //get position of phone number input
-    var topOfPhoneInput = $ionicPosition.offset(angular.element(document.getElementById('phoneNumberInput'))).top;
-    //scroll to left position, right position, should it animate
-    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTo(0, topOfPhoneInput, false);    
-  }
 
 });
