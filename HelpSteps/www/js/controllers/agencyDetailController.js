@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope, $cordovaInAppBrowser, $ionicPlatform, $timeout){
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope, $cordovaInAppBrowser, $ionicPlatform, $timeout, $ionicScrollDelegate, $ionicPosition){
 
   $scope.userInfoForExporting = {};
   $scope.userInfoForExporting.email = "";
@@ -206,6 +206,14 @@ $cordovaEmailComposer.isAvailable().then(function() {
 
   $scope.openMailtoLink = function() {
     $cordovaInAppBrowser.open($scope.agency.website, '_system');
+  }
+
+  $scope.scrollToBottom = function() {
+    debugger;
+    //get position of phone number input
+    var topOfPhoneInput = $ionicPosition.offset(angular.element(document.getElementById('phoneNumberInput'))).top;
+    //scroll to left position, right position, should it animate
+    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTo(0, topOfPhoneInput, false);    
   }
 
 });

@@ -33,10 +33,11 @@
     {
       "locator": "https://github.com/kentalogic/cordova-plugin-email-composer.git",
       "id": "cordova-plugin-email-composer"
-    }
+    },
+    "cordova-sqlite-storage"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }

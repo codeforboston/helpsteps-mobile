@@ -734,7 +734,10 @@
 .#{$ionicons-prefix}wineglass:before,
 .#{$ionicons-prefix}woman:before,
 .#{$ionicons-prefix}wrench:before,
-.#{$ionicons-prefix}xbox:before
+.#{$ionicons-prefix}xbox:before,
+.#{$ionicons-prefix}apple:before,
+.#{$ionicons-prefix}hat-icon:before,
+.#{$ionicons-prefix}road-perspective:before
 {
   @extend .ion;
 }
@@ -1471,3 +1474,7 @@
 .#{$ionicons-prefix}woman:before { content: $ionicon-var-woman; }
 .#{$ionicons-prefix}wrench:before { content: $ionicon-var-wrench; }
 .#{$ionicons-prefix}xbox:before { content: $ionicon-var-xbox; }
+//custom icons
+.#{$ionicons-prefix}apple:before { content: $ionicon-var-apple; }
+.#{$ionicons-prefix}hat-icon:before { content: $ionicon-var-hat-icon; }
+.#{$ionicons-prefix}road-perspective:before { content: $ionicon-var-road-perspective; }

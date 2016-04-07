@@ -31,7 +31,7 @@ angular.module('starter', ['ionic','underscore', 'starter.directives', 'starter.
 .config(function(uiGmapGoogleMapApiProvider) {
   uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyDu3ACzX5UEHrISWJyIDEYjN40IppUvbbM',
-        v: '3.20', //defaults to latest 3.X anyhow
+        v: '3.22', //defaults to latest 3.X anyhow
         libraries: 'weather,geometry,visualization'
       });
 })

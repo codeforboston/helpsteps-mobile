@@ -766,7 +766,10 @@ $dark:                            #444 !default;
 .ion-wineglass:before,
 .ion-woman:before,
 .ion-wrench:before,
-.ion-xbox:before {
+.ion-xbox:before,
+.ion-apple:before,
+.ion-hat-icon:before,
+.ion-road-perspective:before {
   display: inline-block;
   font-family: "Ionicons";
   speak: none;
@@ -2977,6 +2980,15 @@ $dark:                            #444 !default;
 
 .ion-xbox:before {
   content: ""; }
+
+.ion-apple:before {
+  content: ""; }
+
+.ion-hat-icon:before {
+  content: ""; }
+
+.ion-road-perspective:before {
+  content: ""; }
 
 /**
  * Resets

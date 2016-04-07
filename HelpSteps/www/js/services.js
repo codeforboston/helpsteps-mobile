@@ -56,7 +56,11 @@ angular.module('starter.services', [])
 	document.addEventListener('deviceready', onDeviceReady, false);
 	
 	function onDeviceReady() {
-        db = window.sqlitePlugin.openDatabase({name: "my.db", androidDatabaseImplementation: 2, androidLockWorkaround: 1});
+		//important note: changed from 'my.db' to 'mynew.db' on 4/7/16
+		//due to a breaking change in the cordova sqlite plugin
+		//The plugin forced the location into a location that is not backed up by iCloud (by default)
+		//This plays nicer with Apple terms of service
+        db = window.sqlitePlugin.openDatabase({name: "mynew.db",location: 'default' ,androidDatabaseImplementation: 2, androidLockWorkaround: 1});
                       
 	}
 
