@@ -3,7 +3,7 @@ angular.module('starter')
 .controller('AgencyListCtrl', function($scope, HelpStepsApi, $state, $stateParams, LoadingSpinner, $cordovaGoogleAnalytics, $ionicModal,UserSearchSelections, GetCategoryIconService ){
   LoadingSpinner.show();
 
-  $scope.$root.showShareButton = true;
+  
 
   $scope.$on("$stateChangeStart", function() {
    $scope.$root.showShareButton = false;
@@ -19,6 +19,10 @@ angular.module('starter')
   $scope.referer = $stateParams.referer;
 
   if($scope.referer === "selectionSearch") {
+
+      //only show the button if user has used selection search, not for text search
+      $scope.$root.showShareButton = true;
+
       //load user's search selections from previous screen
       $scope.userSearchSelections = UserSearchSelections.getSearchObject();
 

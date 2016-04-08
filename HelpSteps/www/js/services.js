@@ -208,4 +208,20 @@ angular.module('starter.services', [])
   	}
   }
   
-});
+})
+
+//used to avoid writing null/undefined values in string concat scenarios
+.service('CheckForEmptyValues',function(){
+	return {
+		check: function(string){
+			if(string == (null || undefined)) {
+				return "";
+			} else {
+				return string;
+			}
+
+		}
+	}
+})
+
+;

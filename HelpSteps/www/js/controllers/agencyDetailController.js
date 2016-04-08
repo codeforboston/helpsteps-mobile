@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope, $cordovaInAppBrowser, $ionicPlatform, $timeout, $ionicScrollDelegate, $ionicPosition){
+.controller('AgencyDetailCtrl', function($scope, HelpStepsApi, $stateParams, $state, uiGmapGoogleMapApi, $ionicModal, $cordovaEmailComposer, $cordovaToast, $cordovaGoogleAnalytics, $rootScope, $cordovaInAppBrowser, $ionicPlatform, $timeout, $ionicScrollDelegate, $ionicPosition, CheckForEmptyValues){
 
   $scope.userInfoForExporting = {};
   $scope.userInfoForExporting.email = "";
@@ -36,8 +36,17 @@ angular.module('starter')
       $scope.servicesString += $scope.agency.services[i].name + "\n";
     }; 
 
-    $scope.encodedEmailBody = encodeURIComponent($scope.agency.name + "\n\n" + $scope.agency.description + "\n\nServices:\n" + $scope.servicesString + "\n" + $scope.agency.phones[0].number + "\n" + $scope.agency.website + "\n" + $scope.agency.address.address_1 + "\n" + $scope.agency.address.city + ", " + $scope.agency.address.state_province + "\n" + $scope.agency.address.postal_code + "\n");
-    $scope.emailBody = $scope.agency.name + "\n\n" + $scope.agency.description + "\n\nServices:\n" + $scope.servicesString + "\n" + $scope.agency.phones[0].number + "\n" + $scope.agency.website + "\n" + $scope.agency.address.address_1 + "\n" + $scope.agency.address.city + ", " + $scope.agency.address.state_province + "\n" + $scope.agency.address.postal_code + "\n";
+    $scope.emailBody =  CheckForEmptyValues.check($scope.agency.name) + "\n\n" + 
+      CheckForEmptyValues.check($scope.agency.description) + 
+      "\n\nServices:\n" + 
+      CheckForEmptyValues.check($scope.servicesString) + "\n" + 
+      ($scope.agency.phones[0] ? CheckForEmptyValues.check($scope.agency.phones[0].number) + "\n" : "") + 
+      CheckForEmptyValues.check($scope.agency.website) + "\n" + 
+      CheckForEmptyValues.check($scope.agency.address.address_1) + "\n" + 
+      CheckForEmptyValues.check($scope.agency.address.city) + ", " + CheckForEmptyValues.check($scope.agency.address.state_province) + "\n" + 
+      CheckForEmptyValues.check($scope.agency.address.postal_code) + "\n";
+    $scope.encodedEmailBody = encodeURIComponent($scope.emailBody);
+    
 
 
     $scope.transportationForAccordion = [];
