@@ -224,4 +224,19 @@ angular.module('starter.services', [])
 	}
 })
 
-;
+.service('Toast', function(ionicToast, $cordovaToast){
+
+	//check platform to decide if native or web library should be used
+	return {
+		show: function(message){
+			if(ionic.Platform.isAndroid() || ionic.Platform.isIOS()) {
+				console.log("mobile");
+				$cordovaToast.show(message, 'short', 'center');        
+            
+			} else {
+				console.log("desktop");
+				ionicToast.show(message, 'middle', true, 2500);
+			}	
+		}
+	}
+});

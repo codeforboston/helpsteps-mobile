@@ -8,7 +8,8 @@
     "angular-underscore-module": "~1.0.3"
   },
   "dependencies": {
-    "ngMask": "angular-mask#~3.0.16"
+    "ngMask": "angular-mask#~3.0.16",
+    "ionic-toast": "^0.2.0"
   },
   "resolutions": {
     "ionic": "^1.2.4"

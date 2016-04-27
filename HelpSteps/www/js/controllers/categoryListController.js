@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite, $cordovaGoogleAnalytics, googleAnalyticsCode, $window){
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite, $cordovaGoogleAnalytics, googleAnalyticsCode, $window, ionicToast, Toast){
 
   $ionicPlatform.ready(function() {
     if (typeof analytics !== 'undefined'){
@@ -84,8 +84,7 @@ angular.module('starter')
         if(nextMethod != "selectionSearch"){
           
           if(!$scope.validateUserInputForTextSearch(nextMethodArg)) {            
-            $cordovaToast
-            .show('Please enter a search term and a location to use text search.', 'short', 'center');        
+           Toast.show('Please enter a search term and a location to use text search.', 'short', 'center');        
             return false;
           }
         } else {
@@ -93,13 +92,7 @@ angular.module('starter')
           //validate location has been entered          
           if(!$scope.search.locationSearchTerm || $scope.search.locationSearchTerm.length < 0 || !$rootScope.userCategoriesArray || $rootScope.userCategoriesArray.length < 1){
 
-            $cordovaToast
-            .show('Please enter a location and select at least one category to use selection search.', 'short', 'center')
-            .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });        
+            Toast.show('Please enter a location and select at least one category to use selection search.');            
             return false;
           }
         }        
@@ -113,7 +106,7 @@ angular.module('starter')
 
             //if google is unable to find the coordinates
             if(results[0].geometry.location.lat() == undefined || results[0].geometry.location.lat() == undefined){
-              $cordovaToast.show('We were not able to locate the address you entered. Please type in another address, or select \"Use My Current Location.\"', 'short', 'center');
+              Toast.show('We were not able to locate the address you entered. Please type in another address, or select \"Use My Current Location.\"');
             }            
             //continue on with search after location has been determined            
             $scope.performNextSearchAction(nextMethod, nextMethodArg);
@@ -137,7 +130,7 @@ angular.module('starter')
                  }                                                
               } else {
                 //show error message if user location wasn't found
-              $cordovaToast.show('We were not able to access your location. Please try again or type in a location.', 'short', 'center');
+              Toast.show('We were not able to access your location. Please try again or type in a location.');
               }              
             }            
           });                                            
@@ -196,13 +189,7 @@ $scope.textSearch = function(){
 
   if($scope.search.text == undefined || $scope.search.text.length < 1){
     
-    $cordovaToast
-      .show('Please enter a search term or select a suggested search term from the list.', 'short', 'center')
-      .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
+    Toast.show('Please enter a search term or select a suggested search term from the list.', 'short', 'center');
     return false;
   }
 
@@ -299,5 +286,6 @@ $scope.textSearch = function(){
     $window.location.reload(true);
     $scope.connectionError = false;
   }
+
   
 });

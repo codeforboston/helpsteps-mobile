@@ -26,14 +26,7 @@ angular.module('starter')
 
     //make sure user has selected at least one service to search for
     if($scope.numberOfSelectedServices < 1) {      
-      $cordovaToast
-      .show('Please select at least one service to continue.', 'short', 'center')
-      .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
-
+      Toast.show('Please select at least one service to continue.', 'short', 'center')      
       return false;
     }
 

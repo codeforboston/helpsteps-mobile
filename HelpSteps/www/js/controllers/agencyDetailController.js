@@ -118,13 +118,8 @@ angular.module('starter')
   $scope.shareThroughText = function(id, phoneNumber){
     if(!$scope.validatePhoneNumber(phoneNumber)) {
 
-      $cordovaToast
-      .show('Please enter a valid 10-digit phone number to proceed.', 'short', 'center')
-      .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
+      Toast.show('Please enter a valid 10-digit phone number to proceed.', 'short', 'center')
+      
 
       return false;
     }
@@ -133,25 +128,11 @@ angular.module('starter')
     .then(
       //success callback
       function(){
-
-
-        $cordovaToast
-        .show('Message sent.', 'short', 'center')
-        .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
-      //failure callback
-    }, function(error){
-      
-      $cordovaToast
-      .show('We were not able to send your text. Please check the number and try again.', 'short', 'center')
-      .then(function(success) {
-      // success
-    }, function (error) {
-      // error
-    });
+        Toast.show('Message sent.', 'short', 'center');        
+      //failure callback    
+    }, function(error){      
+      Toast.show('We were not able to send your text. Please check the number and try again.', 'short', 'center');
+      .
     });
     $cordovaGoogleAnalytics.trackEvent('Share Agency', 'Share Through SMS', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude )
   }
