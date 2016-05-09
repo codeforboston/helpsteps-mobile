@@ -32,7 +32,7 @@ angular.module('starter', ['ionic','underscore', 'starter.directives', 'starter.
   uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyDu3ACzX5UEHrISWJyIDEYjN40IppUvbbM',
         v: '3.22', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization'
+        libraries: 'geometry,visualization'
       });
 })
 

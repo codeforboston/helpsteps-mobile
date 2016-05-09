@@ -28,7 +28,7 @@ angular.module('starter')
   $scope.getRecentSearchTerms = function(){         
 
     //get keyword search terms
-    alert("hello");
+    
     UserStorage.getKeywordSearches().then(function(keywords){
       $scope.recentKeywordSearches = keywords;
       UserStorage.getLocationSearches().then(function(locations){
@@ -39,7 +39,7 @@ angular.module('starter')
   }
 
 if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/) && (window.sqlitePlugin != undefined)) {
-      alert("about to look");
+      
         document.addEventListener("deviceready", $scope.getRecentSearchTerms, false);
     } else {
         $scope.getRecentSearchTerms();
@@ -112,13 +112,9 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/) && (windo
           //get location automatically from device
           $scope.getUserLocation();
           //when geolocation information comes back from async call
-          $scope.$on('geolocationUpdate', function(event, args){           
-            
-            debugger;
+          $scope.$on('geolocationUpdate', function(event, args){                                   
 
-            if (args === true) {
-              alert("fire!");
-              alert("test 2")
+            if (args === true) {             
               //continue on with search after location has been determined
               $scope.performNextSearchAction(nextMethod, nextMethodArg);    
             } else {
@@ -268,13 +264,10 @@ $scope.textSearch = function(){
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {      
       $rootScope.latitude = position.coords.latitude;
       $rootScope.longitude = position.coords.longitude;       
-      $rootScope.$broadcast('geolocationUpdate', true);
-      alert($rootScope.latitude +   $rootScope.longitude );
+      $rootScope.$broadcast('geolocationUpdate', true);      
     }, function(err) {      
       $rootScope.$broadcast('geolocationUpdate', err);              
-      alert("oops...");
-      alert(err);
-      debugger;
+      console.log(err);
     });
   });
 
