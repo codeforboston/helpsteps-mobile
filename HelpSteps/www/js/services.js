@@ -191,9 +191,7 @@ angular.module('starter.services', [])
 //})
 .service('UserStorage', function(LocalStorage,SQLite ){
 	//check to see if it's a native mobile environment (inside an app) or a web page
-	var userIsUsingApp = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
-
-	if(userIsUsingApp){
+	if(window.sqlitePlugin != undefined){
 		return SQLite;
 	} else {
 		return LocalStorage;
@@ -254,15 +252,17 @@ angular.module('starter.services', [])
 .factory('SQLite', function($q, $rootScope){
 	var db;
 	document.addEventListener('deviceready', onDeviceReady, false);
-	
+		
+	debugger;
 	function onDeviceReady() {
 		//important note: changed from 'my.db' to 'mynew.db' on 4/7/16
 		//due to a breaking change in the cordova sqlite plugin
 		//The new version of the plugin forces the location into a location that is not backed up by iCloud (by default)
 		//This plays nicer with Apple terms of service
-		
-        db = window.sqlitePlugin.openDatabase({name: "mynew.db",location: 'default' ,androidDatabaseImplementation: 2, androidLockWorkaround: 1});
-                      
+				
+		if (window.sqlitePlugin != undefined) {
+			db = window.sqlitePlugin.openDatabase({name: "mynew.db",location: 'default' ,androidDatabaseImplementation: 2, androidLockWorkaround: 1});	
+		}                    
 	}
 
 	return {

@@ -28,7 +28,7 @@ angular.module('starter')
   $scope.getRecentSearchTerms = function(){         
 
     //get keyword search terms
-    
+    alert("hello");
     UserStorage.getKeywordSearches().then(function(keywords){
       $scope.recentKeywordSearches = keywords;
       UserStorage.getLocationSearches().then(function(locations){
@@ -38,13 +38,12 @@ angular.module('starter')
     });         
   }
 
-if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/) && (window.sqlitePlugin != undefined)) {
+      alert("about to look");
         document.addEventListener("deviceready", $scope.getRecentSearchTerms, false);
     } else {
         $scope.getRecentSearchTerms();
-    }
-
-  //document.addEventListener('deviceready', $scope.getRecentSearchTerms, false);
+    }  
   
   $scope.$on('selectedServiceCount', function (event, args) {
     if(args.increaseOrDecrease == "increase"){
@@ -115,7 +114,11 @@ if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
           //when geolocation information comes back from async call
           $scope.$on('geolocationUpdate', function(event, args){           
             
+            debugger;
+
             if (args === true) {
+              alert("fire!");
+              alert("test 2")
               //continue on with search after location has been determined
               $scope.performNextSearchAction(nextMethod, nextMethodArg);    
             } else {
@@ -264,12 +267,14 @@ $scope.textSearch = function(){
 
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {      
       $rootScope.latitude = position.coords.latitude;
-      $rootScope.longitude = position.coords.longitude; 
-      
+      $rootScope.longitude = position.coords.longitude;       
       $rootScope.$broadcast('geolocationUpdate', true);
-    }, function(err) {
-      console.log("callback failure fires once");
+      alert($rootScope.latitude +   $rootScope.longitude );
+    }, function(err) {      
       $rootScope.$broadcast('geolocationUpdate', err);              
+      alert("oops...");
+      alert(err);
+      debugger;
     });
   });
 

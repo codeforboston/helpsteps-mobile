@@ -86,14 +86,14 @@ angular.module('starter.directives', [])
                             if($scope.selectedCategoriesObject[$scope.categoryId] == true){
                               
                                  $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "increase"});                                                              
-                                  $cordovaGoogleAnalytics.trackEvent('Category Selection'                                   
-                                    ,'Select Category',
-                                      'Select ' + $scope.category);
+                                  // $cordovaGoogleAnalytics.trackEvent('Category Selection'                                   
+                                  //   ,'Select Category',
+                                  //     'Select ' + $scope.category);
                                   
                             } else {
                               $rootScope.$broadcast('selectedServiceCount', {increaseOrDecrease: "decrease"});
-                              $cordovaGoogleAnalytics.trackEvent('Category Selection',
-                                'Unselect Category','Unselect Category');                              
+                            //   $cordovaGoogleAnalytics.trackEvent('Category Selection',
+                            //     'Unselect Category','Unselect Category');                              
                             }
        		});
 
