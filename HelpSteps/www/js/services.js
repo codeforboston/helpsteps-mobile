@@ -51,67 +51,6 @@ angular.module('starter.services', [])
 	};
 })
 
-.factory('SQLite', function($q){
-	var db;
-	document.addEventListener('deviceready', onDeviceReady, false);
-	
-	function onDeviceReady() {
-		//important note: changed from 'my.db' to 'mynew.db' on 4/7/16
-		//due to a breaking change in the cordova sqlite plugin
-		//The plugin forced the location into a location that is not backed up by iCloud (by default)
-		//This plays nicer with Apple terms of service
-        db = window.sqlitePlugin.openDatabase({name: "mynew.db",location: 'default' ,androidDatabaseImplementation: 2, androidLockWorkaround: 1});
-                      
-	}
-
-	return {
-		getDb: function(){
-			return db;
-		},
-
-		addKeywordSearchToHistory: function(searchTerm, locationSearchCoordinates, tableName){
-			var deferred = $q.defer();
-			db.transaction(function(tx) {
-
-		      tx.executeSql('CREATE TABLE IF NOT EXISTS ' +tableName+ ' (id integer primary key, searchTerm text, locationSearchCoordinates text, timeStamp long)');		  	
-		  	tx.executeSql('INSERT INTO ' +tableName+ ' (searchTerm, locationSearchCoordinates, timeStamp) VALUES (?,?,?)', [searchTerm, locationSearchCoordinates, Date.now()]);
-		  			  			  			
-		}, function(error) {
-			
-		  console.log('transaction error: ' + error.message);
-		}, function() {
-			deferred.resolve('transaction finished');
-		  console.log('transaction ok');
-		});
-			return deferred.promise;
-		},
-
-		findRecentSearches: function(tableName){
-			//return promise
-			var deferred = $q.defer();
-			
-			var responseRows;
-						db.transaction(function(tx) {
-				
-		      tx.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+' (id integer primary key, searchTerm text, locationSearchCoordinates text, timeStamp text)');		  			
-
-		  	tx.executeSql('SELECT DISTINCT searchTerm, timeStamp  FROM '+tableName+' GROUP BY searchTerm ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
-		  		deferred.resolve(res.rows);
-		  	});
-		  			
-		}, function(error) {
-			debugger;
-		  console.log('transaction error: ' + error.message);
-		}, function() {
-			return responseRows;
-		  console.log('transaction ok');
-		});
-
-			return deferred.promise;			
-		}
-	}
-
-})
 
 .factory('LoadingSpinner', function($ionicLoading){
 	return {
@@ -219,7 +158,6 @@ angular.module('starter.services', [])
 			} else {
 				return string;
 			}
-
 		}
 	}
 })
@@ -239,4 +177,192 @@ angular.module('starter.services', [])
 			}	
 		}
 	}
+})
+
+//this is an interface for storing users' past searches 
+//these method are available:
+//addKeywordSearch
+//getKeywordSearches
+//addLocationSearch
+//getLocationSearches
+//import note: always returns promises that you must then resole yourself
+//example: UserStorgage.getKeywordSearches().then(function(keywords){
+// alert("look at my awesome keywords: " + keywords);
+//})
+.service('UserStorage', function(LocalStorage,SQLite ){
+	//check to see if it's a native mobile environment (inside an app) or a web page
+	var userIsUsingApp = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/);
+
+	if(userIsUsingApp){
+		return SQLite;
+	} else {
+		return LocalStorage;
+	}	
+})
+
+//use local storage in browser when user is not in an app (SQLite is used if user is in an app)
+.service('LocalStorage', function($localStorage, $q){
+	$storage = $localStorage;
+	//only make new objects if nothing exists
+	debugger;
+	if ($storage.keywordSearches == undefined) {
+		$storage.keywordSearches = [];	
+	}
+	if ($storage.locationSearches == undefined) {
+		$storage.locationSearches = [];
+	}
+		
+	var addSearchTerm = function(searchTerm, searchTermType){
+		//if it's already there, push it to the front of the list, don't add it again
+		if($storage[searchTermType].indexOf(searchTerm) > -1) {				
+			//find existing keyword in array				
+			debugger;
+			var searchTermIndex = $storage[searchTermType].indexOf(searchTerm);				
+			//delete it in the array
+			$storage[searchTermType].splice(searchTermIndex,1);				
+			//insert it again at index 0
+			$storage[searchTermType].splice(0,0,searchTerm);
+		} else {
+			$storage.deferred.resolve($storage[searchTermType].splice(0,0,searchTerm));	
+		}
+	}
+	
+	return {
+		addKeywordSearch: function(keyword) {	
+			$storage.deferred = $q.defer();	
+			addSearchTerm(keyword,"keywordSearches");					
+			return $storage.deferred.promise;		
+		},		
+		getKeywordSearches: function() {
+			$storage.deferred = $q.defer();
+			$storage.deferred.resolve($storage.keywordSearches);				
+			return $storage.deferred.promise;		
+		},
+		addLocationSearch: function(location) {
+			$storage.deferred = $q.defer();
+			addSearchTerm(location,"locationSearches");					
+			return $storage.deferred.promise;		
+		},
+		getLocationSearches: function() {
+			$storage.deferred = $q.defer();
+			$storage.deferred.resolve($storage.locationSearches);
+			return $storage.deferred.promise;		
+		}
+	};	
+})
+
+.factory('SQLite', function($q, $rootScope){
+	var db;
+	document.addEventListener('deviceready', onDeviceReady, false);
+	
+	function onDeviceReady() {
+		//important note: changed from 'my.db' to 'mynew.db' on 4/7/16
+		//due to a breaking change in the cordova sqlite plugin
+		//The new version of the plugin forces the location into a location that is not backed up by iCloud (by default)
+		//This plays nicer with Apple terms of service
+		
+        db = window.sqlitePlugin.openDatabase({name: "mynew.db",location: 'default' ,androidDatabaseImplementation: 2, androidLockWorkaround: 1});
+                      
+	}
+
+	return {
+		getDb: function(){
+			return db;
+		},
+
+		addKeywordSearch: function(searchTerm){
+			var deferred = $q.defer();
+			var tableName = "keyword_searches";
+			db.transaction(function(tx) {
+
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS ' +tableName+ ' (id integer primary key, searchTerm text, locationSearchCoordinates text, timeStamp long)');		  	
+		  	tx.executeSql('INSERT INTO ' +tableName+ ' (searchTerm,locationSearchCoordinates, timeStamp) VALUES (?,?,?)', [searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, Date.now()]);
+		  			  			  			
+		}, function(error) {
+			
+		  console.log('transaction error: ' + error.message);
+		}, function() {
+			deferred.resolve('transaction finished');
+		  console.log('transaction ok');
+		});
+			return deferred.promise;
+		},
+
+		getKeywordSearches: function(){
+			//return promise
+			var deferred = $q.defer();
+			var tableName = "keyword_searches";
+			var responseRows;
+			db.transaction(function(tx) {
+				
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+' (id integer primary key, searchTerm text, locationSearchCoordinates text, timeStamp text)');		  			
+
+		  	tx.executeSql('SELECT DISTINCT searchTerm, timeStamp  FROM '+tableName+' GROUP BY searchTerm ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
+		  		var length = res.rows.length;
+		  		var results =[];
+		  		for (var i = 0; i < length ; i++) {
+			        results.push(res.rows.item(i).searchTerm);
+			      };    			    
+		  		deferred.resolve(results);
+		  	});
+		  			
+		}, function(error) {
+			debugger;
+		  console.log('transaction error: ' + error.message);
+		}, function() {
+			return responseRows;
+		  console.log('transaction ok');
+		});
+
+			return deferred.promise;			
+		},
+		addLocationSearch: function(searchTerm) {
+			var deferred = $q.defer();
+			var tableName = "location_searches";
+			db.transaction(function(tx) {
+
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS ' +tableName+ ' (id integer primary key, searchTerm text, locationSearchCoordinates text, timeStamp long)');		  	
+		  	tx.executeSql('INSERT INTO ' +tableName+ ' (searchTerm,locationSearchCoordinates, timeStamp) VALUES (?,?,?)', [searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, Date.now()]);
+		  			  			  			
+		}, function(error) {
+			
+		  console.log('transaction error: ' + error.message);
+		}, function() {
+			deferred.resolve('transaction finished');
+		  console.log('transaction ok');
+		});
+			return deferred.promise;
+
+		},
+		getLocationSearches: function() {
+			//return promise
+			var deferred = $q.defer();
+			var tableName = "location_searches";
+			var responseRows;
+			db.transaction(function(tx) {
+				
+		      tx.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+' (id integer primary key, searchTerm text, locationSearchCoordinates text, timeStamp text)');		  			
+
+		  	tx.executeSql('SELECT DISTINCT searchTerm, timeStamp  FROM '+tableName+' GROUP BY searchTerm ORDER BY timeStamp DESC LIMIT 10', [], function(tx, res){		  		
+		  		var length = res.rows.length;
+		  		var results =[];
+		  		for (var i = 0; i < length ; i++) {
+			        results.push(res.rows.item(i).searchTerm);
+			      };    			    
+		  		deferred.resolve(results);
+		  	});
+		  			
+		}, function(error) {
+			debugger;
+		  console.log('transaction error: ' + error.message);
+		}, function() {
+			return responseRows;
+		  console.log('transaction ok');
+		});
+
+			return deferred.promise;
+
+		}
+	}
+
 });

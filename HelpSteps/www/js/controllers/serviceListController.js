@@ -40,11 +40,9 @@ angular.module('starter')
     });
     $rootScope.selectedServices = selectedServices.join(',');    
     
-
     UserSearchSelections.setSearchObject($scope.fullSelectionObject);
-    
-   
-    $cordovaGoogleAnalytics.trackEvent('Search', 'Selection Search', JSON.stringify( $scope.fullSelectionObject) + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
+       
+    // $cordovaGoogleAnalytics.trackEvent('Search', 'Selection Search', JSON.stringify( $scope.fullSelectionObject) + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
 
     $state.go('agencyList', { 'referer' : 'selectionSearch'});
   }
@@ -71,7 +69,7 @@ angular.module('starter')
       }
 
       //$scope.selectedNames.push("Category: " + category.name + ",  Service: " + service.name+ ", Category ID for service: " + service.id);      
-      $cordovaGoogleAnalytics.trackEvent('Service Selection','Select Service','Select Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
+      //$cordovaGoogleAnalytics.trackEvent('Service Selection','Select Service','Select Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
       
     } else {
       //remove from fullSelectionObject
@@ -82,7 +80,7 @@ angular.module('starter')
       if(Object.keys($scope.fullSelectionObject[category.id]['services']).length < 1){
         delete $scope.fullSelectionObject[category.id];
       }
-      $cordovaGoogleAnalytics.trackEvent('Service Deselection','Deselect Service','Deselect Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
+      //  $cordovaGoogleAnalytics.trackEvent('Service Deselection','Deselect Service','Deselect Service: ' + service.name + ', In Category: ' + category.name + ", Category ID for service: " + service.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude)
       
     }
   }

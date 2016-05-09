@@ -126,7 +126,7 @@ angular.module('starter')
 }
 
 $scope.reportAgencyClicked = function(name, id, distance){
-  $cordovaGoogleAnalytics.trackEvent('View',  'View Agency', "View Agency: " + name + ",  Agency ID: " + id + ", Agency Distance from User in Miles: " + distance);
+  //$cordovaGoogleAnalytics.trackEvent('View',  'View Agency', "View Agency: " + name + ",  Agency ID: " + id + ", Agency Distance from User in Miles: " + distance);
 }
 
 $scope.showFilterModal = function(){

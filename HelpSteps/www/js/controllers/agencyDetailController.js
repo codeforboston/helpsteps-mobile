@@ -132,7 +132,7 @@ angular.module('starter')
       //failure callback    
     }, function(error){      
       Toast.show('We were not able to send your text. Please check the number and try again.', 'short', 'center');
-      .
+      
     });
     $cordovaGoogleAnalytics.trackEvent('Share Agency', 'Share Through SMS', 'Agency Name: ' + $scope.agency.name + ', Agency Id: ' + $scope.agency.id + ', Latitude: ' + $rootScope.latitude + ', Longitude: ' + $rootScope.longitude )
   }

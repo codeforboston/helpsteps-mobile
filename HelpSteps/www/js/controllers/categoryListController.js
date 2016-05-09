@@ -1,22 +1,19 @@
 angular.module('starter')
 
-.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, SQLite, $cordovaGoogleAnalytics, googleAnalyticsCode, $window, ionicToast, Toast){
+.controller('CategoryListCtrl', function($scope, $http, HelpStepsApi, $rootScope, $state, $ionicPlatform, uiGmapGoogleMapApi, $cordovaGeolocation, $cordovaToast, $cordovaGoogleAnalytics, googleAnalyticsCode, $window, ionicToast, Toast, LocalStorage, UserStorage){
 
   $ionicPlatform.ready(function() {
     if (typeof analytics !== 'undefined'){
       //analytics.startTrackerWithId('UA-XXXXXXX-X');
             
-      $cordovaGoogleAnalytics.startTrackerWithId(googleAnalyticsCode);
-      
+      $cordovaGoogleAnalytics.startTrackerWithId(googleAnalyticsCode);      
        
     }
   });
 
-  //$cordovaGoogleAnalytics.trackEvent('Videos', 'Video Load Time', 'Gone With the Wind', 100);
+  
 
   $scope.selectedCategoriesObject = {};
-
-  
 
   $scope.selectedServiceCount = 0;
   $scope.searchBarIcon = "ion-ios-search";
@@ -28,25 +25,26 @@ angular.module('starter')
   $scope.geolocationUpdate = "";
   $scope.lastLocationUpdateTime = Date.now();
 
-  $scope.getRecentSearchTerms = function(){        
+  $scope.getRecentSearchTerms = function(){         
 
-    //get recent keyword searches
-    SQLite.findRecentSearches('keyword_searches').then(function(data){
-      $scope.recentKeywordSearches = [];
-      for (var i = 0; i < data.length; i++) {
-        $scope.recentKeywordSearches.push(data.item(i).searchTerm);
-      };    
-        //after getting keyword search results...
-        //get recent location searches
-        SQLite.findRecentSearches('location_searches').then(function(data){
-          $scope.recentLocationSearches = [];
-          for (var i = 0; i < data.length; i++) {
-            $scope.recentLocationSearches.push(data.item(i).searchTerm);
-          };    
-        });
-    });    
+    //get keyword search terms
+    
+    UserStorage.getKeywordSearches().then(function(keywords){
+      $scope.recentKeywordSearches = keywords;
+      UserStorage.getLocationSearches().then(function(locations){
+
+        $scope.recentLocationSearches = locations;        
+      });
+    });         
   }
-  document.addEventListener('deviceready', $scope.getRecentSearchTerms, false);
+
+if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+        document.addEventListener("deviceready", $scope.getRecentSearchTerms, false);
+    } else {
+        $scope.getRecentSearchTerms();
+    }
+
+  //document.addEventListener('deviceready', $scope.getRecentSearchTerms, false);
   
   $scope.$on('selectedServiceCount', function (event, args) {
     if(args.increaseOrDecrease == "increase"){
@@ -145,9 +143,8 @@ $scope.performNextSearchAction = function(nextMethod, nextMethodArg){
     nextMethod(nextMethodArg);
   } else if (nextMethod == "selectionSearch") {
     
-    //record user's search term
-    SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches').then(function(){        
-    });
+    //record user's location search term
+    UserStorage.addLocationSearch($scope.search.locationSearchTerm);        
 
     //go to next screen and continue selection search
     $state.go('serviceList', {'referer': 'selectionSearch'});
@@ -195,14 +192,13 @@ $scope.textSearch = function(){
 
     //user input from search box
     $rootScope.searchTerm = $scope.search.text.toLowerCase();
-    $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search', 'Search Term: ' + $rootScope.searchTerm + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude);
+    //$cordovaGoogleAnalytics.trackEvent('Search', 'Text Search', 'Search Term: ' + $rootScope.searchTerm + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude);
   
   //  save user's keyword search term
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches').then(function(){            
-      //save user's location search term  //async pattern: this is recorded after keyword search is saved
-      SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches').then(function(){        
-      });
-    });    
+  UserStorage.addKeywordSearch($rootScope.searchTerm).then(function(){
+    UserStorage.addLocationSearch($scope.search.locationSearchTerm)
+  });
+
     //go to agency list. Specify text search so that proper api endpoint is hit
     $state.go('agencyList', { 'referer':'textSearch'});
 
@@ -212,14 +208,11 @@ $scope.textSearch = function(){
 
     //user input from search box
     $rootScope.searchTerm = suggestion.toLowerCase();
-    $cordovaGoogleAnalytics.trackEvent('Search', 'Text Search From Suggestion', $rootScope.searchTerm, + ', Latitude: ' + $rootScope.latitude + ', Longitude: '+  $rootScope.longitude);
-    
-    SQLite.addKeywordSearchToHistory($rootScope.searchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'keyword_searches').then(function(){
-      SQLite.addKeywordSearchToHistory($scope.search.locationSearchTerm, $rootScope.latitude + ',' + $rootScope.longitude, 'location_searches').then(function(){
-
-      });
-    });
-    //save user's location search term
+    UserStorage.addKeywordSearch($rootScope.searchTerm).then(function(){
+      UserStorage.addLocationSearch($scope.search.locationSearchTerm);
+    }
+          
+    );      
     
     //go to agency list. Specify text search so that proper api endpoint is hit    
     $state.go('agencyList', { 'referer':'textSearch'});
